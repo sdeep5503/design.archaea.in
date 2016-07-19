@@ -13,9 +13,19 @@ Base.query = db_session.query_property()
 
 
 def init_db():
-    # import all modules here that might define models so that
-    # they will be registered properly on the metadata.  Otherwise
-    # you will have to import them first before calling init_db()
-    # import yourapplication.models
-    import api.models.user
+    """
+    This method initiates the data base for the first time
+
+    :return:
+    """
+
+
+    import api.models.dump
+    import api.models.accounts
+    import api.models.users
+    import api.models.applications
+    import api.models.linear_regression
     Base.metadata.create_all(bind=engine)
+
+
+init_db()
