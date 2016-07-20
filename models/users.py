@@ -1,6 +1,8 @@
 import datetime
-from api.database import Base
+
 from sqlalchemy import Column, Integer, String, DateTime
+
+from database import Base
 
 
 class Users(Base):
@@ -15,12 +17,17 @@ class Users(Base):
     last_name = Column(String(20))
     company = Column(String(20))
 
-    created = Column(DateTime, default=datetime.datetime.utcnow)
-    updated = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, user_guid=None, email=None):
+    def __init__(self, user_guid=None, email=None,
+                 password = None, first_name= None, last_name=None, company=None):
         self.user_guid = user_guid
         self.email = email
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name
+        self.company = company
 
     def __repr__(self):
         return '<User %r>' % self.user_guid

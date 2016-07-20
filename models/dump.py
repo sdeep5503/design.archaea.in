@@ -1,20 +1,21 @@
 import datetime
-from api.database import Base
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+
+from sqlalchemy import Column, Integer, String, DateTime
+
+from database import Base
 
 
-class Applications(Base):
+class Dump(Base):
 
-    __tablename__ = 'applications'
+    __tablename__ = 'dummy'
 
     application_id = Column(Integer, primary_key=True)
-    account_id = Column(Integer, ForeignKey('accounts.account_id'))
     application_name = Column(String(50))
     application_guid = Column(String(120), unique=True)
+    active = Column(Integer, default=0)
+    owner_id = Column(Integer, nullable=False)
+    enterprise = Column(Integer, nullable=False)
     deleted = Column(Integer, nullable=False)
-    algorithm = Column(String(20), nullable=False)
-    linear_regressions = relationship("LinearRegression")
 
     created= Column(DateTime, default=datetime.datetime.utcnow)
     updated= Column(DateTime, default=datetime.datetime.utcnow)
@@ -24,4 +25,4 @@ class Applications(Base):
         self.email = email
 
     def __repr__(self):
-        return '<Applications %r>' % self.account_name
+        return '<Dump %r>' % self.account_name
