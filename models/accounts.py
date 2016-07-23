@@ -21,7 +21,7 @@ class Accounts(Base):
     account_guid = Column(String(120), unique=True, nullable=False)
     is_active = Column(Boolean, nullable=False)
     is_trail =  Column(Boolean, nullable=False)
-    is_enterprise = Column(Integer, nullable=False)
+    is_enterprise = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)
     applications = relationship("Applications", backref='accounts', lazy='dynamic')
     users = relationship("Users",
