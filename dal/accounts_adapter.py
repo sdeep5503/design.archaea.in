@@ -1,13 +1,14 @@
 from database import db
 from models.users import Users
 from models.accounts import Accounts
-from dal.data_base_adapter import DataBaseAdapter
+from dal.base_adapter import BaseAdapter
+from models.applications import Applications
 
 
-class AccountsDataAdapter(DataBaseAdapter):
+class AccountsAdapter(BaseAdapter):
 
     def __init__(self):
-        DataBaseAdapter.__init__(self)
+        BaseAdapter.__init__(self)
 
     @staticmethod
     def create(account_name=None,
@@ -95,6 +96,17 @@ class AccountsDataAdapter(DataBaseAdapter):
         account.users.append(user)
         db.commit()
 
+    @staticmethod
+    def add_application(query, application):
+        """
+        Adding applications to accounts
 
-
-AccountsDataAdapter.add_user()
+        :param query:
+        :param application:
+        :return:
+        """
+        assert  isinstance(application, Applications)
+        account = db.query(Accounts). \
+            filter_by(**query).one()
+        account.applications.append(application)
+        db.commit()

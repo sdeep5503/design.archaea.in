@@ -1,7 +1,7 @@
 from database import db
 
 
-class DataBaseAdapter:
+class BaseAdapter:
 
     def __init__(self):
         pass

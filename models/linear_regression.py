@@ -1,8 +1,6 @@
 import datetime
-
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
-
 from database import Base
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 
 
 class LinearRegression(Base):
@@ -15,15 +13,32 @@ class LinearRegression(Base):
     fit_intercept = Column(Boolean, default=True)
     normalize = Column(Boolean, default=False)
     copy_X = Column(Boolean, default=True)
-    n_jobs = Column(Integer, default=True)
-    deleted = Column(Integer, nullable=False)
+    n_jobs = Column(Integer, default=1)
+    is_deleted = Column(Boolean, nullable=False)
 
-    created= Column(DateTime, default=datetime.datetime.utcnow)
-    updated= Column(DateTime, default=datetime.datetime.utcnow)
+    created_at= Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at= Column(DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, account_name=None, email=None):
-        self.name = account_name
-        self.email = email
+    def __init__(self, algorithm_guid=None,
+                       fit_intercept=True,
+                       normalize=False,
+                       copy_X=True,
+                       n_jobs=1):
+        """
+        Create a Linear regression
+
+        :param algorithm_guid:
+        :param fit_intercept:
+        :param normalize:
+        :param copy_X:
+        :param n_jobs:
+        """
+
+        self.algorithm_guid = algorithm_guid
+        self.fit_intercept = fit_intercept
+        self.normalize = normalize
+        self.copy_X = copy_X
+        self.n_jobs =n_jobs
 
     def __repr__(self):
-        return '<LinearRegression %r>' % self.account_name
+        return '<LinearRegression %r>' % self.algorithm_guid

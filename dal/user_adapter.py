@@ -1,12 +1,12 @@
 from database import db
 from models.users import Users
-from dal.data_base_adapter import DataBaseAdapter
+from dal.base_adapter import BaseAdapter
 
 
-class UserDataAdapter(DataBaseAdapter):
+class UserAdapter(BaseAdapter):
 
     def __init__(self):
-        DataBaseAdapter.__init__(self)
+        BaseAdapter.__init__(self)
 
     @staticmethod
     def create(user_guid=None,
@@ -75,11 +75,3 @@ class UserDataAdapter(DataBaseAdapter):
             .filter_by(**query).all()
         assert isinstance(users, list)
         return users
-
-
-print UserDataAdapter.create(user_guid='my_name',
-                     email='is@g',
-                     password='khan',
-                     first_name='fn',
-                     last_name='ln',
-                     company='my')
