@@ -34,7 +34,11 @@ class DALCRUDUnitTests(unittest.TestCase):
         AccountUserAdapter.update({
             'account_guid': '123-123-432-123',
             'user_guid': '321-233-222-33',
-        }, {
-            'permission': 'owner'
-        })
+        }, permission='owner')
         self.assertEqual(len(accounts), 1)
+        AccountsAdapter.update({
+            'account_guid': '123-123-432-123'
+        },{
+            'is_deleted': True
+        })
+        self.assertEqual(len(accounts), 0)

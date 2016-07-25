@@ -1,3 +1,4 @@
+from log_helper import logger
 from database import db
 from models.users import Users
 from models.accounts import Accounts
@@ -63,10 +64,8 @@ class AccountsAdapter(BaseAdapter):
         :param query:
         :return:
         """
-        db.query(Accounts). \
-            filter_by(**query). \
-            delete()
-        db.commit()
+        logger.warn('Hard delete on Accounts Table not implemented')
+
 
     @staticmethod
     def read(query=None):

@@ -6,11 +6,11 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boo
 account_user_association_table = Table('account_user', Base.metadata,
                                        Column('account_guid', String(120), ForeignKey('accounts.account_guid')),
                                        Column('user_guid', String(120), ForeignKey('users.user_guid')),
-                                       Column('permission', String(20), default='member')
-                                       )
+                                       Column('permission', String(20), default='member'))
 
 
 class Accounts(Base):
+
     __tablename__ = 'accounts'
 
     account_id = Column(Integer, primary_key=True, nullable=False)
@@ -20,8 +20,8 @@ class Accounts(Base):
     is_trail = Column(Boolean, nullable=False)
     is_enterprise = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)
-    applications = relationship("Applications", backref='accounts', lazy='dynamic')
-    users = relationship("Users",
+    applications = relationship("Applications", cascade="all,delete")
+    users = relationship("Users", cascade="all,delete",
                          secondary=account_user_association_table)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
