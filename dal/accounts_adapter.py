@@ -7,7 +7,6 @@ from models.applications import Applications
 
 
 class AccountsAdapter(BaseAdapter):
-
     def __init__(self):
         BaseAdapter.__init__(self)
 
@@ -66,7 +65,6 @@ class AccountsAdapter(BaseAdapter):
         """
         logger.warn('Hard delete on Accounts Table not implemented')
 
-
     @staticmethod
     def read(query=None):
         """
@@ -104,8 +102,21 @@ class AccountsAdapter(BaseAdapter):
         :param application:
         :return:
         """
-        assert  isinstance(application, Applications)
+        assert isinstance(application, Applications)
         account = db.query(Accounts). \
             filter_by(**query).one()
         account.applications.append(application)
         db.commit()
+
+    @staticmethod
+    def read_accounts_by_guids(guid_list=None):
+        """
+        Reading the records from a table
+
+        :param query:
+        :return:
+        """
+        accounts = db.query(Accounts) \
+            .filter(Accounts.account_guid.in_(guid_list)).all()
+        assert isinstance(accounts, list)
+        return accounts

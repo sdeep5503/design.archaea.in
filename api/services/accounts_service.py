@@ -2,6 +2,8 @@ from models.users import Users
 from dal.user_adapter import UserAdapter
 from dal.accounts_adapter import AccountsAdapter
 from api.common_helper.common_utils import CommonHelper
+from api.common_helper.common_validations import CommonValidator
+from api.services.account_user_service import AccountUserService
 
 
 class AccountsService:
@@ -42,30 +44,30 @@ class AccountsService:
                 is_enterprise=is_enterprise,
                 is_deleted=False,
                 owner=user)
-            # TODO make this user owner but using AccountUserService
+            AccountUserService.change_user_permission_on_account(user_guid=user.user_guid,
+                                                                 account_guid=new_account_guid)
         else:
             raise Exception('[Services] User cannot create multiple accounts. '
                             'Please add yourself to any other account if needed')
         return new_account_guid
 
     @staticmethod
-    def deactivate_account(account_guid=None):
-        if account_guid or len(account_guid) == 0:
-            raise Exception('[Services] Account GUID should contain atleast one character')
-        AccountsAdapter.update({
-            'account_guid': account_guid
-        },{
-            'is_active': False
-        })
+    def get_accounts_by_user(user_guid=None):
+        CommonValidator.validate_user_guid(user_guid=user_guid)
 
-class AccountUserService:
 
-    def __init__(self):
-        pass
 
     @staticmethod
-    def account_user_permission(account_guid=None,
-                                user_guid=None,
-                                permission=None):
-        pass
+    def deactivate_account(account_guid=None):
+        """
+        This method deactivates an account by fliping is active flag
 
+        :param account_guid:
+        :return:
+        """
+        CommonValidator.validate_account_guid(account_guid)
+        AccountsAdapter.update({
+            'account_guid': account_guid
+        }, {
+            'is_active': False
+        })

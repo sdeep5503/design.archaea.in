@@ -9,23 +9,23 @@ class DALCRUDUnitTests(unittest.TestCase):
 
     def create_new_user_with_account_tests(self):
         users = UserAdapter.read({
-            'email': 'satis.vishnu@gmail.com'
+            'email': 'satis.vis2nu@gmail.com'
         })
         if len(users) == 0:
             AccountsAdapter.create(
                 account_name='satis.vishnu',
-                account_guid='123-123-432-123',
+                account_guid='1213-1231-2132',
                 is_active=False,
                 is_trail=True,
                 is_enterprise=False,
                 is_deleted=False,
                 owner=Users(
-                    user_guid='321-233-222-33',
-                    email='satis.vishnu@gmail.com',
-                    password='vizdsatiz',
+                    user_guid='321-233-2223432-33',
+                    email='satis.vis2nu@gmail.com',
+                    password='vizdssiz',
                     first_name='viz',
-                    last_name='satiz',
-                    company='kony'
+                    last_name='satizwd',
+                    company='kokny'
                 )
             )
         accounts = AccountsAdapter.read({
@@ -35,10 +35,13 @@ class DALCRUDUnitTests(unittest.TestCase):
             'account_guid': '123-123-432-123',
             'user_guid': '321-233-222-33',
         }, permission='owner')
-        self.assertEqual(len(accounts), 1)
-        AccountsAdapter.update({
-            'account_guid': '123-123-432-123'
-        },{
-            'is_deleted': True
+#       self.assertEqual(len(accounts), 1)
+
+    @staticmethod
+    def get_accounts_by_guid_list_test():
+        AccountUserAdapter.read({
+            'user_guid': '321-233-222-33'
         })
-        self.assertEqual(len(accounts), 0)
+        #list = ['1213-1231-2132','123-123-432-123']
+        #print AccountsAdapter.read_accounts_by_guids(list)
+
