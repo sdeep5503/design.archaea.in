@@ -24,7 +24,13 @@ class AccountUserAdapter(BaseAdapter):
         engine.execute(sql_query)
 
     @staticmethod
-    def read(query=None):
-        sql_query =  account_user_association_table.select().where(
-            account_user_association_table.c.user_guid == query['user_guid'])
+    def read(user_guid=None):
+        """
+        This methods returns all the records with the given guid
+
+        :param user_guid:
+        :return:
+        """
+        sql_query = account_user_association_table.select().where(
+            account_user_association_table.c.user_guid == user_guid)
         print engine.execute(sql_query).fetchall()

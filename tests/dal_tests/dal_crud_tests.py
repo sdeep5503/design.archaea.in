@@ -1,5 +1,6 @@
 import unittest
 from models.users import Users
+from database import Base, engine
 from dal.user_adapter import UserAdapter
 from dal.accounts_adapter import AccountsAdapter
 from dal.account_user_adapter import AccountUserAdapter
@@ -7,9 +8,13 @@ from dal.account_user_adapter import AccountUserAdapter
 
 class DALCRUDUnitTests(unittest.TestCase):
 
+    def clear_database(self):
+        for tbl in reversed(Base.metadata.sorted_tables):
+            engine.execute(tbl.delete())
+
     def create_new_user_with_account_tests(self):
         users = UserAdapter.read({
-            'email': 'satis.vis2nu@gmail.com'
+            'email': 'vishnu.satis@kony.com'
         })
         if len(users) == 0:
             AccountsAdapter.create(
