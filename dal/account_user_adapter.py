@@ -1,6 +1,6 @@
 from database import engine
 from dal.base_adapter import BaseAdapter
-from models.accounts import account_user_association_table
+from models.accounts import account_user_association_table, Accounts
 
 
 class AccountUserAdapter(BaseAdapter):
@@ -26,7 +26,7 @@ class AccountUserAdapter(BaseAdapter):
     @staticmethod
     def read(user_guid=None):
         """
-        This methods returns all the records with the given guid
+        This methods returns all the records with the given user_guid
 
         :param user_guid:
         :return:

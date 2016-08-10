@@ -3,7 +3,7 @@ from database import db
 from models.users import Users
 from models.accounts import Accounts
 from dal.base_adapter import BaseAdapter
-from models.applications import Applications
+from models.bots import Bots
 
 
 class AccountsAdapter(BaseAdapter):
@@ -42,17 +42,17 @@ class AccountsAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def update(query=None, new_user=None):
+    def update(query=None, updated_value=None):
         """
         This method update the account
 
         :param query:
-        :param new_user:
+        :param updated_value:
         :return:
         """
         db.query(Accounts) \
             .filter_by(**query) \
-            .update(new_user)
+            .update(updated_value)
         db.commit()
 
     @staticmethod
@@ -94,22 +94,22 @@ class AccountsAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def add_application(query, application):
+    def add_bot(query, bot):
         """
         Adding applications to accounts
 
         :param query:
-        :param application:
+        :param bot:
         :return:
         """
-        assert isinstance(application, Applications)
+        assert isinstance(bot, Bots)
         account = db.query(Accounts). \
             filter_by(**query).one()
-        account.applications.append(application)
+        account.bots.append(bot)
         db.commit()
 
     @staticmethod
-    def read_accounts_by_guids(guid_list=None):
+    def read_accounts_by_guid_list(guid_list=None):
         """
         Reading the records from a table
 

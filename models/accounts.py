@@ -20,8 +20,8 @@ class Accounts(Base):
     is_trail = Column(Boolean, nullable=False)
     is_enterprise = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)
-    applications = relationship("Applications", cascade="all,delete")
-    users = relationship("Users", cascade="all,delete",
+    bots = relationship('Bots', cascade='all,delete')
+    users = relationship('Users', cascade='all,delete',
                          secondary=account_user_association_table)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)

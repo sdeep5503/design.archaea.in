@@ -1,6 +1,6 @@
 from dal.account_user_adapter import AccountUserAdapter
-from api.common_helper.common_constants import AccountPermissions
 from api.common_helper.common_validations import CommonValidator
+from api.common_helper.common_constants import AccountPermissions
 
 
 class AccountUserService:
@@ -29,4 +29,13 @@ class AccountUserService:
 
     @staticmethod
     def get_all_accounts_for_given_user(user_guid=None):
+        """
+        This method returns the list of account guids for a given user guid
+
+        :param user_guid:
+        :return:
+        """
         CommonValidator.validate_user_guid(user_guid)
+        list_of_accounts = AccountUserAdapter.read(user_guid=user_guid)
+        return list_of_accounts
+

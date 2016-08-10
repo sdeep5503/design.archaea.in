@@ -1,9 +1,11 @@
 from models.users import Users
 from dal.user_adapter import UserAdapter
 from dal.accounts_adapter import AccountsAdapter
+from dal.account_user_adapter import AccountUserAdapter
 from api.common_helper.common_utils import CommonHelper
 from api.common_helper.common_validations import CommonValidator
 from api.services.account_user_service import AccountUserService
+from api.common_helper.common_constants import AccountPermissions
 
 
 class AccountsService:
@@ -45,17 +47,29 @@ class AccountsService:
                 is_deleted=False,
                 owner=user)
             AccountUserService.change_user_permission_on_account(user_guid=user.user_guid,
-                                                                 account_guid=new_account_guid)
+                                                                 account_guid=new_account_guid,
+                                                                 permission=AccountPermissions.OWNER)
         else:
             raise Exception('[Services] User cannot create multiple accounts. '
                             'Please add yourself to any other account if needed')
         return new_account_guid
 
     @staticmethod
-    def get_accounts_by_user(user_guid=None):
-        CommonValidator.validate_user_guid(user_guid=user_guid)
+    def update_account(query=None,
+                       update_values=None):
+        """
+        This function updates an account.
 
-
+        :param query:
+        :param update_values:
+        :return:
+        """
+        if not query:
+            raise Exception('[Services] Update Query should not be empty')
+        if not update_values:
+            raise Exception('[Services] Update values should not be empty')
+        AccountsAdapter.update(query=query,
+                               updated_value=update_values)
 
     @staticmethod
     def deactivate_account(account_guid=None):
@@ -66,8 +80,14 @@ class AccountsService:
         :return:
         """
         CommonValidator.validate_account_guid(account_guid)
-        AccountsAdapter.update({
+        AccountsAdapter.update(query={
             'account_guid': account_guid
-        }, {
+        }, updated_value={
             'is_active': False
         })
+
+    @staticmethod
+    def get_all_accounts_by_user(user_guid=None):
+        CommonValidator.validate_user_guid(user_guid=user_guid)
+        list_of_accounts = AccountUserAdapter.read(user_guid)
+        return list_of_accounts
