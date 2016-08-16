@@ -1,7 +1,7 @@
 from database import db
 
 
-class DataBaseAdapter:
+class BaseAdapter:
 
     def __init__(self):
         pass
@@ -23,3 +23,19 @@ class DataBaseAdapter:
         :return:
         """
         db.remove()
+
+    @staticmethod
+    def create():
+        pass
+
+    @staticmethod
+    def update():
+        pass
+
+    @staticmethod
+    def delete():
+        pass
+
+    @staticmethod
+    def read():
+        pass

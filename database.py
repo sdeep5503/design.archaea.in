@@ -22,8 +22,7 @@ def init_db():
     import models.dump
     import models.users
     import models.accounts
-    import models.applications
-    import models.linear_regression
+    import models.bots
 
     Base.metadata.create_all(bind=engine)
 

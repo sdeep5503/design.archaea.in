@@ -10,7 +10,7 @@ class Users(Base):
     __tablename__ = 'users'
 
     user_id = Column(Integer, primary_key=True)
-    user_guid = Column(String(120), unique=True)
+    user_guid = Column(String(120), unique=True, primary_key=True)
     email = Column(String(120), unique=True, nullable=False)
     password = Column(String(120), nullable=False)
     first_name = Column(String(20))
@@ -20,8 +20,22 @@ class Users(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, user_guid=None, email=None,
-                 password = None, first_name= None, last_name=None, company=None):
+    def __init__(self, user_guid=None,
+                 email=None,
+                 password = None,
+                 first_name= None,
+                 last_name=None,
+                 company=None):
+        """
+        Create User
+
+        :param user_guid:
+        :param email:
+        :param password:
+        :param first_name:
+        :param last_name:
+        :param company:
+        """
         self.user_guid = user_guid
         self.email = email
         self.password = password
