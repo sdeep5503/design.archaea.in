@@ -28,7 +28,7 @@ class AccountsService:
         :return:
         """
         if not isinstance(user, Users):
-            raise Exception('[Services] User not found while creating account')
+            raise Exception('[Services] User<Owner> not found while creating account')
         if not account_name or len(account_name) == 0:
             raise Exception('[Services] Account Name should contain atleast one character')
         if is_trail == is_enterprise:
@@ -51,8 +51,20 @@ class AccountsService:
                                                                  permission=AccountPermissions.OWNER)
         else:
             raise Exception('[Services] User cannot create multiple accounts. '
-                            'Please add yourself to any other account if needed')
+                            'Please add yourself to any other account if required')
         return new_account_guid
+
+    @staticmethod
+    def get_all_accounts_by_user(user_guid=None):
+        """
+        This method returns all the accounts of a given user_guid
+
+        :param user_guid:
+        :return:
+        """
+        CommonValidator.validate_user_guid(user_guid=user_guid)
+        list_of_accounts = AccountUserAdapter.read(user_guid)
+        return list_of_accounts
 
     @staticmethod
     def update_account(query=None,
@@ -72,6 +84,22 @@ class AccountsService:
                                updated_value=update_values)
 
     @staticmethod
+    def delete_account(account_guid=None):
+        """
+        Soft deleting account
+
+        :param account_guid:
+        :return:
+        """
+        if not account_guid:
+            CommonValidator.validate_account_guid(account_guid)
+            AccountsAdapter.update(query={
+                'account_guid': account_guid
+            }, updated_value={
+                'is_deleted': True
+            })
+
+    @staticmethod
     def deactivate_account(account_guid=None):
         """
         This method deactivates an account by fliping is active flag
@@ -85,9 +113,3 @@ class AccountsService:
         }, updated_value={
             'is_active': False
         })
-
-    @staticmethod
-    def get_all_accounts_by_user(user_guid=None):
-        CommonValidator.validate_user_guid(user_guid=user_guid)
-        list_of_accounts = AccountUserAdapter.read(user_guid)
-        return list_of_accounts

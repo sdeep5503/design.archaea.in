@@ -7,17 +7,19 @@ from models.bots import Bots
 
 
 class AccountsAdapter(BaseAdapter):
+
     def __init__(self):
         BaseAdapter.__init__(self)
 
     @staticmethod
     def create(account_name=None,
                account_guid=None,
-               is_active=None,
-               is_trail=None,
-               is_enterprise=None,
-               is_deleted=None,
-               owner=None):
+               is_active=True,
+               is_trail=True,
+               is_enterprise=False,
+               is_deleted=False,
+               owner=None,
+               is_testing=False):
         """
         Create a Account
 
@@ -38,7 +40,9 @@ class AccountsAdapter(BaseAdapter):
                            is_deleted=is_deleted)
         if owner:
             account.users.append(owner)
-        db.add(account)
+        sql_query = db.add(account)
+        if is_testing:
+            return sql_query
         db.commit()
 
     @staticmethod
@@ -63,7 +67,7 @@ class AccountsAdapter(BaseAdapter):
         :param query:
         :return:
         """
-        logger.warn('Hard delete on Accounts Table not implemented')
+        raise Exception('Hard delete on Accounts Table not implemented')
 
     @staticmethod
     def read(query=None):

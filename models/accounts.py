@@ -3,14 +3,16 @@ from database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boolean
 
-account_user_association_table = Table('account_user', Base.metadata,
-                                       Column('account_guid', String(120), ForeignKey('accounts.account_guid')),
-                                       Column('user_guid', String(120), ForeignKey('users.user_guid')),
+account_user_association_table = Table('accounts_users', Base.metadata,
+                                       Column('account_guid', String(120),
+                                              ForeignKey('accounts.account_guid', ondelete='CASCADE',
+                                                         onupdate='CASCADE')),
+                                       Column('user_guid', String(120),
+                                              ForeignKey('users.user_guid', ondelete='CASCADE', onupdate='CASCADE')),
                                        Column('permission', String(20), default='member'))
 
 
 class Accounts(Base):
-
     __tablename__ = 'accounts'
 
     account_id = Column(Integer, primary_key=True, nullable=False)
@@ -20,8 +22,8 @@ class Accounts(Base):
     is_trail = Column(Boolean, nullable=False)
     is_enterprise = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)
-    bots = relationship('Bots', cascade='all,delete')
-    users = relationship('Users', cascade='all,delete',
+    bots = relationship('Bots', cascade='all, save-update, delete')
+    users = relationship('Users', cascade='all, save-update, delete',
                          secondary=account_user_association_table)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)

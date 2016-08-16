@@ -17,7 +17,7 @@ class UserAdapter(BaseAdapter):
                company=None
                ):
         """
-        This method does the database call to create a user
+        This method creates a user
 
         :param user_guid:
         :param email:

@@ -1,3 +1,4 @@
+import uuid
 
 class CommonHelper:
 
@@ -6,4 +7,4 @@ class CommonHelper:
 
     @staticmethod
     def generate_guid():
-        pass
+        return uuid.uuid1()
