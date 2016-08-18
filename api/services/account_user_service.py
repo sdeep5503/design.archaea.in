@@ -9,33 +9,30 @@ class AccountUserService:
         pass
 
     @staticmethod
-    def change_user_permission_on_account(account_guid=None,
-                                          user_guid=None,
+    def change_user_permission_on_account(account_id=None,
+                                          user_id=None,
                                           permission=AccountPermissions.MEMBER):
         """
         This method is used for changing the user permission on a account
 
-        :param account_guid:
-        :param user_guid:
+        :param account_id:
+        :param user_id:
         :param permission:
         :return:
         """
-        CommonValidator.validate_account_guid(account_guid)
-        CommonValidator.validate_user_guid(user_guid)
         AccountUserAdapter.update({
-            'account_guid': account_guid,
-            'user_guid': user_guid,
+            'account_id': account_id,
+            'user_id': user_id,
         }, permission=permission)
 
     @staticmethod
-    def get_all_accounts_for_given_user(user_guid=None):
+    def get_all_accounts_for_given_user(user_id=None):
         """
         This method returns the list of account guids for a given user guid
 
-        :param user_guid:
+        :param user_id:
         :return:
         """
-        CommonValidator.validate_user_guid(user_guid)
-        list_of_accounts = AccountUserAdapter.read(user_guid=user_guid)
+        list_of_accounts = AccountUserAdapter.read(user_id=user_id)
         return list_of_accounts
 

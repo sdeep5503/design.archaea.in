@@ -18,19 +18,19 @@ class AccountUserAdapter(BaseAdapter):
         :return:
         """
         sql_query = account_user_association_table.update().where(
-            account_user_association_table.c.account_guid == query['account_guid']).where(
-            account_user_association_table.c.user_guid == query['user_guid'])\
+            account_user_association_table.c.account_id == query['account_id']).where(
+            account_user_association_table.c.user_id == query['user_id'])\
             .values(permission=permission)
         engine.execute(sql_query)
 
     @staticmethod
-    def read(user_guid=None):
+    def read(user_id=None):
         """
         This methods returns all the records with the given user_guid
 
-        :param user_guid:
+        :param user_id:
         :return:
         """
         sql_query = account_user_association_table.select().where(
-            account_user_association_table.c.user_guid == user_guid)
+            account_user_association_table.c.user_id == user_id)
         print engine.execute(sql_query).fetchall()

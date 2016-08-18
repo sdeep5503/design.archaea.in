@@ -18,8 +18,7 @@ class AccountsAdapter(BaseAdapter):
                is_trail=True,
                is_enterprise=False,
                is_deleted=False,
-               owner=None,
-               is_testing=False):
+               owner=None):
         """
         Create a Account
 
@@ -40,10 +39,9 @@ class AccountsAdapter(BaseAdapter):
                            is_deleted=is_deleted)
         if owner:
             account.users.append(owner)
-        sql_query = db.add(account)
-        if is_testing:
-            return sql_query
+        db.add(account)
         db.commit()
+        return account.account_id
 
     @staticmethod
     def update(query=None, updated_value=None):
@@ -113,7 +111,7 @@ class AccountsAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def read_accounts_by_guid_list(guid_list=None):
+    def read_accounts_by_id_list(id_list=None):
         """
         Reading the records from a table
 
@@ -121,6 +119,6 @@ class AccountsAdapter(BaseAdapter):
         :return:
         """
         accounts = db.query(Accounts) \
-            .filter(Accounts.account_guid.in_(guid_list)).all()
+            .filter(Accounts.account_id.in_(id_list)).all()
         assert isinstance(accounts, list)
         return accounts

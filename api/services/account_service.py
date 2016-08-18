@@ -38,7 +38,7 @@ class AccountsService:
         })
         new_account_guid = CommonHelper.generate_guid()
         if len(existing_user_with_same_email) == 0:
-            AccountsAdapter.create(
+            account_id = AccountsAdapter.create(
                 account_name=account_name,
                 account_guid=new_account_guid,
                 is_active=True,
@@ -46,8 +46,8 @@ class AccountsService:
                 is_enterprise=is_enterprise,
                 is_deleted=False,
                 owner=user)
-            AccountUserService.change_user_permission_on_account(user_guid=user.user_guid,
-                                                                 account_guid=new_account_guid,
+            AccountUserService.change_user_permission_on_account(user_id=user.user_id,
+                                                                 account_id=account_id,
                                                                  permission=AccountPermissions.OWNER)
         else:
             raise Exception('[Services] User cannot create multiple accounts. '
@@ -55,15 +55,14 @@ class AccountsService:
         return new_account_guid
 
     @staticmethod
-    def get_all_accounts_by_user(user_guid=None):
+    def get_all_accounts_by_user(user_id=None):
         """
         This method returns all the accounts of a given user_guid
 
-        :param user_guid:
+        :param user_id:
         :return:
         """
-        CommonValidator.validate_user_guid(user_guid=user_guid)
-        list_of_accounts = AccountUserAdapter.read(user_guid)
+        list_of_accounts = AccountUserAdapter.read(user_id=user_id)
         return list_of_accounts
 
     @staticmethod

@@ -4,11 +4,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boolean
 
 account_user_association_table = Table('accounts_users', Base.metadata,
-                                       Column('account_guid', String(120),
-                                              ForeignKey('accounts.account_guid', ondelete='CASCADE',
+                                       Column('account_id', Integer,
+                                              ForeignKey('accounts.account_id', ondelete='CASCADE',
                                                          onupdate='CASCADE')),
-                                       Column('user_guid', String(120),
-                                              ForeignKey('users.user_guid', ondelete='CASCADE', onupdate='CASCADE')),
+                                       Column('user_id', Integer,
+                                              ForeignKey('users.user_id', ondelete='CASCADE', onupdate='CASCADE')),
                                        Column('permission', String(20), default='member'))
 
 

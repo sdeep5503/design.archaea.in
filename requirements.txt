@@ -1,2 +1,3 @@
+validate_email
 sqlalchemy
 flask
