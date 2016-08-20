@@ -14,36 +14,31 @@ class AccountsAdapter(BaseAdapter):
     @staticmethod
     def create(account_name=None,
                account_guid=None,
+               account_type=None,
                is_active=True,
-               is_trail=True,
-               is_enterprise=False,
                is_deleted=False,
-               owner=None,
-               is_testing=False):
+               owner=None):
         """
         Create a Account
 
+        :param account_type:
         :param owner:
         :param account_name:
         :param account_guid:
         :param is_active:
-        :param is_trail:
-        :param is_enterprise:
         :param is_deleted:
         :return:
         """
         account = Accounts(account_name=account_name,
                            account_guid=account_guid,
+                           account_type=account_type,
                            is_active=is_active,
-                           is_trail=is_trail,
-                           is_enterprise=is_enterprise,
                            is_deleted=is_deleted)
         if owner:
             account.users.append(owner)
-        sql_query = db.add(account)
-        if is_testing:
-            return sql_query
+        db.add(account)
         db.commit()
+        return account.account_id
 
     @staticmethod
     def update(query=None, updated_value=None):
@@ -113,7 +108,7 @@ class AccountsAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def read_accounts_by_guid_list(guid_list=None):
+    def read_accounts_by_id_list(id_list=None):
         """
         Reading the records from a table
 
@@ -121,6 +116,6 @@ class AccountsAdapter(BaseAdapter):
         :return:
         """
         accounts = db.query(Accounts) \
-            .filter(Accounts.account_guid.in_(guid_list)).all()
+            .filter(Accounts.account_id.in_(id_list)).all()
         assert isinstance(accounts, list)
         return accounts

@@ -1,16 +1,26 @@
-from models.users import Users
 from api.services.account_service import AccountsService
-from tests.service_tests.test_data import TEST_USER
+from api.common_helper.common_constants import AccountTypes
 
 
-owner = Users(user_guid=TEST_USER['user_guid'],
-              email=TEST_USER['email'],
-              password=TEST_USER['password'],
-              first_name=TEST_USER['first_name'],
-              last_name=TEST_USER['last_name'],
-              company=TEST_USER['company']
-              )
-AccountsService.create_account(user=owner,
-                               account_name='Test Account',
-                               is_trail=1,
-                               is_enterprise=0)
+class UserService:
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def create_new_enterprise_user(user=None,
+                                   account_name=None):
+        """
+        Creating a new user which will add this person to marketplace/common account
+
+        :param user:
+        :param account_name:
+        :return:
+        """
+        if not account_name:
+            raise Exception('[Services] Please enter valid first name')
+        if not user:
+            raise Exception('[Services] Please enter valid last name')
+        AccountsService.create_account(user=user,
+                                       account_name=account_name,
+                                       account_type=AccountTypes.ENTERPRISE)

@@ -16,38 +16,31 @@ class AccountsService:
     @staticmethod
     def create_account(user=None,
                        account_name=None,
-                       is_trail=1,
-                       is_enterprise=0):
+                       account_type=None):
         """
         This method creates a account and corresponding user and makes the user owner
 
+        :param account_type:
         :param user:
         :param account_name:
-        :param is_trail:
-        :param is_enterprise:
         :return:
         """
         if not isinstance(user, Users):
             raise Exception('[Services] User<Owner> not found while creating account')
         if not account_name or len(account_name) == 0:
             raise Exception('[Services] Account Name should contain atleast one character')
-        if is_trail == is_enterprise:
-            raise Exception('[Services] Account should be either trail or enterprise, cannot be both')
         existing_user_with_same_email = UserAdapter.read({
             'email': user.email
         })
         new_account_guid = CommonHelper.generate_guid()
         if len(existing_user_with_same_email) == 0:
-            AccountsAdapter.create(
+            account_id = AccountsAdapter.create(
                 account_name=account_name,
                 account_guid=new_account_guid,
-                is_active=True,
-                is_trail=is_trail,
-                is_enterprise=is_enterprise,
-                is_deleted=False,
+                account_type=account_type,
                 owner=user)
-            AccountUserService.change_user_permission_on_account(user_guid=user.user_guid,
-                                                                 account_guid=new_account_guid,
+            AccountUserService.change_user_permission_on_account(user_id=user.user_id,
+                                                                 account_id=account_id,
                                                                  permission=AccountPermissions.OWNER)
         else:
             raise Exception('[Services] User cannot create multiple accounts. '
@@ -55,15 +48,14 @@ class AccountsService:
         return new_account_guid
 
     @staticmethod
-    def get_all_accounts_by_user(user_guid=None):
+    def get_all_accounts_by_user(user_id=None):
         """
         This method returns all the accounts of a given user_guid
 
-        :param user_guid:
+        :param user_id:
         :return:
         """
-        CommonValidator.validate_user_guid(user_guid=user_guid)
-        list_of_accounts = AccountUserAdapter.read(user_guid)
+        list_of_accounts = AccountUserAdapter.read(user_id=user_id)
         return list_of_accounts
 
     @staticmethod
@@ -84,32 +76,46 @@ class AccountsService:
                                updated_value=update_values)
 
     @staticmethod
-    def delete_account(account_guid=None):
+    def delete_account(account_id=None):
         """
         Soft deleting account
 
-        :param account_guid:
+        :param account_id:
         :return:
         """
-        if not account_guid:
-            CommonValidator.validate_account_guid(account_guid)
+        if not account_id:
+            CommonValidator.validate_account_guid(account_id)
             AccountsAdapter.update(query={
-                'account_guid': account_guid
+                'account_id': account_id
             }, updated_value={
                 'is_deleted': True
             })
 
     @staticmethod
-    def deactivate_account(account_guid=None):
+    def deactivate_account(account_id=None):
         """
         This method deactivates an account by fliping is active flag
 
         :param account_guid:
         :return:
         """
-        CommonValidator.validate_account_guid(account_guid)
+        CommonValidator.validate_account_guid(account_id)
         AccountsAdapter.update(query={
-            'account_guid': account_guid
+            'account_id': account_id
         }, updated_value={
             'is_active': False
         })
+
+    @staticmethod
+    def add_user_to_account(account_id=None, user=None):
+        """
+        This method adds users to account
+
+        :param account_id:
+        :param user:
+        :return:
+        """
+        AccountsAdapter.add_user({
+            'account_id': account_id
+        }, user=user)
+
