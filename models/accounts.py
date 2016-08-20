@@ -18,9 +18,8 @@ class Accounts(Base):
     account_id = Column(Integer, primary_key=True, nullable=False)
     account_name = Column(String(50), nullable=False)
     account_guid = Column(String(120), unique=True, nullable=False)
+    account_type = Column(String(50), nullable=False)
     is_active = Column(Boolean, nullable=False)
-    is_trail = Column(Boolean, nullable=False)
-    is_enterprise = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)
     bots = relationship('Bots', cascade='all, save-update, delete')
     users = relationship('Users', cascade='all, save-update, delete',
@@ -28,8 +27,8 @@ class Accounts(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, account_name=None, account_guid=None, is_active=True,
-                 is_trail=True, is_enterprise=False, is_deleted=False):
+    def __init__(self, account_name=None, account_guid=None, account_type=None,
+                 is_active=True, is_deleted=False):
         """
 
         :param account_name:
@@ -42,9 +41,8 @@ class Accounts(Base):
         """
         self.account_name = account_name
         self.account_guid = account_guid
+        self.account_type = account_type
         self.is_active = is_active
-        self.is_trail = is_trail
-        self.is_enterprise = is_enterprise
         self.is_deleted = is_deleted
 
     def __repr__(self):

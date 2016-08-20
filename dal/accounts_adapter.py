@@ -14,28 +14,25 @@ class AccountsAdapter(BaseAdapter):
     @staticmethod
     def create(account_name=None,
                account_guid=None,
+               account_type=None,
                is_active=True,
-               is_trail=True,
-               is_enterprise=False,
                is_deleted=False,
                owner=None):
         """
         Create a Account
 
+        :param account_type:
         :param owner:
         :param account_name:
         :param account_guid:
         :param is_active:
-        :param is_trail:
-        :param is_enterprise:
         :param is_deleted:
         :return:
         """
         account = Accounts(account_name=account_name,
                            account_guid=account_guid,
+                           account_type=account_type,
                            is_active=is_active,
-                           is_trail=is_trail,
-                           is_enterprise=is_enterprise,
                            is_deleted=is_deleted)
         if owner:
             account.users.append(owner)
