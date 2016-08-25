@@ -3,6 +3,7 @@ from dal.user_adapter import UserAdapter
 from dal.accounts_adapter import AccountsAdapter
 from dal.account_user_adapter import AccountUserAdapter
 from api.common_helper.common_utils import CommonHelper
+from api.common_helper.common_constants import AccountTypes
 from api.common_helper.common_validations import CommonValidator
 from api.services.account_user_service import AccountUserService
 from api.common_helper.common_constants import AccountPermissions
@@ -107,15 +108,21 @@ class AccountsService:
         })
 
     @staticmethod
-    def add_user_to_account(account_id=None, user=None):
+    def add_user_to_account(account_guid=None, user=None):
         """
         This method adds users to account
 
-        :param account_id:
+        :param account_guid:
         :param user:
         :return:
         """
         AccountsAdapter.add_user({
-            'account_id': account_id
+            'account_id': account_guid
+        }, user=user)
+
+    @staticmethod
+    def add_user_to_niche(nich_type=AccountTypes.COMMON_NICHE, user=None):
+        AccountsAdapter.add_user({
+            'account_type': nich_type
         }, user=user)
 

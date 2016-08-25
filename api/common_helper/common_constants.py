@@ -9,7 +9,7 @@ class AccountPermissions:
 
 class AccountTypes:
     # Types of accounts
-    NICHE = 'niche'
+    COMMON_NICHE = 'common_niche'
     ENTERPRISE = 'enterprise'
     MARKETPLACE = 'marketplace'
 
@@ -31,4 +31,4 @@ class ApiRequestConstants:
         pass
     # Request Keys
     X_REQUEST_ID = 'X-Request-Id'
-
+    X_ARCHAEA_AUTHORIZATION = 'X-Archaea-Authorization'

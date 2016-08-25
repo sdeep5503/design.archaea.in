@@ -29,7 +29,7 @@ class TokenService:
         return token.decode('unicode_escape')
 
     @staticmethod
-    def parse_token(token):
+    def decode_jwt_token(token):
         return jwt.decode(token, 'Secret Key', algorithms='HS256')
 
-print TokenService.parse_token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWRlbnRpdHkiOiJ2aXNocCIsIl9leHAiOiJcIjIwMTYtMDgtMjRUMjA6MDk6MjIuMDQ5NjMxXCIiLCJfaWRwIjoiZGVzaWduLmFyY2hhZWEuaW4iLCJfaWF0IjoiXCIyMDE2LTA4LTI1VDAxOjM5OjIxLjA0OTYwNFwiIn0.3VsotJH_Lv5b11MQLq3z6KDHUOdFHTmMHrOurT_NnqM')
+print TokenService.decode_jwt_token('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWRlbnRpdHkiOiJ2aXNocCIsIl9leHAiOiJcIjIwMTYtMDgtMjRUMjA6MDk6MjIuMDQ5NjMxXCIiLCJfaWRwIjoiZGVzaWduLmFyY2hhZWEuaW4iLCJfaWF0IjoiXCIyMDE2LTA4LTI1VDAxOjM5OjIxLjA0OTYwNFwiIn0.3VsotJH_Lv5b11MQLq3z6KDHUOdFHTmMHrOurT_NnqM')
