@@ -1,5 +1,4 @@
 class AccountPermissions:
-
     # permission names
     OWNER = 'owner'
     MEMBER = 'member'
@@ -9,11 +8,27 @@ class AccountPermissions:
 
 
 class AccountTypes:
-
     # Types of accounts
-    NICHE = 'niche'
+    COMMON_NICHE = 'common_niche'
     ENTERPRISE = 'enterprise'
     MARKETPLACE = 'marketplace'
 
     def __init__(self):
         pass
+
+
+class ApiVersions:
+
+    def __init__(self):
+        pass
+    # APi Versions
+    API_VERSION_V1 = '/api/v1_0'
+
+
+class ApiRequestConstants:
+
+    def __init__(self):
+        pass
+    # Request Keys
+    X_REQUEST_ID = 'X-Request-Id'
+    X_ARCHAEA_AUTHORIZATION = 'X-Archaea-Authorization'
