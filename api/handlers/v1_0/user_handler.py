@@ -45,8 +45,8 @@ def create_niche_user():
             is_system=False,
             company=company
         ))
-    except:
-        HttpResponse.internal_server_error('Exception while adding user to account')
+    except Exception as e:
+        HttpResponse.internal_server_error(e.message)
     return HttpResponse.accepted('User added to common niche account successfully')
 
 

@@ -30,22 +30,15 @@ class AccountsService:
             raise Exception('[Services] User<Owner> not found while creating account')
         if not account_name or len(account_name) == 0:
             raise Exception('[Services] Account Name should contain atleast one character')
-        existing_user_with_same_email = UserAdapter.read({
-            'email': user.email
-        })
         new_account_guid = CommonHelper.generate_guid()
-        if len(existing_user_with_same_email) == 0:
-            account_id = AccountsAdapter.create(
-                account_name=account_name,
-                account_guid=new_account_guid,
-                account_type=account_type,
-                owner=user)
-            AccountUserService.change_user_permission_on_account(user_id=user.user_id,
-                                                                 account_id=account_id,
-                                                                 permission=AccountPermissions.OWNER)
-        else:
-            raise Exception('[Services] User cannot create multiple accounts. '
-                            'Please add yourself to any other account if required')
+        account_id = AccountsAdapter.create(
+            account_name=account_name,
+            account_guid=new_account_guid,
+            account_type=account_type,
+            owner=user)
+        AccountUserService.change_user_permission_on_account(user_id=user.user_id,
+                                                             account_id=account_id,
+                                                             permission=AccountPermissions.OWNER)
         return new_account_guid
 
     @staticmethod

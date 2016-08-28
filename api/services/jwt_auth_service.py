@@ -16,7 +16,7 @@ class JWTAuthService:
         def decorated(*args, **kwargs):
             current_user = JWTAuthService.validate_jwt_token_and_get_user(request.headers
                 .get(ApiRequestConstants.X_ARCHAEA_AUTHORIZATION))
-            kwargs['current_user'] = current_user
+            kwargs['current_user'] = current_user[0]
             return f(*args, **kwargs)
 
         return decorated

@@ -25,28 +25,24 @@ def create_account(**kwargs):
 
     :return:
     """
-    account_type = request.type['type']
-    account_name = request.json['name']
-    if not account_type or not account_name:
-        return HttpResponse.bad_request('Incomplete parameters')
-    current_user = kwargs['current_user']
-    if current_user.is_system:
-        try:
-            AccountsService.create_account(current_user,
-                                           account_name=account_name,
-                                           account_type=account_type)
-            return HttpResponse.accepted('Account created successfully')
-        except Exception:
-            return HttpResponse.internal_server_error('Exception while creating account')
-
-    else:
-        if account_type == AccountTypes.ENTERPRISE:
-            try:
+    try:
+        account_type = request.json['type']
+        account_name = request.json['name']
+        if not account_type or not account_name:
+            return HttpResponse.bad_request('Incomplete parameters')
+        current_user = kwargs['current_user']
+        if current_user.is_system:
                 AccountsService.create_account(current_user,
                                                account_name=account_name,
-                                               account_type=AccountTypes.ENTERPRISE)
+                                               account_type=account_type)
                 return HttpResponse.accepted('Account created successfully')
-            except Exception:
-                return HttpResponse.internal_server_error('Exception while creating account')
         else:
-            return HttpResponse.forbidden('You are not allowed to create this account')
+            if account_type == AccountTypes.ENTERPRISE:
+                    AccountsService.create_account(current_user,
+                                                   account_name=account_name,
+                                                   account_type=AccountTypes.ENTERPRISE)
+                    return HttpResponse.accepted('Account created successfully')
+            else:
+                return HttpResponse.forbidden('You are not allowed to create this account')
+    except Exception as e:
+        HttpResponse.internal_server_error(e.message)
