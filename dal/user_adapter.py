@@ -14,6 +14,7 @@ class UserAdapter(BaseAdapter):
                password=None,
                first_name=None,
                last_name=None,
+               is_system=False,
                company=None
                ):
         """
@@ -32,6 +33,7 @@ class UserAdapter(BaseAdapter):
                      password=password,
                      first_name=first_name,
                      last_name=last_name,
+                     is_system=is_system,
                      company=company)
         db.add(user)
         db.commit()

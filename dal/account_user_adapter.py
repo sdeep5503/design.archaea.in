@@ -34,3 +34,7 @@ class AccountUserAdapter(BaseAdapter):
         sql_query = account_user_association_table.select().where(
             account_user_association_table.c.user_id == user_id)
         print engine.execute(sql_query).fetchall()
+
+    def read_by_guid(user_guid=None, account_guid=None):
+        pass
+        

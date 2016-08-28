@@ -1,9 +1,10 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from api.common_helper.common_constants import AccountTypes
 from api.services.jwt_auth_service import JWTAuthService
 from api.common_helper.common_constants import ApiVersions
 from api.services.account_service import AccountsService
 from api.common_helper.common_validations import RequestValidator
+from api.common_helper.http_response import HttpResponse
 
 account_handler = Blueprint(__name__, __name__)
 
@@ -13,6 +14,8 @@ account_handler = Blueprint(__name__, __name__)
 @JWTAuthService.jwt_validation
 def create_account(**kwargs):
     """
+    This API can be used by system user to create Niche account and other users to create enterprise accounts
+
     The payload example:
 
     {
@@ -24,29 +27,26 @@ def create_account(**kwargs):
     """
     account_type = request.type['type']
     account_name = request.json['name']
-    system_user = kwargs['current_user']
-    if system_user.is_system:
-        # TODO validate the account name and the type (should be either of AccountTypes)
-        AccountsService.create_account(system_user,
-                                       account_name=account_name,
-                                       account_type=account_type)
+    if not account_type or not account_name:
+        return HttpResponse.bad_request('Incomplete parameters')
+    current_user = kwargs['current_user']
+    if current_user.is_system:
+        try:
+            AccountsService.create_account(current_user,
+                                           account_name=account_name,
+                                           account_type=account_type)
+            return HttpResponse.accepted('Account created successfully')
+        except Exception:
+            return HttpResponse.internal_server_error('Exception while creating account')
+
     else:
         if account_type == AccountTypes.ENTERPRISE:
-            # TODO enterprise accounts should be trail based
-            AccountsService.create_account(system_user,
-                                           account_name=account_name,
-                                           account_type=AccountTypes.ENTERPRISE)
-            response = jsonify({
-                'message': 'Account created successfully'
-            })
-            response.status_code = 202
-            return response
+            try:
+                AccountsService.create_account(current_user,
+                                               account_name=account_name,
+                                               account_type=AccountTypes.ENTERPRISE)
+                return HttpResponse.accepted('Account created successfully')
+            except Exception:
+                return HttpResponse.internal_server_error('Exception while creating account')
         else:
-            response = jsonify({
-                'message': 'You are not allowed to create this account'
-            })
-            response.status_code = 403
-            return response
-
-def get_accounts():
-    pass
+            return HttpResponse.forbidden('You are not allowed to create this account')
