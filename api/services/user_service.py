@@ -14,7 +14,7 @@ class UserService:
         :param email:
         :return:
         """
-        return UserAdapter.read({
+        return UserAdapter.read_by_user_id({
             'email': email
         })
 
@@ -26,6 +26,6 @@ class UserService:
         :param user_guid:
         :return:
         """
-        return UserAdapter.read({
+        return UserAdapter.read_by_user_id({
             'user_guid': user_guid
         })

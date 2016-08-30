@@ -17,4 +17,4 @@ if __name__ == '__main__':
     app.register_blueprint(auth_handler)
     app.register_blueprint(account_handler)
     app.register_blueprint(user_handler)
-    app.run(debug=True, port=9080)
+    app.run(debug=True, port=9081)

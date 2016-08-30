@@ -42,6 +42,19 @@ class AccountsService:
         return new_account_guid
 
     @staticmethod
+    def get_account_by_guid(user_guid=None):
+        """
+        Gets the account by userid
+
+        :param user_guid:
+        :return:
+        """
+        account = AccountsAdapter.read_by_user_id({
+            'user_guid': user_guid
+        })
+        return account
+
+    @staticmethod
     def get_all_accounts_by_user(user_id=None):
         """
         This method returns all the accounts of a given user_guid
@@ -49,7 +62,7 @@ class AccountsService:
         :param user_id:
         :return:
         """
-        list_of_accounts = AccountUserAdapter.read(user_id=user_id)
+        list_of_accounts = AccountUserAdapter.read_by_user_id(user_id=user_id)
         return list_of_accounts
 
     @staticmethod
@@ -119,3 +132,22 @@ class AccountsService:
             'account_type': nich_type
         }, user=user)
 
+    @staticmethod
+    def get_user_permission_on_account(user=None, account_guid=None):
+        """
+        Returns user permission on account
+
+        :param user:
+        :param account_guid:
+        :return:
+        """
+        accounts = AccountsAdapter.read_by_user_id({
+            'account_guid': account_guid
+        })
+        if not accounts or len(accounts) == 0:
+            raise Exception('[Services] account not found')
+        account_user = AccountUserAdapter.read(user_id=user.user_id,
+                                account_id=accounts[0].account_id)
+        if not account_user or len(account_user) == 0:
+            Exception('[Services] user doesn\'t have permission on account')
+        return account_user[0].permission

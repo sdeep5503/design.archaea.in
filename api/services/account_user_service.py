@@ -33,6 +33,6 @@ class AccountUserService:
         :param user_id:
         :return:
         """
-        list_of_accounts = AccountUserAdapter.read(user_id=user_id)
+        list_of_accounts = AccountUserAdapter.read_by_user_id(user_id=user_id)
         return list_of_accounts
 
