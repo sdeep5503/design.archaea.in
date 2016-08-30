@@ -83,7 +83,7 @@ def get_accounts_by_guid(account_guid, **kwargs):
     try:
         current_user = kwargs['current_user']
         try:
-            AccountsService.get_user_permission_on_account()
+            AccountsService.get_user_permission_on_account(user=current_user, account_guid=account_guid)
         except Exception as e:
             if e.message == '[Services] user doesn\'t have permission on account':
                 return HttpResponse.forbidden(e.message)

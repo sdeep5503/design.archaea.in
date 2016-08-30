@@ -123,11 +123,18 @@ class AccountsService:
         :return:
         """
         AccountsAdapter.add_user({
-            'account_id': account_guid
+            'account_guid': account_guid
         }, user=user)
 
     @staticmethod
     def add_user_to_niche(nich_type=AccountTypes.COMMON_NICHE, user=None):
+        """
+        Add user to Niche
+
+        :param nich_type:
+        :param user:
+        :return:
+        """
         AccountsAdapter.add_user({
             'account_type': nich_type
         }, user=user)

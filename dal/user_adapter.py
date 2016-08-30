@@ -66,7 +66,7 @@ class UserAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def read_by_user_id(query=None):
+    def read(query=None):
         """
         Reading the records from a table
 
