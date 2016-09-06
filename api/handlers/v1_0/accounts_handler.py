@@ -5,6 +5,7 @@ from api.common_helper.common_constants import ApiVersions
 from api.services.account_service import AccountsService
 from api.common_helper.common_validations import RequestValidator
 from api.common_helper.http_response import HttpResponse
+from api.common_helper.transformers import Transformer
 
 account_handler = Blueprint(__name__, __name__)
 
@@ -61,10 +62,10 @@ def get_accounts(**kwargs):
     try:
         current_user = kwargs['current_user']
         if current_user.is_system:
-            HttpResponse.accepted('All accounts should be returned [unimplemented]')
+            return HttpResponse.accepted('All accounts should be returned [unimplemented]')
         else:
             accounts = AccountsService.get_all_accounts_by_user(user_id=current_user.user_id)
-            return HttpResponse.success(accounts)
+            return HttpResponse.success(Transformer.account_list_to_json_array(accounts))
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)
 
@@ -88,11 +89,11 @@ def get_accounts_by_guid(account_guid, **kwargs):
             if e.message == '[Services] user doesn\'t have permission on account':
                 return HttpResponse.forbidden(e.message)
         if current_user.is_system:
-            HttpResponse.accepted('All accounts should be returned [unimplemented]')
+            return HttpResponse.accepted('All accounts should be returned [unimplemented]')
         else:
-            accounts = AccountsService.get_account_by_guid(user_guid=account_guid)
+            accounts = AccountsService.get_account_by_guid(account_guid=account_guid)
             if not len(accounts) or len(accounts) == 0:
                 return HttpResponse.bad_request('The account doesn\'t exist')
-            return HttpResponse.success(accounts[0])
+            return HttpResponse.success(Transformer.account_to_json(accounts[0]))
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)

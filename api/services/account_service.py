@@ -42,7 +42,7 @@ class AccountsService:
         return new_account_guid
 
     @staticmethod
-    def get_account_by_guid(user_guid=None):
+    def get_account_by_guid(account_guid=None):
         """
         Gets the account by userid
 
@@ -50,7 +50,7 @@ class AccountsService:
         :return:
         """
         account = AccountsAdapter.read_by_user_id({
-            'user_guid': user_guid
+            'account_guid': account_guid
         })
         return account
 
@@ -63,7 +63,11 @@ class AccountsService:
         :return:
         """
         list_of_accounts = AccountUserAdapter.read_by_user_id(user_id=user_id)
-        return list_of_accounts
+        account_id_list = []
+        for account in list_of_accounts:
+            account_id_list.append(account.account_id)
+        account_list = AccountsAdapter.read_accounts_by_id_list(account_id_list)
+        return account_list
 
     @staticmethod
     def update_account(query=None,
