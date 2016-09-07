@@ -13,6 +13,7 @@ account_user_association_table = Table('accounts_users', Base.metadata,
 
 
 class Accounts(Base):
+
     __tablename__ = 'accounts'
 
     account_id = Column(Integer, primary_key=True, nullable=False)
