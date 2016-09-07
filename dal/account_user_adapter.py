@@ -24,7 +24,7 @@ class AccountUserAdapter(BaseAdapter):
         engine.execute(sql_query)
 
     @staticmethod
-    def read(user_id=None):
+    def read_by_user_id(user_id=None):
         """
         This methods returns all the records with the given user_guid
 
@@ -33,4 +33,14 @@ class AccountUserAdapter(BaseAdapter):
         """
         sql_query = account_user_association_table.select().where(
             account_user_association_table.c.user_id == user_id)
-        print engine.execute(sql_query).fetchall()
+        return engine.execute(sql_query).fetchall()
+
+    def read_by_guid(user_guid=None, account_guid=None):
+        pass
+
+    @staticmethod
+    def read(user_id, account_id):
+        sql_query = account_user_association_table.select().where(
+            account_user_association_table.c.user_id == user_id).where(
+            account_user_association_table.c.account_id == account_id)
+        return engine.execute(sql_query).fetchall()

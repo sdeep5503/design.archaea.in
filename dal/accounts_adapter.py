@@ -65,7 +65,7 @@ class AccountsAdapter(BaseAdapter):
         raise Exception('Hard delete on Accounts Table not implemented')
 
     @staticmethod
-    def read(query=None):
+    def read_by_user_id(query=None):
         """
         Reading the records from a table
 

@@ -37,5 +37,5 @@ class BaseAdapter:
         pass
 
     @staticmethod
-    def read():
+    def read_by_user_id():
         pass

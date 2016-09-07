@@ -30,23 +30,29 @@ class AccountsService:
             raise Exception('[Services] User<Owner> not found while creating account')
         if not account_name or len(account_name) == 0:
             raise Exception('[Services] Account Name should contain atleast one character')
-        existing_user_with_same_email = UserAdapter.read({
-            'email': user.email
-        })
         new_account_guid = CommonHelper.generate_guid()
-        if len(existing_user_with_same_email) == 0:
-            account_id = AccountsAdapter.create(
-                account_name=account_name,
-                account_guid=new_account_guid,
-                account_type=account_type,
-                owner=user)
-            AccountUserService.change_user_permission_on_account(user_id=user.user_id,
-                                                                 account_id=account_id,
-                                                                 permission=AccountPermissions.OWNER)
-        else:
-            raise Exception('[Services] User cannot create multiple accounts. '
-                            'Please add yourself to any other account if required')
+        account_id = AccountsAdapter.create(
+            account_name=account_name,
+            account_guid=new_account_guid,
+            account_type=account_type,
+            owner=user)
+        AccountUserService.change_user_permission_on_account(user_id=user.user_id,
+                                                             account_id=account_id,
+                                                             permission=AccountPermissions.OWNER)
         return new_account_guid
+
+    @staticmethod
+    def get_account_by_guid(account_guid=None):
+        """
+        Gets the account by userid
+
+        :param user_guid:
+        :return:
+        """
+        account = AccountsAdapter.read_by_user_id({
+            'account_guid': account_guid
+        })
+        return account
 
     @staticmethod
     def get_all_accounts_by_user(user_id=None):
@@ -56,8 +62,12 @@ class AccountsService:
         :param user_id:
         :return:
         """
-        list_of_accounts = AccountUserAdapter.read(user_id=user_id)
-        return list_of_accounts
+        list_of_accounts = AccountUserAdapter.read_by_user_id(user_id=user_id)
+        account_id_list = []
+        for account in list_of_accounts:
+            account_id_list.append(account.account_id)
+        account_list = AccountsAdapter.read_accounts_by_id_list(account_id_list)
+        return account_list
 
     @staticmethod
     def update_account(query=None,
@@ -117,12 +127,38 @@ class AccountsService:
         :return:
         """
         AccountsAdapter.add_user({
-            'account_id': account_guid
+            'account_guid': account_guid
         }, user=user)
 
     @staticmethod
     def add_user_to_niche(nich_type=AccountTypes.COMMON_NICHE, user=None):
+        """
+        Add user to Niche
+
+        :param nich_type:
+        :param user:
+        :return:
+        """
         AccountsAdapter.add_user({
             'account_type': nich_type
         }, user=user)
 
+    @staticmethod
+    def get_user_permission_on_account(user=None, account_guid=None):
+        """
+        Returns user permission on account
+
+        :param user:
+        :param account_guid:
+        :return:
+        """
+        accounts = AccountsAdapter.read_by_user_id({
+            'account_guid': account_guid
+        })
+        if not accounts or len(accounts) == 0:
+            raise Exception('[Services] account not found')
+        account_user = AccountUserAdapter.read(user_id=user.user_id,
+                                account_id=accounts[0].account_id)
+        if not account_user or len(account_user) == 0:
+            Exception('[Services] user doesn\'t have permission on account')
+        return account_user[0].permission

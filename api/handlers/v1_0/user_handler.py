@@ -1,9 +1,11 @@
 from models.users import Users
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from api.services.user_service import UserService
+from api.common_helper.http_response import HttpResponse
+from api.common_helper.common_utils import CommonHelper
 from api.services.jwt_auth_service import JWTAuthService
 from api.services.account_service import AccountsService
-from api.common_helper.common_constants import ApiVersions
+from api.common_helper.common_constants import ApiVersions, AccountPermissions
 from api.common_helper.common_validations import RequestValidator
 
 user_handler = Blueprint(__name__, __name__)
@@ -13,17 +15,7 @@ user_handler = Blueprint(__name__, __name__)
 @RequestValidator.validate_request_header
 def create_niche_user():
     """
-    Open API to create Niche Users
-
-    The payload example:
-
-    {
-      'email': <email>
-      'password': <password>
-      'first_name': <Name>
-      'last_name': <Name>
-      'company': <Company>
-    }
+    Open API to create Niche Users (Cannot create system users this way)
 
     :return:
     """
@@ -34,45 +26,48 @@ def create_niche_user():
     company = request.json['company']
 
     # TODO validate required fields
-    user_guid = None
-    AccountsService.add_user_to_niche(user=Users(
-        user_guid=None,
-        email=email,
-        password=password,
-        first_name=first_name,
-        last_name=last_name,
-        company=company
-    ))
-    return {
-        'user_guid': user_guid
-    }
+    try:
+        AccountsService.add_user_to_niche(user=Users(
+            user_guid=CommonHelper.generate_guid(),
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            is_system=False,
+            company=company
+        ))
+    except Exception as e:
+        HttpResponse.internal_server_error(e.message)
+    return HttpResponse.accepted('User added to common niche account successfully')
 
 
-@user_handler.route(ApiVersions.API_VERSION_V1 + '<account_guid>/users', method=['PUT'])
+@user_handler.route(ApiVersions.API_VERSION_V1 + '<account_guid>/users', methods=['PUT'])
 @RequestValidator.validate_request_header
 @JWTAuthService.jwt_validation
-def add_user_to_account(account_guid):
+def add_user_to_account(account_guid, **kwargs):
     """
     This api adds users to account
 
     :param account_guid:
     :return:
     """
-    # TODO validate whether the current user is admin of the given account
-    new_user = UserService.get_user_by_email(email=request.json['email'])[0]
-    if not new_user:
-        response = jsonify({
-            'message': 'This user is unknown to archaea'
-        })
-        response.status_code = 400
-        return response
-    else:
-        AccountsService.add_user_to_account(
-            account_guid=account_guid,
-            user=new_user
-        )
-        response = jsonify({
-            'message': 'User has been added successfully'
-        })
-        response.status_code = 202
-        return response
+    try:
+        new_user = UserService.get_user_by_email(email=request.json['email'])[0]
+        current_user = kwargs['current_user']
+        try:
+            permission = AccountsService.get_user_permission_on_account(user=current_user, account_guid=account_guid)
+            if permission == AccountPermissions.MEMBER:
+                HttpResponse.forbidden('User doesn\'t have permission to perform this operation')
+        except Exception as e:
+            if e.message == '[Services] user doesn\'t have permission on account':
+                return HttpResponse.forbidden(e.message)
+        if not new_user:
+            return HttpResponse.bad_request('This user is unknown to archaea')
+        else:
+            AccountsService.add_user_to_account(
+                account_guid=account_guid,
+                user=new_user
+            )
+            return HttpResponse.accepted('User has been added successfully')
+    except Exception as e:
+        HttpResponse.internal_server_error(e.message)
