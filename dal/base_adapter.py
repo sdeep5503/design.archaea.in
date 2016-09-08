@@ -35,7 +35,3 @@ class BaseAdapter:
     @staticmethod
     def delete():
         pass
-
-    @staticmethod
-    def read_by_user_id():
-        pass

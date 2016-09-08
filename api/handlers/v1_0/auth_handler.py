@@ -13,11 +13,10 @@ auth_handler = Blueprint(__name__, __name__)
 def authenticate():
     email = request.json['email']
     password = request.json['password']
-    user = None
     try:
         user = UserService.get_user_by_email(email=email)[0]
-    except Exception:
-        HttpResponse.internal_server_error('Exception while getting the user')
+    except Exception as e:
+        return HttpResponse.internal_server_error(e.message)
     if user:
         if user.password == password:
             claims_token = TokenService.create_jwt_token(user_guid=user.user_guid)
