@@ -49,7 +49,7 @@ class AccountsService:
         :param user_guid:
         :return:
         """
-        account = AccountsAdapter.read_by_user_id({
+        account = AccountsAdapter.read({
             'account_guid': account_guid
         })
         return account
@@ -152,7 +152,7 @@ class AccountsService:
         :param account_guid:
         :return:
         """
-        accounts = AccountsAdapter.read_by_user_id({
+        accounts = AccountsAdapter.read({
             'account_guid': account_guid
         })
         if not accounts or len(accounts) == 0:

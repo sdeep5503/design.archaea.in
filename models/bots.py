@@ -4,19 +4,18 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boolean
 
 bot_user_association_table = Table('bots_users', Base.metadata,
-                                       Column('bot_id', Integer,
-                                              ForeignKey('bots.bot_id'), ondelete='CASCADE',
-                                                    onupdate='CASCADE')),\
-                                       Column('user_id', Integer,
-                                              ForeignKey('users.user_id', ondelete='CASCADE', onupdate='CASCADE'))
+                                   Column('bot_id', Integer,
+                                          ForeignKey('bots.bot_id', ondelete='CASCADE', onupdate='CASCADE')),
+                                   Column('user_id', Integer,
+                                          ForeignKey('users.user_id', ondelete='CASCADE', onupdate='CASCADE')))
 
 
 class Bots(Base):
-
     __tablename__ = 'bots'
 
     bot_id = Column(Integer, primary_key=True)
-    account_id = Column(Integer, ForeignKey('accounts.account_id'))
+    account_id = Column(Integer, ForeignKey('accounts.account_id', ondelete='CASCADE',
+                                            onupdate='CASCADE'))
     users = relationship('Users', cascade='all, save-update, delete',
                          secondary=bot_user_association_table)
     bot_guid = Column(String(128), unique=True)
@@ -29,7 +28,7 @@ class Bots(Base):
     bot_key = Column(String(128), nullable=False)
 
     created = Column(DateTime, default=datetime.datetime.utcnow)
-    updated = Column(DateTime, default=datetime.datetime.utcnow)
+    updated = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow())
 
     def __init__(self, bot_guid=None,
                  bot_name=None,

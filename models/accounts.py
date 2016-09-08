@@ -26,7 +26,7 @@ class Accounts(Base):
     users = relationship('Users', cascade='all, save-update, delete',
                          secondary=account_user_association_table)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow())
 
     def __init__(self, account_name=None, account_guid=None, account_type=None,
                  is_active=True, is_deleted=False):
@@ -48,3 +48,4 @@ class Accounts(Base):
 
     def __repr__(self):
         return '<Accounts %r>' % self.account_name
+

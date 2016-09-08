@@ -1,4 +1,3 @@
-from log_helper import logger
 from database import db
 from models.users import Users
 from models.accounts import Accounts
@@ -65,7 +64,7 @@ class AccountsAdapter(BaseAdapter):
         raise Exception('Hard delete on Accounts Table not implemented')
 
     @staticmethod
-    def read_by_user_id(query=None):
+    def read(query=None):
         """
         Reading the records from a table
 
@@ -119,3 +118,9 @@ class AccountsAdapter(BaseAdapter):
             .filter(Accounts.account_id.in_(id_list)).all()
         assert isinstance(accounts, list)
         return accounts
+
+AccountsAdapter.update(query={
+    'account_id': 1
+}, updated_value={
+    'account_name': 'vizsat'
+})
