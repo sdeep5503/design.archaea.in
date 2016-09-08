@@ -118,9 +118,3 @@ class AccountsAdapter(BaseAdapter):
             .filter(Accounts.account_id.in_(id_list)).all()
         assert isinstance(accounts, list)
         return accounts
-
-AccountsAdapter.update(query={
-    'account_id': 1
-}, updated_value={
-    'account_name': 'vizsat'
-})
