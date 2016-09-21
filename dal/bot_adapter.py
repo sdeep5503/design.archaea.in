@@ -2,16 +2,15 @@ from database import db
 from models.bots import Bots
 from models.users import Users
 from dal.base_adapter import BaseAdapter
-from accounts_adapter import AccountsAdapter
+from models.bots import bot_user_association_table
 
 
 class BotAdapter(BaseAdapter):
-
     def __init__(self):
         BaseAdapter.__init__(self)
-    
+
     @staticmethod
-    def create(account_guid=None,
+    def create(account=None,
                bot_guid=None,
                bot_name=None,
                bot_description=None,
@@ -23,7 +22,7 @@ class BotAdapter(BaseAdapter):
                user=None):
         """
 
-        :param account_guid:
+        :param account:
         :param bot_guid:
         :param bot_name:
         :param bot_description:
@@ -34,11 +33,6 @@ class BotAdapter(BaseAdapter):
         :param bot_key:
         :return:
         """
-        account = AccountsAdapter.read(query={
-            'account_guid': account_guid
-        })[0]
-        if not account:
-            raise Exception('[Adapter] The account that you are trying to create the app does not exist')
         bot = Bots(
             bot_guid=bot_guid,
             bot_name=bot_name,
@@ -55,15 +49,11 @@ class BotAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def read(query=None):
-        """
-        Reading the records from a table
-
-        :param query:
-        :return:
-        """
+    def read_by_user(user_id=None, account_id=None):
         bots = db.query(Bots) \
-            .filter_by(**query).all()
+            .filter_by({
+                'account_id': account_id
+            }).filter(Bots.users.any(user_id=user_id)).all()
         assert isinstance(bots, list)
         return bots
 

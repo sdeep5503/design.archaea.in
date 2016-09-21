@@ -1,6 +1,6 @@
 from database import engine
 from dal.base_adapter import BaseAdapter
-from models.accounts import account_user_association_table, Accounts
+from models.accounts import account_user_association_table
 
 
 class AccountUserAdapter(BaseAdapter):
