@@ -55,7 +55,7 @@ def create_bot(account_guid, **kwargs):
 @JWTAuthService.jwt_validation
 def get_bots(account_guid, **kwargs):
     """
-    GET on accounts
+    GET on bots
 
     :param kwargs:
     :return:
@@ -73,6 +73,37 @@ def get_bots(account_guid, **kwargs):
         else:
             bots = BotService.read(account=account, user=current_user)
             return HttpResponse.success(Transformer.bot_list_to_json_array(bots))
+    except Exception as e:
+        return HttpResponse.internal_server_error(e.message)
+
+
+@bot_handler.route(ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/bots/<bot_guid>', methods=['GET'])
+@RequestValidator.validate_request_header
+@JWTAuthService.jwt_validation
+def get_bot_by_guid(account_guid, bot_guid, **kwargs):
+    """
+    GET on accounts by account_guid
+
+    :param bot_guid:
+    :param account_guid:
+    :param kwargs:
+    :return:
+    """
+    try:
+        current_user = kwargs['current_user']
+        account = AccountsService.get_account_by_guid(account_guid=account_guid)
+        if not account:
+            return HttpResponse.forbidden('Unexpected request')
+        user_permission = AccountUserService.get_permission(user=current_user, account=account)
+        if not user_permission:
+            return HttpResponse.forbidden('User doesn\'t have permission to perform this operation')
+        if current_user.is_system:
+            return HttpResponse.accepted('All accounts should be returned [unimplemented]')
+        else:
+            bots = BotService.get_bot_guid(account=account, user=current_user, bot_guid=bot_guid)
+            if len(bots) == 0:
+                return HttpResponse.bad_request('The bot you are looking for is not found in this account')
+            return HttpResponse.success(Transformer.bot_to_json(bots[0]))
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)
 

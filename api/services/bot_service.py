@@ -29,10 +29,15 @@ class BotService:
 
     @staticmethod
     def read(account=None, user=None):
-        account_permission = AccountUserService.get_permission(user=user,account=account)
-        if not account_permission:
-            return []
-        return BotAdapter.read_by_user(
+        return BotAdapter.read_all_by_user(
             user_id=user.user_id,
             account_id=account.account_id
         )
+
+    @staticmethod
+    def get_bot_guid(account=None, user=None, bot_guid=None):
+         return BotAdapter.read_bot_by_user_and_bot_guid(
+             account_id=account.account_id,
+             user_id=user.user_id,
+             bot_guid=bot_guid
+         )

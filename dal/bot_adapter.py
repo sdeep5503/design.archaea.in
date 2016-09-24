@@ -2,10 +2,10 @@ from database import db
 from models.bots import Bots
 from models.users import Users
 from dal.base_adapter import BaseAdapter
-from models.bots import bot_user_association_table
 
 
 class BotAdapter(BaseAdapter):
+
     def __init__(self):
         BaseAdapter.__init__(self)
 
@@ -43,9 +43,17 @@ class BotAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def read_by_user(user_id=None, account_id=None):
+    def read_all_by_user(user_id=None, account_id=None):
         bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)).\
             filter(Bots.account_id.like(account_id)).all()
+        assert isinstance(bots, list)
+        return bots
+
+    @staticmethod
+    def read_bot_by_user_and_bot_guid(user_id=None, account_id=None, bot_guid=None):
+        bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)). \
+            filter(Bots.account_id.like(account_id)). \
+            filter(Bots.bot_guid.like(bot_guid)).all()
         assert isinstance(bots, list)
         return bots
 
