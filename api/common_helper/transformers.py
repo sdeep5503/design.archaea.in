@@ -1,3 +1,4 @@
+from json import loads
 
 
 class Transformer:
@@ -30,24 +31,24 @@ class Transformer:
             'bot_name': bot.bot_name,
             'is_active': bot.is_active,
             'is_deleted': bot.is_deleted,
-            'bot_metadata': bot.metadata,
-            'created_at': str(bot.created_at),
-            'updated_at': str(bot.updated_at)
+            'bot_metadata': loads(bot.bot_metadata),
+            'created_at': str(bot.created),
+            'updated_at': str(bot.updated)
 
         }
 
     @staticmethod
-    def bot_list_to_json_array(accounts=None):
+    def account_list_to_json_array(accounts=None):
         account_list = []
         for account in accounts:
             account_list.append(Transformer.account_to_json(account))
         return account_list
 
     @staticmethod
-    def account_list_to_json_array(bots=None):
+    def bot_list_to_json_array(bots=None):
         bot_list = []
         for bot in bots:
-            bot_list.append(Transformer.account_to_json(bot))
+            bot_list.append(Transformer.bot_to_json(bot))
         return bot_list
 
 

@@ -22,7 +22,7 @@ class Bots(Base):
     bot_name = Column(String(64))
     is_deleted = Column(Boolean, nullable=False, default=False)
     is_active = Column(Boolean, nullable=False, default=True)
-    bot_metadata = Column(String(512), nullable=False)
+    bot_metadata = Column(String(255), nullable=False)
 
     created = Column(DateTime, default=datetime.datetime.utcnow)
     updated = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow())

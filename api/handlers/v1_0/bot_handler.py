@@ -1,3 +1,4 @@
+from json import dumps
 from flask import Blueprint, request
 from api.services.jwt_auth_service import JWTAuthService
 from api.common_helper.common_constants import ApiVersions
@@ -30,7 +31,7 @@ def create_bot(account_guid, **kwargs):
     try:
         bot_name = request.json['name']
         bot_description = request.json['description']
-        bot_metadata = str(request.json['metadata'])
+        bot_metadata = dumps(request.json['metadata'])
         if not bot_name or not bot_description or not bot_metadata:
             return HttpResponse.bad_request('Incomplete parameters. Please provide all the parameters')
         current_user = kwargs['current_user']
