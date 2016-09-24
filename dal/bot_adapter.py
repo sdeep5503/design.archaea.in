@@ -13,12 +13,9 @@ class BotAdapter(BaseAdapter):
     def create(account=None,
                bot_guid=None,
                bot_name=None,
-               bot_description=None,
                is_deleted=False,
                is_active=True,
                bot_metadata=None,
-               bot_secret=None,
-               bot_key=None,
                user=None):
         """
 
@@ -36,12 +33,9 @@ class BotAdapter(BaseAdapter):
         bot = Bots(
             bot_guid=bot_guid,
             bot_name=bot_name,
-            bot_description=bot_description,
             is_deleted=is_deleted,
             is_active=is_active,
-            bot_metadata=bot_metadata,
-            bot_secret=bot_secret,
-            bot_key=bot_key
+            bot_metadata=bot_metadata
         )
         bot.users.append(user)
         account.bots.append(bot)
@@ -50,10 +44,8 @@ class BotAdapter(BaseAdapter):
 
     @staticmethod
     def read_by_user(user_id=None, account_id=None):
-        bots = db.query(Bots) \
-            .filter_by({
-                'account_id': account_id
-            }).filter(Bots.users.any(user_id=user_id)).all()
+        bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)).\
+            filter(Bots.account_id.like(account_id)).all()
         assert isinstance(bots, list)
         return bots
 
