@@ -1,5 +1,4 @@
 from models.users import Users
-from dal.user_adapter import UserAdapter
 from dal.accounts_adapter import AccountsAdapter
 from dal.account_user_adapter import AccountUserAdapter
 from api.common_helper.common_utils import CommonHelper
@@ -46,13 +45,15 @@ class AccountsService:
         """
         Gets the account by userid
 
-        :param user_guid:
+        :param account_guid:
         :return:
         """
         account = AccountsAdapter.read({
             'account_guid': account_guid
         })
-        return account
+        if len(account) == 0:
+            return None
+        return account[0]
 
     @staticmethod
     def get_all_accounts_by_user(user_id=None):

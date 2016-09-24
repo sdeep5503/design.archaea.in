@@ -26,6 +26,15 @@ class AccountUserService:
         }, permission=permission)
 
     @staticmethod
+    def get_permission(user, account):
+        account_permissions = AccountUserAdapter.read(user_id=user.user_id,
+                                account_id=account.account_id)
+        if len(account_permissions) == 1:
+            return account_permissions[0].permission
+        else:
+            return None
+
+    @staticmethod
     def get_all_accounts_for_given_user(user_id=None):
         """
         This method returns the list of account guids for a given user guid

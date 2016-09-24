@@ -1,25 +1,25 @@
+from database import db
 from models.bots import Bots
-from accounts_adapter import AccountsAdapter
+from models.users import Users
+from dal.base_adapter import BaseAdapter
 
 
-class BotAdapter:
+class BotAdapter(BaseAdapter):
 
     def __init__(self):
-        pass
-    
+        BaseAdapter.__init__(self)
+
     @staticmethod
-    def create_bot(account_guid=None,
-                   bot_guid=None,
-                   bot_name=None,
-                   bot_description=None,
-                   is_deleted=False,
-                   is_active=False,
-                   bot_metadata=None,
-                   bot_secret=None,
-                   bot_key=None):
+    def create(account=None,
+               bot_guid=None,
+               bot_name=None,
+               is_deleted=False,
+               is_active=True,
+               bot_metadata=None,
+               user=None):
         """
 
-        :param account_guid:
+        :param account:
         :param bot_guid:
         :param bot_name:
         :param bot_description:
@@ -30,18 +30,58 @@ class BotAdapter:
         :param bot_key:
         :return:
         """
-        account = AccountsAdapter.read(query={
-            'account_guid': account_guid
-        })[0]
-        if not account:
-            raise Exception('[Adapter] The account that you are trying to create the app does not exist')
-        account.bots.append(Bots(
+        bot = Bots(
             bot_guid=bot_guid,
             bot_name=bot_name,
-            bot_description=bot_description,
             is_deleted=is_deleted,
             is_active=is_active,
-            bot_metadata=bot_metadata,
-            bot_secret=bot_secret,
-            bot_key=bot_key
-        ))
+            bot_metadata=bot_metadata
+        )
+        bot.users.append(user)
+        account.bots.append(bot)
+        db.add(account)
+        db.commit()
+
+    @staticmethod
+    def read_all_by_user(user_id=None, account_id=None):
+        bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)).\
+            filter(Bots.account_id.like(account_id)).all()
+        assert isinstance(bots, list)
+        return bots
+
+    @staticmethod
+    def read_bot_by_user_and_bot_guid(user_id=None, account_id=None, bot_guid=None):
+        bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)). \
+            filter(Bots.account_id.like(account_id)). \
+            filter(Bots.bot_guid.like(bot_guid)).all()
+        assert isinstance(bots, list)
+        return bots
+
+    @staticmethod
+    def update(query=None, updated_value=None):
+        """
+        This method update the account
+
+        :param query:
+        :param updated_value:
+        :return:
+        """
+        db.query(Bots) \
+            .filter_by(**query) \
+            .update(updated_value)
+        db.commit()
+
+    @staticmethod
+    def add_user(query, user):
+        """
+        Adds users to an existing account
+
+        :param query:
+        :param user:
+        :return:
+        """
+        assert isinstance(user, Users)
+        bot = db.query(Bots). \
+            filter_by(**query).one()
+        bot.users.append(user)
+        db.commit()
