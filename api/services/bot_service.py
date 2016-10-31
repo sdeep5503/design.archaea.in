@@ -1,7 +1,6 @@
 from models.users import Users
 from dal.bot_adapter import BotAdapter
 from api.common_helper.common_utils import CommonHelper
-from api.services.account_user_service import AccountUserService
 
 
 class BotService:
@@ -29,7 +28,7 @@ class BotService:
 
     @staticmethod
     def read(account=None, user=None):
-        return BotAdapter.read_all_by_user(
+        return BotAdapter.read_by_user(
             user_id=user.user_id,
             account_id=account.account_id
         )

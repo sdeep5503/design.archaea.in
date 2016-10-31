@@ -37,7 +37,7 @@ def create_bot(account_guid, **kwargs):
         current_user = kwargs['current_user']
         account = AccountsService.get_account_by_guid(account_guid=account_guid)
         if not account:
-            return HttpResponse.forbidden('Unexpected request')
+            return HttpResponse.forbidden('The account doesn\'t exist')
         user_permission = AccountUserService.get_permission(user=current_user, account=account)
         if not user_permission:
             return HttpResponse.forbidden('User doesn\'t have permission to perform this operation')
