@@ -7,9 +7,22 @@ class ApplicationBotsAdapter:
         pass
 
     @staticmethod
-    def create(account_id=None,
+    def create(application_id=None,
                bot_id=None):
-        app_bot = ApplicationBots(account_id=account_id,
+        app_bot = ApplicationBots(application_id=application_id,
                                   bot_id=bot_id)
         apps_db.add(app_bot)
         apps_db.commit()
+
+    @staticmethod
+    def read(query=None):
+        """
+        Reading the records from a table
+
+        :param query:
+        :return:
+        """
+        apps = apps_db.query(ApplicationBots) \
+            .filter_by(**query).all()
+        assert isinstance(apps, list)
+        return apps

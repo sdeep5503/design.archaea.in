@@ -1,3 +1,4 @@
+from json import dumps
 from flask import Blueprint, request
 from api.services.jwt_auth_service import JWTAuthService
 from api.common_helper.common_validations import RequestValidator
@@ -32,12 +33,12 @@ def create_application(account_guid, bot_guid, **kwargs):
             return HttpResponse.forbidden('User doesn\'t have permission to perform this operation')
         bot = BotService.get_bot_guid(account=account, user=current_user, bot_guid=bot_guid)
         if len(bot) == 0:
-            return HttpResponse.forbidden('The user has no persmission on this account')
+            return HttpResponse.forbidden('The user has no permission on this bot')
         ApplicationsService.create_application(account_id=account.account_id,
                                                application_name=name,
                                                application_algorithm=algorithm,
                                                user_id=current_user.user_id,
-                                               app_metadata=app_metadata,
+                                               app_metadata=dumps(app_metadata),
                                                bot_id=None)
         return HttpResponse.accepted('Application created successfully')
     except Exception as e:

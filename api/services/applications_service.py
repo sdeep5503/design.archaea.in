@@ -25,5 +25,11 @@ class ApplicationsService:
                                                  application_algorithm=application_algorithm,
                                                  user_id=user_id,
                                                  app_metadata=app_metadata)
-        ApplicationBotsAdapter.create(account_id=account_id, bot_id=bot_id)
+        ApplicationBotsAdapter.create(application_id=app_details.application_id, bot_id=bot_id)
         return app_details
+
+    @staticmethod
+    def get_application_by_guid(application_guid=None):
+        return ApplicationsAdapter.read({
+            'application_guid': application_guid
+        })

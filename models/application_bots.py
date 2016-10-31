@@ -14,10 +14,10 @@ class ApplicationBots(AppDBBase):
     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow())
 
     def __init__(self,
-                 account_id=None,
+                 application_id=None,
                  bot_id=None):
 
-        self.account_id = account_id
+        self.applications_id = application_id
         self.bot_id = bot_id
 
     def __repr__(self):

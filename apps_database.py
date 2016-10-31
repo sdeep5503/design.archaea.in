@@ -21,6 +21,7 @@ def init_apps_db():
     """
     import models.dump2
     import models.applications
+    import models.application_bots
 
     AppDBBase.metadata.create_all(bind=engine)
 
