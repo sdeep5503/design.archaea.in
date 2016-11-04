@@ -23,7 +23,6 @@ def init_db():
     import models.users
     import models.accounts
     import models.bots
-    import models.applications
 
     Base.metadata.create_all(bind=engine)
 

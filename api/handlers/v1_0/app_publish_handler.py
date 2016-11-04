@@ -10,7 +10,7 @@ from api.services.applications_service import ApplicationsService
 
 publish_handler = Blueprint(__name__, __name__)
 
-
+# TODO authentication
 @publish_handler.route(
     ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/applications/<application_guid>/publish',
     methods=['POST'])

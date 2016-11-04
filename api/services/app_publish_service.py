@@ -9,5 +9,5 @@ class ApplicationPublishServices:
     @staticmethod
     def publish_app(application_id=None,
                     bot_id=None):
-        ApplicationBotsAdapter.create(application_id=application_id,
+        create(application_id=application_id,
                              bot_id=bot_id)
