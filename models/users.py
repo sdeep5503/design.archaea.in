@@ -47,4 +47,4 @@ class Users(Base):
         self.company = company
 
     def __repr__(self):
-        return '<User %r>' % self.user_guid
+        return '<User %r>' % self.email

@@ -2,9 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from design_config import MY_SQL_HOST_URL
+from design_config import DESIGN_DB_URL
 
-engine = create_engine(MY_SQL_HOST_URL, convert_unicode=True)
+engine = create_engine(DESIGN_DB_URL, convert_unicode=True)
 db = scoped_session(sessionmaker(autocommit=False,
                                  autoflush=False,
                                  bind=engine))

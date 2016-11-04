@@ -43,7 +43,7 @@ class BotAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def read_all_by_user(user_id=None, account_id=None):
+    def read_by_user(user_id=None, account_id=None):
         bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)).\
             filter(Bots.account_id.like(account_id)).all()
         assert isinstance(bots, list)

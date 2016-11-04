@@ -30,16 +30,6 @@ class Accounts(Base):
 
     def __init__(self, account_name=None, account_guid=None, account_type=None,
                  is_active=True, is_deleted=False):
-        """
-
-        :param account_name:
-        :param account_guid:
-        :param is_active:
-        :param owner_id:
-        :param is_trail:
-        :param is_enterprise:
-        :param is_deleted:
-        """
         self.account_name = account_name
         self.account_guid = account_guid
         self.account_type = account_type

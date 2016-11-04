@@ -1,4 +1,4 @@
-from flask import Blueprint, request, make_response, jsonify
+from flask import Blueprint, request
 from api.services.user_service import UserService
 from api.services.token_service import TokenService
 from api.common_helper.http_response import HttpResponse

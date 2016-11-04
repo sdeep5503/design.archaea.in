@@ -14,18 +14,6 @@ account_handler = Blueprint(__name__, __name__)
 @RequestValidator.validate_request_header
 @JWTAuthService.jwt_validation
 def create_account(**kwargs):
-    """
-    This API can be used by system user to create Niche account and other users to create enterprise accounts
-
-    The payload example:
-
-    {
-      'type' : 'Enterprise'/'Niche'/'MarketPlace'
-      'name' : 'Account Name'
-    }
-
-    :return:
-    """
     try:
         account_type = request.json['type']
         account_name = request.json['name']
