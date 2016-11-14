@@ -18,17 +18,26 @@ class AccountTypes:
 
 
 class ApiVersions:
-
     def __init__(self):
         pass
+
     # APi Versions
     API_VERSION_V1 = '/api/v1_0'
 
 
 class ApiRequestConstants:
-
     def __init__(self):
         pass
+
     # Request Keys
     X_REQUEST_ID = 'X-Request-Id'
     X_ARCHAEA_AUTHORIZATION = 'X-Archaea-Authorization'
+
+
+class NerdUrlPaths:
+
+    def __init__(self):
+        pass
+
+    VERSION = '/api/v1_0'
+    NERD_APPLICATION_PATH = VERSION + '/applications'
