@@ -1,5 +1,6 @@
+from design_config import MOCK_NERD_RESPONSE
 from restclient.nerd_rest_client import NerdRestClient
-from restclient.nerd_mock_rest_client import NerdMockRestClient
+from tests.mocks.nerd_mock_rest_client import NerdMockRestClient
 
 
 class NerdRestClientFactory:
@@ -8,8 +9,8 @@ class NerdRestClientFactory:
         self.nerd_base_url = nerd_base_url
 
     def getNerdRestClient(self, is_mock=False):
-        if is_mock:
-            return NerdMockRestClient()
-        return NerdRestClient()
+        if is_mock or MOCK_NERD_RESPONSE:
+            return NerdMockRestClient(self.nerd_base_url)
+        return NerdRestClient(self.nerd_base_url)
 
 

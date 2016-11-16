@@ -30,12 +30,12 @@ class ApiRequestConstants:
         pass
 
     # Request Keys
+    CONTENT_TYPE = 'Content-Type'
     X_REQUEST_ID = 'X-Request-Id'
     X_ARCHAEA_AUTHORIZATION = 'X-Archaea-Authorization'
 
 
 class NerdUrlPaths:
-
     def __init__(self):
         pass
 
