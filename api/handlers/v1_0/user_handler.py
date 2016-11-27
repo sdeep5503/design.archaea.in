@@ -14,19 +14,15 @@ user_handler = Blueprint(__name__, __name__)
 @user_handler.route(ApiVersions.API_VERSION_V1 + '/users', methods=['POST'])
 @RequestValidator.validate_request_header
 def create_niche_user():
-    """
-    Open API to create Niche Users (Cannot create system users this way)
-
-    :return:
-    """
-    email = request.json['email']
-    password = request.json['password']
-    first_name = request.json['first_name']
-    last_name = request.json['last_name']
-    company = request.json['company']
-
-    # TODO validate required fields
     try:
+        try:
+            email = request.json['email']
+            password = request.json['password']
+            first_name = request.json['first_name']
+            last_name = request.json['last_name']
+            company = request.json['company']
+        except Exception:
+            return HttpResponse.bad_request('One or parameters are missing')
         AccountsService.add_user_to_niche(user=Users(
             user_guid=CommonHelper.generate_guid(),
             email=email,
@@ -36,9 +32,9 @@ def create_niche_user():
             is_system=False,
             company=company
         ))
+        return HttpResponse.accepted('User added to common niche account successfully')
     except Exception as e:
         HttpResponse.internal_server_error(e.message)
-    return HttpResponse.accepted('User added to common niche account successfully')
 
 
 @user_handler.route(ApiVersions.API_VERSION_V1 + '<account_guid>/users', methods=['PUT'])

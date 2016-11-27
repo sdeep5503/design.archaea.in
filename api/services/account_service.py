@@ -15,6 +15,7 @@ class AccountsService:
 
     @staticmethod
     def create_account(user=None,
+                       company=None,
                        account_name=None,
                        account_type=None):
         """
@@ -31,6 +32,7 @@ class AccountsService:
             raise Exception('[Services] Account Name should contain atleast one character')
         new_account_guid = CommonHelper.generate_guid()
         account_id = AccountsAdapter.create(
+            company=company,
             account_name=account_name,
             account_guid=new_account_guid,
             account_type=account_type,

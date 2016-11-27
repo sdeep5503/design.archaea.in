@@ -14,6 +14,7 @@ class Transformer:
             'account_guid': account.account_guid,
             'account_name': account.account_name,
             'account_type': account.account_type,
+            'company': account.company,
             'is_active': account.is_active,
             'is_deleted': account.is_deleted,
             'created_at': str(account.created_at),

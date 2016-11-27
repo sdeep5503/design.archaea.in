@@ -20,6 +20,7 @@ class Accounts(Base):
     account_name = Column(String(50), nullable=False)
     account_guid = Column(String(120), unique=True, nullable=False)
     account_type = Column(String(50), nullable=False)
+    company = Column(String(64), nullable=True)
     is_active = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)
     bots = relationship('Bots', cascade='all, save-update, delete')
@@ -28,11 +29,16 @@ class Accounts(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow())
 
-    def __init__(self, account_name=None, account_guid=None, account_type=None,
-                 is_active=True, is_deleted=False):
+    def __init__(self, account_name=None,
+                 account_guid=None,
+                 account_type=None,
+                 company=None,
+                 is_active=True,
+                 is_deleted=False):
         self.account_name = account_name
         self.account_guid = account_guid
         self.account_type = account_type
+        self.company = company
         self.is_active = is_active
         self.is_deleted = is_deleted
 

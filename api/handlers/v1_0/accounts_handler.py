@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from api.common_helper.common_constants import AccountTypes
+from api.common_helper.common_constants import AccountTypes, ProjectDetails
 from api.services.jwt_auth_service import JWTAuthService
 from api.common_helper.common_constants import ApiVersions
 from api.services.account_service import AccountsService
@@ -17,11 +17,13 @@ def create_account(**kwargs):
     try:
         account_type = request.json['type']
         account_name = request.json['name']
+        company = request.json['company']
         if not account_type or not account_name:
             return HttpResponse.bad_request('Incomplete parameters')
         current_user = kwargs['current_user']
         if current_user.is_system:
             AccountsService.create_account(current_user,
+                                           company=ProjectDetails.COMPANY_NAME,
                                            account_name=account_name,
                                            account_type=account_type)
             return HttpResponse.accepted('Account created successfully')
@@ -29,6 +31,7 @@ def create_account(**kwargs):
             if account_type == AccountTypes.ENTERPRISE:
                 AccountsService.create_account(current_user,
                                                account_name=account_name,
+                                               company=company,
                                                account_type=AccountTypes.ENTERPRISE)
                 return HttpResponse.accepted('Account created successfully')
             else:

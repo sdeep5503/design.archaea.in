@@ -2,7 +2,7 @@ from database import db
 from models.users import Users
 from models.accounts import Accounts
 from dal.base_adapter import BaseAdapter
-from models.nerds import Bots
+from models.nerds import Nerds
 
 
 class AccountsAdapter(BaseAdapter):
@@ -14,6 +14,7 @@ class AccountsAdapter(BaseAdapter):
     def create(account_name=None,
                account_guid=None,
                account_type=None,
+               company=None,
                is_active=True,
                is_deleted=False,
                owner=None):
@@ -31,6 +32,7 @@ class AccountsAdapter(BaseAdapter):
         account = Accounts(account_name=account_name,
                            account_guid=account_guid,
                            account_type=account_type,
+                           company=company,
                            is_active=is_active,
                            is_deleted=is_deleted)
         if owner:
@@ -92,7 +94,7 @@ class AccountsAdapter(BaseAdapter):
         db.commit()
 
     @staticmethod
-    def add_bot(query, bot):
+    def add_bot(query, nerd):
         """
         Adding applications to accounts
 
@@ -100,10 +102,9 @@ class AccountsAdapter(BaseAdapter):
         :param bot:
         :return:
         """
-        assert isinstance(bot, Bots)
         account = db.query(Accounts). \
             filter_by(**query).one()
-        account.bots.append(bot)
+        account.bots.append(nerd)
         db.commit()
 
     @staticmethod
@@ -116,5 +117,4 @@ class AccountsAdapter(BaseAdapter):
         """
         accounts = db.query(Accounts) \
             .filter(Accounts.account_id.in_(id_list)).all()
-        assert isinstance(accounts, list)
         return accounts

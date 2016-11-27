@@ -1,3 +1,10 @@
+class ProjectDetails:
+    def __init__(self):
+        pass
+
+    COMPANY_NAME = 'nerdstacks'
+
+
 class AccountPermissions:
     # permission names
     OWNER = 'owner'
