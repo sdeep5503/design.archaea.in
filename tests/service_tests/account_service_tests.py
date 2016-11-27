@@ -1,6 +1,6 @@
 import unittest
 from models.users import Users
-from api.services.bot_service import BotService
+from api.services.nerd_service import BotService
 from api.services.user_service import UserService
 from api.services.account_service import AccountsService
 from tests.service_tests.test_data import TEST_USER

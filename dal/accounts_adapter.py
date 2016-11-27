@@ -2,7 +2,7 @@ from database import db
 from models.users import Users
 from models.accounts import Accounts
 from dal.base_adapter import BaseAdapter
-from models.bots import Bots
+from models.nerds import Bots
 
 
 class AccountsAdapter(BaseAdapter):

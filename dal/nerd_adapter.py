@@ -1,59 +1,47 @@
 from database import db
-from models.bots import Bots
+from models.nerds import Nerds
 from models.users import Users
 from dal.base_adapter import BaseAdapter
 
 
-class BotAdapter(BaseAdapter):
+class NerdAdapter(BaseAdapter):
 
     def __init__(self):
         BaseAdapter.__init__(self)
 
     @staticmethod
     def create(account=None,
-               bot_guid=None,
-               bot_name=None,
+               nerd_guid=None,
+               nerd_name=None,
+               nerd_url=None,
                is_deleted=False,
                is_active=True,
-               bot_metadata=None,
                user=None):
-        """
 
-        :param account:
-        :param bot_guid:
-        :param bot_name:
-        :param bot_description:
-        :param is_deleted:
-        :param is_active:
-        :param bot_metadata:
-        :param bot_secret:
-        :param bot_key:
-        :return:
-        """
-        bot = Bots(
-            bot_guid=bot_guid,
-            bot_name=bot_name,
+        nerd = Nerds(
+            nerd_url=nerd_url,
+            nerd_guid=nerd_guid,
+            nerd_name=nerd_name,
             is_deleted=is_deleted,
             is_active=is_active,
-            bot_metadata=bot_metadata
         )
-        bot.users.append(user)
-        account.bots.append(bot)
+        nerd.users.append(user)
+        account.bots.append(nerd)
         db.add(account)
         db.commit()
 
     @staticmethod
     def read_by_user(user_id=None, account_id=None):
-        bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)).\
-            filter(Bots.account_id.like(account_id)).all()
+        bots = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)).\
+            filter(Nerds.account_id.like(account_id)).all()
         assert isinstance(bots, list)
         return bots
 
     @staticmethod
-    def read_bot_by_user_and_bot_guid(user_id=None, account_id=None, bot_guid=None):
-        bots = db.query(Bots).filter(Bots.users.any(user_id=user_id)). \
-            filter(Bots.account_id.like(account_id)). \
-            filter(Bots.bot_guid.like(bot_guid)).all()
+    def read_nerd_by_user_and_nerd_guid(user_id=None, account_id=None, nerd_guid=None):
+        bots = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)). \
+            filter(Nerds.account_id.like(account_id)). \
+            filter(Nerds.bot_guid.like(nerd_guid)).all()
         assert isinstance(bots, list)
         return bots
 
@@ -66,7 +54,7 @@ class BotAdapter(BaseAdapter):
         :param updated_value:
         :return:
         """
-        db.query(Bots) \
+        db.query(Nerds) \
             .filter_by(**query) \
             .update(updated_value)
         db.commit()
@@ -81,7 +69,7 @@ class BotAdapter(BaseAdapter):
         :return:
         """
         assert isinstance(user, Users)
-        bot = db.query(Bots). \
+        bot = db.query(Nerds). \
             filter_by(**query).one()
         bot.users.append(user)
         db.commit()

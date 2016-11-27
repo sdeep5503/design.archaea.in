@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, render_template, send_from_directory
 from api.handlers.v1_0.auth_handler import auth_handler
 from api.handlers.v1_0.accounts_handler import account_handler
 from api.handlers.v1_0.user_handler import user_handler
-from api.handlers.v1_0.bot_handler import bot_handler
+from api.handlers.v1_0.nerd_handler import bot_handler
 
 bp = Blueprint(__name__, __name__)
 app = Flask(__name__)
