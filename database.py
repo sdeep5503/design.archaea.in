@@ -22,7 +22,7 @@ def init_db():
     import models.dump
     import models.users
     import models.accounts
-    import models.bots
+    import models.nerds
 
     Base.metadata.create_all(bind=engine)
 

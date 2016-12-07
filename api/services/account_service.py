@@ -15,22 +15,16 @@ class AccountsService:
 
     @staticmethod
     def create_account(user=None,
+                       company=None,
                        account_name=None,
                        account_type=None):
-        """
-        This method creates a account and corresponding user and makes the user owner
-
-        :param account_type:
-        :param user:
-        :param account_name:
-        :return:
-        """
         if not isinstance(user, Users):
             raise Exception('[Services] User<Owner> not found while creating account')
         if not account_name or len(account_name) == 0:
             raise Exception('[Services] Account Name should contain atleast one character')
         new_account_guid = CommonHelper.generate_guid()
         account_id = AccountsAdapter.create(
+            company=company,
             account_name=account_name,
             account_guid=new_account_guid,
             account_type=account_type,

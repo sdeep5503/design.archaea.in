@@ -14,6 +14,7 @@ class Transformer:
             'account_guid': account.account_guid,
             'account_name': account.account_name,
             'account_type': account.account_type,
+            'company': account.company,
             'is_active': account.is_active,
             'is_deleted': account.is_deleted,
             'created_at': str(account.created_at),
@@ -22,18 +23,18 @@ class Transformer:
         }
 
     @staticmethod
-    def bot_to_json(bot=None):
+    def nerd_to_json(nerd=None):
         return {
 
-            'bot_id': bot.bot_id,
-            'bot_guid': bot.bot_guid,
-            'account_id': bot.account_id,
-            'bot_name': bot.bot_name,
-            'is_active': bot.is_active,
-            'is_deleted': bot.is_deleted,
-            'bot_metadata': loads(bot.bot_metadata),
-            'created_at': str(bot.created),
-            'updated_at': str(bot.updated)
+            'nerd_id': nerd.nerd_id,
+            'nerd_guid': nerd.nerd_guid,
+            'account_id': nerd.account_id,
+            'nerd_name': nerd.nerd_name,
+            'nerd_url': nerd.nerd_url,
+            'is_active': nerd.is_active,
+            'is_deleted': nerd.is_deleted,
+            'created_at': str(nerd.created_at),
+            'updated_at': str(nerd.updated_at)
 
         }
 
@@ -45,10 +46,10 @@ class Transformer:
         return account_list
 
     @staticmethod
-    def bot_list_to_json_array(bots=None):
-        bot_list = []
-        for bot in bots:
-            bot_list.append(Transformer.bot_to_json(bot))
-        return bot_list
+    def nerd_list_to_json_array(nerds=None):
+        nerd_list = []
+        for nerd in nerds:
+            nerd_list.append(Transformer.nerd_to_json(nerd))
+        return nerd_list
 
 

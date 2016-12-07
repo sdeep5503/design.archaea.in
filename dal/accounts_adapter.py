@@ -2,7 +2,7 @@ from database import db
 from models.users import Users
 from models.accounts import Accounts
 from dal.base_adapter import BaseAdapter
-from models.bots import Bots
+from models.nerds import Nerds
 
 
 class AccountsAdapter(BaseAdapter):
@@ -14,23 +14,14 @@ class AccountsAdapter(BaseAdapter):
     def create(account_name=None,
                account_guid=None,
                account_type=None,
+               company=None,
                is_active=True,
                is_deleted=False,
                owner=None):
-        """
-        Create a Account
-
-        :param account_type:
-        :param owner:
-        :param account_name:
-        :param account_guid:
-        :param is_active:
-        :param is_deleted:
-        :return:
-        """
         account = Accounts(account_name=account_name,
                            account_guid=account_guid,
                            account_type=account_type,
+                           company=company,
                            is_active=is_active,
                            is_deleted=is_deleted)
         if owner:
@@ -85,14 +76,13 @@ class AccountsAdapter(BaseAdapter):
         :param user:
         :return:
         """
-        assert isinstance(user, Users)
         account = db.query(Accounts). \
             filter_by(**query).one()
         account.users.append(user)
         db.commit()
 
     @staticmethod
-    def add_bot(query, bot):
+    def add_bot(query, nerd):
         """
         Adding applications to accounts
 
@@ -100,10 +90,9 @@ class AccountsAdapter(BaseAdapter):
         :param bot:
         :return:
         """
-        assert isinstance(bot, Bots)
         account = db.query(Accounts). \
             filter_by(**query).one()
-        account.bots.append(bot)
+        account.nerds.append(nerd)
         db.commit()
 
     @staticmethod
@@ -116,5 +105,4 @@ class AccountsAdapter(BaseAdapter):
         """
         accounts = db.query(Accounts) \
             .filter(Accounts.account_id.in_(id_list)).all()
-        assert isinstance(accounts, list)
         return accounts

@@ -1,4 +1,5 @@
 from factory.rest_client_factory import NerdRestClientFactory
+import json
 
 
 class ApplicationService:
@@ -34,4 +35,4 @@ class ApplicationService:
     def get_application_by_guid(nerd_url, application_guid):
         nerd_rest_client = NerdRestClientFactory(nerd_base_url=nerd_url).getNerdRestClient()
         result = nerd_rest_client.get_application_by_guid(application_guid=application_guid)
-        print result.text
+        return result

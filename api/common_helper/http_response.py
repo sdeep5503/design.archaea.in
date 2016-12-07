@@ -44,3 +44,7 @@ class HttpResponse:
     @staticmethod
     def success(response):
         return make_response(jsonify(response), 200)
+
+    @staticmethod
+    def custom_http_response(response, status):
+        return make_response(jsonify(response), status)
