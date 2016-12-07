@@ -33,8 +33,8 @@ class Transformer:
             'nerd_url': nerd.nerd_url,
             'is_active': nerd.is_active,
             'is_deleted': nerd.is_deleted,
-            'created_at': str(nerd.created),
-            'updated_at': str(nerd.updated)
+            'created_at': str(nerd.created_at),
+            'updated_at': str(nerd.updated_at)
 
         }
 

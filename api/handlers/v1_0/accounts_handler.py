@@ -31,6 +31,7 @@ def create_account(**kwargs):
                                            account_type=account_type)
             return HttpResponse.accepted('Account created successfully')
         else:
+            # TODO creating enterprise account. Do take the credit card details.
             if account_type == AccountTypes.ENTERPRISE:
                 AccountsService.create_account(current_user,
                                                account_name=account_name,

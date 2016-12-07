@@ -9,7 +9,7 @@ from api.common_helper.common_validations import RequestValidator
 user_handler = Blueprint(__name__, __name__)
 
 
-@user_handler.route(ApiVersions.API_VERSION_V1 + '/users', methods=['POST'])
+@user_handler.route(ApiVersions.API_VERSION_V1 + '/users/register', methods=['POST'])
 @RequestValidator.validate_request_header
 # TODO basic auth
 def create_user():

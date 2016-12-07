@@ -8,10 +8,10 @@ from api.common_helper.common_validations import RequestValidator
 from api.common_helper.http_response import HttpResponse
 from api.common_helper.transformers import Transformer
 
-bot_handler = Blueprint(__name__, __name__)
+nerd_handler = Blueprint(__name__, __name__)
 
 
-@bot_handler.route(ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/nerds', methods=['POST'])
+@nerd_handler.route(ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/nerds', methods=['POST'])
 @RequestValidator.validate_request_header
 @JWTAuthService.jwt_validation
 def create_nerd(account_guid, **kwargs):
@@ -29,12 +29,12 @@ def create_nerd(account_guid, **kwargs):
                                 nerd_name=nerd_name,
                                 nerd_url=nerd_url,
                                 user=current_user)
-        return HttpResponse.accepted('Nerd entry created in design db. This doesn\'t mean bot has been created.')
+        return HttpResponse.accepted('Nerd entry created in design db. This doesn\'t mean nerd has been created.')
     except Exception as e:
         return HttpResponse.bad_request(e.message)
 
 
-@bot_handler.route(ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/nerds', methods=['GET'])
+@nerd_handler.route(ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/nerds', methods=['GET'])
 @RequestValidator.validate_request_header
 @JWTAuthService.jwt_validation
 def get_nerds(account_guid, **kwargs):
@@ -61,7 +61,7 @@ def get_nerds(account_guid, **kwargs):
         return HttpResponse.internal_server_error(e.message)
 
 
-@bot_handler.route(ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/nerds/<nerd_guid>', methods=['GET'])
+@nerd_handler.route(ApiVersions.API_VERSION_V1 + '/accounts/<account_guid>/nerds/<nerd_guid>', methods=['GET'])
 @RequestValidator.validate_request_header
 @JWTAuthService.jwt_validation
 def get_nerd_by_guid(account_guid, nerd_guid, **kwargs):
@@ -84,10 +84,10 @@ def get_nerd_by_guid(account_guid, nerd_guid, **kwargs):
         if current_user.is_system:
             return HttpResponse.accepted('All accounts should be returned [unimplemented]')
         else:
-            bots = NerdService.get_nerd_guid(account=account, user=current_user, nerd_guid=nerd_guid)
-            if len(bots) == 0:
-                return HttpResponse.bad_request('The bot you are looking for is not found in this account')
-            return HttpResponse.success(Transformer.nerd_to_json(bots[0]))
+            nerds = NerdService.get_nerd_guid(account=account, user=current_user, nerd_guid=nerd_guid)
+            if len(nerds) == 0:
+                return HttpResponse.bad_request('The nerd you are looking for is not found in this account')
+            return HttpResponse.success(Transformer.nerd_to_json(nerds[0]))
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)
 

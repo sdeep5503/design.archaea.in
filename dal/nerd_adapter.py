@@ -26,7 +26,7 @@ class NerdAdapter(BaseAdapter):
             is_active=is_active,
         )
         nerd.users.append(user)
-        account.bots.append(nerd)
+        account.nerds.append(nerd)
         db.add(account)
         db.commit()
 
@@ -41,7 +41,7 @@ class NerdAdapter(BaseAdapter):
     def read_nerd_by_user_and_nerd_guid(user_id=None, account_id=None, nerd_guid=None):
         bots = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)). \
             filter(Nerds.account_id.like(account_id)). \
-            filter(Nerds.bot_guid.like(nerd_guid)).all()
+            filter(Nerds.nerd_guid.like(nerd_guid)).all()
         assert isinstance(bots, list)
         return bots
 
