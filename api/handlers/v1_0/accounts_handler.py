@@ -15,9 +15,12 @@ account_handler = Blueprint(__name__, __name__)
 @JWTAuthService.jwt_validation
 def create_account(**kwargs):
     try:
-        account_type = request.json['type']
-        account_name = request.json['name']
-        company = request.json['company']
+        try:
+            account_type = request.json['type']
+            account_name = request.json['name']
+            company = request.json['company']
+        except Exception:
+            return HttpResponse.bad_request('One or more parameters are missing')
         if not account_type or not account_name:
             return HttpResponse.bad_request('Incomplete parameters')
         current_user = kwargs['current_user']

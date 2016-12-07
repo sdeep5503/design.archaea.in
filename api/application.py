@@ -7,21 +7,6 @@ from api.handlers.v1_0.nerd_handler import bot_handler
 bp = Blueprint(__name__, __name__)
 app = Flask(__name__)
 
-
-@bp.route('/')
-def index():
-    return render_template('/src/index.html')
-
-
-@bp.route('/js/<path:path>')
-def send_js(path):
-    return send_from_directory('templates', path)
-
-
-@bp.route('/<path:path>')
-def send_html(path):
-    return send_from_directory('templates/src', path)
-
 if __name__ == '__main__':
 
     app.register_blueprint(bp)

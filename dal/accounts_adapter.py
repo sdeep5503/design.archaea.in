@@ -18,17 +18,6 @@ class AccountsAdapter(BaseAdapter):
                is_active=True,
                is_deleted=False,
                owner=None):
-        """
-        Create a Account
-
-        :param account_type:
-        :param owner:
-        :param account_name:
-        :param account_guid:
-        :param is_active:
-        :param is_deleted:
-        :return:
-        """
         account = Accounts(account_name=account_name,
                            account_guid=account_guid,
                            account_type=account_type,
@@ -87,7 +76,6 @@ class AccountsAdapter(BaseAdapter):
         :param user:
         :return:
         """
-        assert isinstance(user, Users)
         account = db.query(Accounts). \
             filter_by(**query).one()
         account.users.append(user)
@@ -104,7 +92,7 @@ class AccountsAdapter(BaseAdapter):
         """
         account = db.query(Accounts). \
             filter_by(**query).one()
-        account.bots.append(nerd)
+        account.nerds.append(nerd)
         db.commit()
 
     @staticmethod

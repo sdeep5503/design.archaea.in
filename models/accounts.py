@@ -23,7 +23,7 @@ class Accounts(Base):
     company = Column(String(64), nullable=True)
     is_active = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)
-    bots = relationship('Bots', cascade='all, save-update, delete')
+    nerds = relationship('Nerds', cascade='all, save-update, delete')
     users = relationship('Users', cascade='all, save-update, delete',
                          secondary=account_user_association_table)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)

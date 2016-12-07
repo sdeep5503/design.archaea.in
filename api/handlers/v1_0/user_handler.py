@@ -1,8 +1,6 @@
-from models.users import Users
 from flask import Blueprint, request
 from api.services.user_service import UserService
 from api.common_helper.http_response import HttpResponse
-from api.common_helper.common_utils import CommonHelper
 from api.services.jwt_auth_service import JWTAuthService
 from api.services.account_service import AccountsService
 from api.common_helper.common_constants import ApiVersions, AccountPermissions
@@ -13,7 +11,8 @@ user_handler = Blueprint(__name__, __name__)
 
 @user_handler.route(ApiVersions.API_VERSION_V1 + '/users', methods=['POST'])
 @RequestValidator.validate_request_header
-def create_niche_user():
+# TODO basic auth
+def create_user():
     try:
         try:
             email = request.json['email']
@@ -23,18 +22,15 @@ def create_niche_user():
             company = request.json['company']
         except Exception:
             return HttpResponse.bad_request('One or parameters are missing')
-        AccountsService.add_user_to_niche(user=Users(
-            user_guid=CommonHelper.generate_guid(),
+        UserService.create_user_and_add_to_niche(
             email=email,
             password=password,
             first_name=first_name,
             last_name=last_name,
-            is_system=False,
-            company=company
-        ))
-        return HttpResponse.accepted('User added to common niche account successfully')
+            company=company)
+        return HttpResponse.accepted('User created and added to niche account successfully')
     except Exception as e:
-        HttpResponse.internal_server_error(e.message)
+        return HttpResponse.internal_server_error(e.message)
 
 
 @user_handler.route(ApiVersions.API_VERSION_V1 + '<account_guid>/users', methods=['PUT'])

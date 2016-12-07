@@ -37,6 +37,7 @@ class UserAdapter(BaseAdapter):
                      company=company)
         db.add(user)
         db.commit()
+        return user
 
     @staticmethod
     def update(query=None, new_user=None):
