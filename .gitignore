@@ -4,3 +4,5 @@
 *.pyc
 # Ignoring log file changes
 *.log
+# Ignoring condig file
+design.config.json
