@@ -129,3 +129,8 @@ class AccountsAdapter(BaseAdapter):
         except Exception as e:
             db.rollback()
             raise Exception(e.message)
+
+    @staticmethod
+    def read_by_user_id(user_id=None):
+        return db.query(Accounts).join(Users, Accounts.users) \
+            .filter(Users.user_id == user_id).all()

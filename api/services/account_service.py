@@ -22,6 +22,8 @@ class AccountsService:
             raise Exception('[Services] User<Owner> not found while creating account')
         if not account_name or len(account_name) == 0:
             raise Exception('[Services] Account Name should contain atleast one character')
+        if account_type not in ['common_niche', 'enterprise']:
+            raise Exception('[Services] Invalid account Type')
         new_account_guid = CommonHelper.generate_guid()
         account_id = AccountsAdapter.create(
             company=company,
@@ -57,12 +59,8 @@ class AccountsService:
         :param user_id:
         :return:
         """
-        list_of_accounts = AccountUserAdapter.read_by_user_id(user_id=user_id)
-        account_id_list = []
-        for account in list_of_accounts:
-            account_id_list.append(account.account_id)
-        account_list = AccountsAdapter.read_accounts_by_id_list(account_id_list)
-        return account_list
+        list_of_accounts = AccountsAdapter.read_by_user_id(user_id=user_id)
+        return list_of_accounts
 
     @staticmethod
     def update_account(query=None,
