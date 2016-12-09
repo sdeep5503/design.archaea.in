@@ -1,5 +1,6 @@
 import datetime
 from database import Base
+from sqlalchemy.types import Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boolean
 
@@ -19,7 +20,7 @@ class Accounts(Base):
     account_id = Column(Integer, primary_key=True, nullable=False)
     account_name = Column(String(50), nullable=False)
     account_guid = Column(String(120), unique=True, nullable=False)
-    account_type = Column(String(50), nullable=False)
+    account_type = Column(Enum('common_niche', 'enterprise'), nullable=False)
     company = Column(String(64), nullable=True)
     is_active = Column(Boolean, nullable=False)
     is_deleted = Column(Boolean, nullable=False)

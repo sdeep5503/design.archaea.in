@@ -17,27 +17,20 @@ class UserAdapter(BaseAdapter):
                is_system=False,
                company=None
                ):
-        """
-        This method creates a user
-
-        :param user_guid:
-        :param email:
-        :param password:
-        :param first_name:
-        :param last_name:
-        :param company:
-        :return:
-        """
-        user = Users(user_guid=user_guid,
-                     email=email,
-                     password=password,
-                     first_name=first_name,
-                     last_name=last_name,
-                     is_system=is_system,
-                     company=company)
-        db.add(user)
-        db.commit()
-        return user
+        try:
+            user = Users(user_guid=user_guid,
+                         email=email,
+                         password=password,
+                         first_name=first_name,
+                         last_name=last_name,
+                         is_system=is_system,
+                         company=company)
+            db.add(user)
+            db.commit()
+            return user
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
 
     @staticmethod
     def update(query=None, new_user=None):
@@ -48,10 +41,14 @@ class UserAdapter(BaseAdapter):
         :param new_user:
         :return:
         """
-        db.query(Users) \
-            .filter_by(**query) \
-            .update(new_user)
-        db.commit()
+        try:
+            db.query(Users) \
+                .filter_by(**query) \
+                .update(new_user)
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
 
     @staticmethod
     def delete(query=None):
@@ -61,10 +58,14 @@ class UserAdapter(BaseAdapter):
         :param query:
         :return:
         """
-        db.query(Users).\
-            filter_by(**query).\
-            delete()
-        db.commit()
+        try:
+            db.query(Users).\
+                filter_by(**query).\
+                delete()
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
 
     @staticmethod
     def read(query=None):
@@ -74,7 +75,11 @@ class UserAdapter(BaseAdapter):
         :param query:
         :return:
         """
-        users = db.query(Users)\
-            .filter_by(**query).all()
-        assert isinstance(users, list)
-        return users
+        try:
+            users = db.query(Users)\
+                .filter_by(**query).all()
+            assert isinstance(users, list)
+            return users
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)

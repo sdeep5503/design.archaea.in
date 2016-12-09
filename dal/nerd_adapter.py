@@ -18,32 +18,42 @@ class NerdAdapter(BaseAdapter):
                is_active=True,
                user=None):
 
-        nerd = Nerds(
-            nerd_url=nerd_url,
-            nerd_guid=nerd_guid,
-            nerd_name=nerd_name,
-            is_deleted=is_deleted,
-            is_active=is_active,
-        )
-        nerd.users.append(user)
-        account.nerds.append(nerd)
-        db.add(account)
-        db.commit()
+        try:
+            nerd = Nerds(
+                nerd_url=nerd_url,
+                nerd_guid=nerd_guid,
+                nerd_name=nerd_name,
+                is_deleted=is_deleted,
+                is_active=is_active,
+            )
+            nerd.users.append(user)
+            account.nerds.append(nerd)
+            db.add(account)
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
 
     @staticmethod
     def read_by_user(user_id=None, account_id=None):
-        bots = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)).\
-            filter(Nerds.account_id.like(account_id)).all()
-        assert isinstance(bots, list)
-        return bots
+        try:
+            nerds = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)). \
+                filter(Nerds.account_id.like(account_id)).all()
+            return nerds
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
 
     @staticmethod
     def read_nerd_by_user_and_nerd_guid(user_id=None, account_id=None, nerd_guid=None):
-        bots = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)). \
-            filter(Nerds.account_id.like(account_id)). \
-            filter(Nerds.nerd_guid.like(nerd_guid)).all()
-        assert isinstance(bots, list)
-        return bots
+        try:
+            nerds = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)). \
+                filter(Nerds.account_id.like(account_id)). \
+                filter(Nerds.nerd_guid.like(nerd_guid)).all()
+            return nerds
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
 
     @staticmethod
     def update(query=None, updated_value=None):
@@ -54,10 +64,14 @@ class NerdAdapter(BaseAdapter):
         :param updated_value:
         :return:
         """
-        db.query(Nerds) \
-            .filter_by(**query) \
-            .update(updated_value)
-        db.commit()
+        try:
+            db.query(Nerds) \
+                .filter_by(**query) \
+                .update(updated_value)
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
 
     @staticmethod
     def add_user(query, user):
@@ -68,8 +82,11 @@ class NerdAdapter(BaseAdapter):
         :param user:
         :return:
         """
-        assert isinstance(user, Users)
-        bot = db.query(Nerds). \
-            filter_by(**query).one()
-        bot.users.append(user)
-        db.commit()
+        try:
+            nerd = db.query(Nerds). \
+                filter_by(**query).one()
+            nerd.users.append(user)
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)

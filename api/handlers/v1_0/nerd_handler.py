@@ -25,6 +25,7 @@ def create_nerd(account_guid, **kwargs):
         user_permission = AccountUserService.get_permission(user=current_user, account=account)
         if not user_permission:
             return HttpResponse.forbidden('User doesn\'t have permission to perform this operation')
+        # TODO Provision request to create a AWS instance and deploy the nerd
         NerdService.create_nerd(account=account,
                                 nerd_name=nerd_name,
                                 nerd_url=nerd_url,

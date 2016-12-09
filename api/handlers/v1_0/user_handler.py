@@ -22,6 +22,9 @@ def create_user():
             company = request.json['company']
         except Exception:
             return HttpResponse.bad_request('One or parameters are missing')
+        user_by_email = UserService.get_user_by_email(email=email)
+        if len(user_by_email) > 0:
+            return HttpResponse.bad_request('An user account with this email already exists')
         UserService.create_user_and_add_to_niche(
             email=email,
             password=password,
