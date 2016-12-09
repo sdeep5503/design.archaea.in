@@ -1,10 +1,12 @@
 import os
+import json
 
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+with open(PROJECT_ROOT + '/design.config.json') as config_file:
+    config = json.load(config_file)
 
-# Database Setup
-DESIGN_DB_URL = 'mysql://root:Kony@123@localhost/design'
-APPS_DB_URL = 'mysql://root:Kony@123@localhost/archaeaappsdb'
 
-MOCK_NERD_RESPONSE = False
+# Config variables
+DESIGN_DB_URL = config['DATABASE_URL']
+MOCK_NERD_RESPONSE = config['MOCK_NERD_RESPONSE']
