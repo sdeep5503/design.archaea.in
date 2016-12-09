@@ -1,2 +1,5 @@
+requests
+PyJWT
+validate_email
 sqlalchemy
 flask

@@ -2,7 +2,7 @@
 .*
 # Ignoring all .pyc files created while compiling
 *.pyc
-# Ignoring the archaea repo
-src
 # Ignoring log file changes
 *.log
+# Ignoring condig file
+design.config.json
