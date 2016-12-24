@@ -10,16 +10,16 @@ var gulp    = require('gulp'),
   templates = require('gulp-angular-templates');
 
 var vendors = [
-  'src/bower_components/angular/angular.js',
-  'src/bower_components/angular-cookies/angular-cookies.js',
-  'src/bower_components/angular-bootstrap/ui-bootstrap.js',
-  'src/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-  'src/bower_components/angular-ui-router/release/angular-ui-router.js',
+  'bower_components/angular/angular.js',
+  'bower_components/angular-cookies/angular-cookies.js',
+  'bower_components/angular-bootstrap/ui-bootstrap.js',
+  'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+  'bower_components/angular-ui-router/release/angular-ui-router.js',
 ];
 
 var styles = [
-  'src/bower_components/bootstrap/dist/css/bootstrap.css',
-  'src/bower_components/font-awesome/css/font-awesome.css',
+  'bower_components/bootstrap/dist/css/bootstrap.css',
+  'bower_components/font-awesome/css/font-awesome.css',
   'src/less/dashboard/variables.less',
   'src/less/dashboard/mixins.less',
   'src/less/dashboard/main.less',
@@ -33,8 +33,8 @@ var styles = [
 
 var fonts = [
   'src/fonts/**.*',
-  'src/bower_components/bootstrap/dist/fonts/*.{ttf,woff,eof,svg}',
-  'src/bower_components/font-awesome/fonts/*.{ttf,woff,eof,svg}'
+  'bower_components/bootstrap/dist/fonts/*.{ttf,woff,eof,svg}',
+  'bower_components/font-awesome/fonts/*.{ttf,woff,eof,svg}'
 ];
 
 var paths = {

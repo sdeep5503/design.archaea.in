@@ -6,3 +6,7 @@
 *.log
 # Ignoring condig file
 design.config.json
+# Ignoring bower_components
+api/templates/bower_components
+api/templates/dist
+api/templates/node_modules
