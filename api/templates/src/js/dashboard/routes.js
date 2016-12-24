@@ -13,12 +13,16 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             url: '/dashboard',
             templateUrl: 'dashboard.html'
         })
-        .state('tables', {
-            url: '/tables',
-            templateUrl: 'tables.html'
-        })
         .state('nerds', {
             url: '/nerds',
             templateUrl: 'manage-nerds.html'
+        })
+        .state('applications', {
+            url: '/nerds/:nerd_guid/applications',
+            templateUrl: 'manage-applications.html'
+        })
+        .state('edit-applications', {
+            url: '/nerds/:nerd_guid/applications/:application_guid',
+            templateUrl: 'design-applications.html'
         });
 }]);

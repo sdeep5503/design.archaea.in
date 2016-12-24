@@ -1,6 +1,7 @@
 angular
 	.module('Dashboard')
-	.directive('rdWidget', rdWidget);
+	.directive('rdWidget', rdWidget)
+	.directive('pageHeader', pageHeader);
 
 function rdWidget () {
 	var directive = {
@@ -14,3 +15,16 @@ function rdWidget () {
       /* */
     }
 };
+
+
+function pageHeader ()
+{
+    return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: "page-header.html",
+        link: function ($scope) {
+
+        }
+    }
+}
