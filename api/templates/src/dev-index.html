@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" ng-app="Dashboard">
+<head>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="dist/css/dashboard.min.css">
+  <script type="text/javascript" src="dist/js/vendors.min.js"></script>
+  <script type="text/javascript" src="js/dashboard/module.js"></script>
+  <script type="text/javascript" src="js/dashboard/routes.js"></script>
+  <script type="text/javascript" src="js/dashboard/controllers/alerts-ctrl.js"></script>
+  <script type="text/javascript" src="js/dashboard/controllers/master-ctrl.js"></script>
+  <script type="text/javascript" src="js/dashboard/directives/loading.js"></script>
+  <script type="text/javascript" src="js/dashboard/directives/widget.js"></script>
+  <script type="text/javascript" src="js/dashboard/directives/widget-body.js"></script>
+  <script type="text/javascript" src="js/dashboard/directives/widget-header.js"></script>
+</head>
+<body ng-controller="MasterCtrl">
+  <div id="page-wrapper" ng-class="{'active': toggle}" ng-cloak>
+    <div id="sidebar-wrapper">
+      <ul class="sidebar">
+        <li class="sidebar-main">
+          <a href="#" ng-click="toggleSidebar()">
+            Nerdstacks
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+          </a>
+        </li>
+        <li class="sidebar-title"><span>NAVIGATION</span></li>
+        <li class="sidebar-list">
+          <a href="#/dashboard" ng-click="changePageInfoHeader('dashboard')">Dashboard<span class="menu-icon fa fa-tachometer"></span></a>
+        </li>
+        <li class="sidebar-list">
+          <a href="#/tables" ng-click="changePageInfoHeader('tables')">Tables<span class="menu-icon fa fa-table"></span></a>
+        </li>
+        <li class="sidebar-list">
+          <a href="#/nerds" ng-click="changePageInfoHeader('nerds')">Nerds<span class="menu-icon fa fa-table"></span></a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="col-xs-4">
+          <a href="https://github.com/Ehesp/Responsive-Dashboard" target="_blank">
+            Github
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="#" target="_blank">
+            About
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="#">
+            Support
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="content-wrapper">
+      <div class="page-content">
+        <div class="row header">
+          <div class="col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown">
+                <a href="#" class="dropdown-toggle">
+                  <img src="img/avatar.jpg">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Joe Bloggs
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#">
+                      Profile
+                    </a>
+                  </li>
+                  <li class="link">
+                    <a href="#">
+                      Menu Item
+                    </a>
+                  </li>
+                  <li class="link">
+                    <a href="#">
+                      Menu Item
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#">
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="item dropdown">
+               <a href="#" class="dropdown-toggle">
+                  <i class="fa fa-bell-o"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Notifications
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="#">Server Down!</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">
+                [[currentPageName]]
+              </div>
+              <div class="breadcrumb-links">
+                [[currentPageDescription]]
+              </div>
+            </div>
+          </div>
+        </div>
+        <section data-ui-view></section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
