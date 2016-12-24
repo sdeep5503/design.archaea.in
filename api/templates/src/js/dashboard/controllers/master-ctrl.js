@@ -11,9 +11,6 @@ function MasterCtrl($scope, $cookieStore, $window) {
      */
     var mobileView = 992;
 
-    $scope.currentPageName = '';
-    $scope.currentPageDescription = '';
-
     $scope.getWidth = function() { return window.innerWidth; };
 
     $scope.$watch($scope.getWidth, function(newValue, oldValue)
