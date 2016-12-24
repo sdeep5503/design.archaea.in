@@ -14,8 +14,8 @@ angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'dashboard.html'
         })
         .state('tables', {
-            url: '/tables',
-            templateUrl: 'tables.html'
+            url: '/nerds/:nerd_guid/applications',
+            templateUrl: 'manage-applications.html'
         })
         .state('nerds', {
             url: '/nerds',

@@ -61,13 +61,15 @@ function MasterCtrl($scope, $cookieStore, $window) {
       var headerMap = {
         'dashboard': 'Dashboard',
         'nerds': 'Manage Nerds',
-        'tables': 'Manage Tables'
+        'tables': 'Manage Tables',
+        'applications': 'Manage Applications'
       }
 
       var descriptionMap = {
         'dashboard': 'Latest updates from Nerdstacks',
         'nerds': 'Manage all your nerd clouds and use them to give life to your apps',
-        'tables': 'Manage Tables'
+        'tables': 'Manage Tables',
+        'applications': 'Manage Applications'
       }
 
       $scope.currentPageName = headerMap[pageName ? pageName : moduleName];
