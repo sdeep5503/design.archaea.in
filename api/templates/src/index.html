@@ -3,17 +3,11 @@
 <head>
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
 	<title>Dashboard</title>
-
   <link rel="stylesheet" type="text/css" href="dist/css/dashboard.min.css">
-
 </head>
 <body ng-controller="MasterCtrl">
   <div id="page-wrapper" ng-class="{'active': toggle}" ng-cloak>
-
-    <!-- Sidebar -->
-
     <div id="sidebar-wrapper">
       <ul class="sidebar">
         <li class="sidebar-main">
@@ -48,14 +42,8 @@
         </div>
       </div>
     </div>
-
-    <!-- End Sidebar -->
-
     <div id="content-wrapper">
       <div class="page-content">
-
-        <!-- Header Bar -->
-
         <div class="row header">
           <div class="col-xs-12">
             <div class="user pull-right">
@@ -116,18 +104,12 @@
             </div>
           </div>
         </div>
-
-        <!-- End Header Bar -->
-
-        <!-- Main Content -->
         <section data-ui-view></section>
-      </div><!-- End Page Content -->
-    </div><!-- End Content Wrapper -->
-  </div><!-- End Page Wrapper -->
-
+      </div>
+    </div>
+  </div>
   <script type="text/javascript" src="dist/js/vendors.min.js"></script>
   <script type="text/javascript" src="dist/js/dashboard.min.js"></script>
   <script type="text/javascript" src="dist/js/templates.min.js"></script>
-
 </body>
 </html>
