@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="widget">
+      <div class="widget-header">
+        <i class="fa fa-users"></i> Servers
+        <a href="#" class="pull-right">Manage</a>
+      </div>
+      <div class="widget-body">
+        <div class="table-responsive">
+          <table st-table="rowCollection" class="table table-striped">
+            <thead>
+            <tr>
+                <th st-sort="firstName">First Name</th>
+                <th st-sort="lastName">Last Name</th>
+                <th st-sort="birthDate">Birth Date</th>
+                <th st-sort="balance">Balance</th>
+                <th st-sort="email">Email</th>
+            </tr>
+            <tr>
+                <th colspan="5">
+                    <input st-search placeholder="global search" class="input-sm form-control" type="search"/>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Firrtsbnanpoejp</td>
+                <td>wefewrg</td>
+                <td>wqfewgf</td>
+                <td>wsfewgr</td>
+                <td><a ng-href="mailto:{{row.email}}">email</a></td>
+            </tr>
+            <tr>
+                <td>don</td>
+                <td>wefewrg</td>
+                <td>bos</td>
+                <td>wsfewgr</td>
+                <td><a ng-href="mailto:{{row.email}}">email</a></td>
+            </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" class="text-center">
+                        <div st-pagination="" st-items-by-page="1" st-displayed-pages="7"></div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

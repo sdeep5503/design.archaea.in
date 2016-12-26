@@ -58,6 +58,7 @@ function MasterCtrl($scope, $cookieStore, $window) {
       var headerMap = {
         'dashboard': 'Dashboard',
         'nerds': 'Manage Nerds',
+        'users': 'Manage Users',
         'tables': 'Manage Tables',
         'applications': 'Manage Applications',
         'createUpdateApp': 'Create/Update Applications'
@@ -66,6 +67,7 @@ function MasterCtrl($scope, $cookieStore, $window) {
       var descriptionMap = {
         'dashboard': 'Latest updates from Nerdstacks',
         'nerds': 'Manage all your nerd clouds and use them to give life to your apps',
+        'users': 'Manage all the users in this account',
         'tables': 'Manage Tables',
         'applications': 'Manage Applications',
         'createUpdateApp': 'Create/Update Applications'
