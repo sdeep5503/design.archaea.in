@@ -8,6 +8,11 @@ def js(path):
     return send_from_directory('templates', 'src/js/' + path)
 
 
+@assets_controller.route('/css/<path:path>', methods=['GET'])
+def css(path):
+    return send_from_directory('templates', 'src/css/' + path)
+
+
 @assets_controller.route('/dist/<path:path>', methods=['GET'])
 def dist(path):
     return send_from_directory('templates', 'dist/' + path)
