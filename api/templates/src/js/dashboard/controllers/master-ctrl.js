@@ -61,7 +61,8 @@ function MasterCtrl($scope, $cookieStore, $window) {
         'users': 'Manage Users',
         'tables': 'Manage Tables',
         'applications': 'Manage Applications',
-        'createUpdateApp': 'Create/Update Applications'
+        'createUpdateApp': 'Create/Update Applications',
+        'documentations': 'Documentations'
       }
 
       var descriptionMap = {
@@ -70,7 +71,8 @@ function MasterCtrl($scope, $cookieStore, $window) {
         'users': 'Manage all the users in this account',
         'tables': 'Manage Tables',
         'applications': 'Manage Applications',
-        'createUpdateApp': 'Create/Update Applications'
+        'createUpdateApp': 'Create/Update Applications',
+        'documentations': 'All the important documentations that you need'
       }
 
       $scope.currentPageName = headerMap[pageName ? pageName : moduleName];
