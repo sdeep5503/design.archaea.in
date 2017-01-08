@@ -8,4 +8,4 @@ class CommonHelper:
 
     @staticmethod
     def generate_guid():
-        return uuid.uuid1()
+        return str(uuid.uuid1())

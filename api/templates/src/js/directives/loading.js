@@ -2,7 +2,7 @@
  * Loading Directive
  * @see http://tobiasahlin.com/spinkit/
  */
-angular.module('Dashboard').directive('rdLoading', rdLoading);
+angular.module('nerdstacks').directive('rdLoading', rdLoading);
 
 function rdLoading () {
     var directive = {

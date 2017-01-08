@@ -1,7 +1,7 @@
 /**
  * Alerts Controller
  */
-angular.module('Dashboard').controller('AlertsCtrl', ['$scope', AlertsCtrl]);
+angular.module('nerdstacks').controller('AlertsCtrl', ['$scope', AlertsCtrl]);
 
 function AlertsCtrl($scope) {
     $scope.alerts = [

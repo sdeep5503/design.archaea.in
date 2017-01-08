@@ -1,21 +1,26 @@
 <!doctype html>
-<html lang="en" ng-app="Dashboard">
+<html lang="en" ng-app="nerdstacks">
 <head>
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Dashboard</title>
   <link rel="stylesheet" type="text/css" href="dist/css/dashboard.min.css">
   <script type="text/javascript" src="dist/js/vendors.min.js"></script>
-  <script type="text/javascript" src="js/dashboard/module.js"></script>
-  <script type="text/javascript" src="js/dashboard/routes.js"></script>
-  <script type="text/javascript" src="js/dashboard/controllers/alerts-ctrl.js"></script>
-  <script type="text/javascript" src="js/dashboard/controllers/master-ctrl.js"></script>
-  <script type="text/javascript" src="js/dashboard/controllers/manage-nerds-ctrl.js"></script>
-  <script type="text/javascript" src="js/dashboard/controllers/manage-apps-ctrl.js"></script>
-  <script type="text/javascript" src="js/dashboard/directives/loading.js"></script>
-  <script type="text/javascript" src="js/dashboard/directives/widget.js"></script>
-  <script type="text/javascript" src="js/dashboard/directives/widget-body.js"></script>
-  <script type="text/javascript" src="js/dashboard/directives/widget-header.js"></script>
+  <script type="text/javascript" src="js/module.js"></script>
+  <script type="text/javascript" src="js/routes.js"></script>
+  <script type="text/javascript" src="js/controllers/alerts-ctrl.js"></script>
+  <script type="text/javascript" src="js/controllers/master-ctrl.js"></script>
+  <script type="text/javascript" src="js/controllers/manage-nerds-ctrl.js"></script>
+  <script type="text/javascript" src="js/controllers/manage-apps-ctrl.js"></script>
+  <script type="text/javascript" src="js/directives/loading.js"></script>
+  <script type="text/javascript" src="js/directives/widget.js"></script>
+  <script type="text/javascript" src="js/directives/widget-body.js"></script>
+  <script type="text/javascript" src="js/directives/widget-header.js"></script>
+
+  <script>
+        var nerdstacks_base_url = '{{ base_url }}';
+  </script>
+
 </head>
 <body ng-controller="MasterCtrl">
   <div id="page-wrapper" ng-class="{'active': toggle}" ng-cloak>
@@ -24,7 +29,7 @@
         <li class="sidebar-main">
           <a href="#" ng-click="toggleSidebar()">
             Nerdstacks
-            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+            <img class="menu-icon" src="img/short_logo.png" style="width: 50px;height: 26px;margin-top: 15px;">
           </a>
         </li>
         <li class="sidebar-title"><span>NAVIGATION</span></li>

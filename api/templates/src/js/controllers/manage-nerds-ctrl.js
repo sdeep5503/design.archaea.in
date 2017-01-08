@@ -1,7 +1,7 @@
 /**
  * Master Controller
  */
-angular.module('Dashboard')
+angular.module('nerdstacks')
     .controller('ManageNerdsCtrl', ['$scope', '$window', '$rootScope', ManageNerdsCtrl]);
 
 function ManageNerdsCtrl($scope, $window, $rootScope) {
