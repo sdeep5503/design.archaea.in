@@ -11,6 +11,7 @@ var gulp    = require('gulp'),
 
 var vendors = [
   'bower_components/angular/angular.js',
+  'bower_components/angular-resource/angular-resource.js',
   'bower_components/angular-cookies/angular-cookies.js',
   'bower_components/angular-bootstrap/ui-bootstrap.js',
   'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
