@@ -1,7 +1,15 @@
 /**
  * Common Nerdstacks Services
  */
-angular.module('nerdstacks', ['ngResource'])
+angular.module('nerdstacks.services', ['ngResource'])
+
+    .service('defaultRequestHeaders', function() {
+        return {
+            'Content-Type': 'application/json',
+            'X-Request-Id': 'edjoijnpoi',
+            'X-Motohub-Authorization': 'bjihubik'
+        }
+    })
 
     .service('api', function ($location) {
         var base = '/api/:version';
@@ -16,5 +24,11 @@ angular.module('nerdstacks', ['ngResource'])
 
         return angular.extend(o, {
             account_users: o.accounts + '/users/:user_guid'
+        });
+    })
+
+    .factory('Authenticate', function ($location, $resource, api, defaultRequestHeaders) {
+        return $resource(api.authenticate, {version: api.version}, {
+            login: {method: 'POST', headers: defaultRequestHeaders}
         });
     })
