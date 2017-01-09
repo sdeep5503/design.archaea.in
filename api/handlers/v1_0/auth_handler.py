@@ -14,7 +14,9 @@ def authenticate():
     email = request.json['email']
     password = request.json['password']
     try:
-        user = UserService.get_user_by_email(email=email)[0]
+        user = UserService.get_user_by_email(email=email)
+        if len(user) == 0:
+            return HttpResponse.forbidden('Incorrect username or password')
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)
     if user:

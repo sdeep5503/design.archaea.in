@@ -26,7 +26,7 @@ def create_account(**kwargs):
         current_user = kwargs['current_user']
         if current_user.is_system:
             AccountsService.create_account(current_user,
-                                           company=ProjectDetails.COMPANY_NAME,
+                                           company=company,
                                            account_name=account_name,
                                            account_type=account_type)
             return HttpResponse.accepted('Account created successfully')

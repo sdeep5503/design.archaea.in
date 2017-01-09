@@ -1,4 +1,4 @@
 {
-  "DATABASE_URL": "mysql://root:Kony@123@localhost/design",
+  "DATABASE_URL": "mysql+pymysql://root:Kony@123@localhost/design",
   "MOCK_NERD_RESPONSE": false
 }

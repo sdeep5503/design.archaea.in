@@ -1,7 +1,7 @@
 /**
  * Master Controller
  */
-angular.module('Dashboard')
+angular.module('nerdstacks')
     .controller('ManageAppsCtrl', ['$scope', '$window', '$rootScope', ManageAppsCtrl]);
 
 function ManageAppsCtrl($scope, $window, $rootScope) {

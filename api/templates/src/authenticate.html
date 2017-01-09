@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app="nerdstacks">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign In | NerdStacks</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
+  <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Montserrat:400,700'>
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="css/auth-style.css">
+
+  <script type="text/javascript" src="dist/js/vendors.min.js"></script>
+  <script type="text/javascript" src="js/module.js"></script>
+  <script type="text/javascript" src="js/directives/loading.js"></script>
+  <script type="text/javascript" src="js/directives/widget.js"></script>
+  <script type="text/javascript" src="js/directives/widget-body.js"></script>
+  <script type="text/javascript" src="js/directives/widget-header.js"></script>
+  <script type="text/javascript" src="js/services/common-services.js"></script>
+  <script type="text/javascript" src="js/controllers/login-ctrl.js"></script>
+
+  <script>
+        var nerdstacks_base_url = '{{ base_url }}';
+  </script>
+
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <h1 style="margin-top: -45px;"><img src="img/loo.png"></h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="container">
+      <div class="info">
+        <h1> Sign In | NerdStacks Console</h1>
+      </div>
+    </div>
+    <div class="form" data-ng-controller="LoginController">
+      <form class="login-form">
+        <input type="text" ng-model="loginCredentials.email" placeholder="email"/>
+        <input type="password" ng-model="loginCredentials.password" placeholder="password"/>
+        <button ng-click="signIn()">Sign In</button>
+        <p class="message">Not registered ? <a href="#">Create an account</a></p>
+      </form>
+    </div>
+    <footer>
+        <div class="wrapper">
+            <div id="footer-links">
+                <ul>
+                    <li><h5>Company</h5></li>
+                </ul>
+                <ul>
+                    <li><h5>About Us</h5></li>
+                </ul>
+                <ul>
+                    <li><h5>Our Team</h5></li>
+                </ul>
+                <ul>
+                    <li><h5>Career</h5></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </footer>
+</body>
+</html>

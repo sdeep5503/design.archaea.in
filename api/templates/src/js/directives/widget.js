@@ -1,5 +1,5 @@
 angular
-	.module('Dashboard')
+	.module('nerdstacks')
 	.directive('rdWidget', rdWidget)
 	.directive('pageHeader', pageHeader);
 

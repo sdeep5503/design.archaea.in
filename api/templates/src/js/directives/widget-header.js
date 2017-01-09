@@ -1,5 +1,5 @@
 angular
-	.module('Dashboard')
+	.module('nerdstacks')
 	.directive('rdWidgetHeader', rdWidgetTitle);
 
 function rdWidgetTitle () {

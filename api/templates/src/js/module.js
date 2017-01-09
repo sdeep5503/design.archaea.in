@@ -1,4 +1,4 @@
-angular.module('Dashboard', ['ui.bootstrap', 'ui.router', 'ngCookies'])
+angular.module('nerdstacks', ['ui.bootstrap', 'ui.router', 'ngCookies'])
 
 .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('[[').endSymbol(']]');

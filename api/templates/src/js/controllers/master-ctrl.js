@@ -1,7 +1,7 @@
 /**
  * Master Controller
  */
-angular.module('Dashboard')
+angular.module('nerdstacks')
     .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', MasterCtrl]);
 
 function MasterCtrl($scope, $cookieStore, $window) {

@@ -1,7 +1,7 @@
 /**
  * Route configuration for the Dashboard module.
  */
-angular.module('Dashboard').config(['$stateProvider', '$urlRouterProvider',
+angular.module('nerdstacks').config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
 
     // For unmatched routes
