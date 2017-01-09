@@ -21,6 +21,10 @@ angular.module('nerdstacks').config(['$stateProvider', '$urlRouterProvider',
             url: '/users',
             templateUrl: 'manage-users.html'
         })
+        .state('documentation', {
+            url: '/documentations',
+            templateUrl: 'documentations.html'
+        })
         .state('applications', {
             url: '/nerds/:nerd_guid/applications',
             templateUrl: 'manage-applications.html'
