@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="nerdstacks">
+<html lang="en" ng-app="nerdstacks">
 <head>
   <meta charset="UTF-8">
   <title>Sign In | NerdStacks</title>
@@ -12,10 +12,6 @@
 
   <script type="text/javascript" src="dist/js/vendors.min.js"></script>
   <script type="text/javascript" src="js/module.js"></script>
-  <script type="text/javascript" src="js/directives/loading.js"></script>
-  <script type="text/javascript" src="js/directives/widget.js"></script>
-  <script type="text/javascript" src="js/directives/widget-body.js"></script>
-  <script type="text/javascript" src="js/directives/widget-header.js"></script>
   <script type="text/javascript" src="js/services/common-services.js"></script>
   <script type="text/javascript" src="js/controllers/login-ctrl.js"></script>
 
@@ -24,7 +20,7 @@
   </script>
 
 </head>
-<body>
+<body ng-controller="LoginController">
     <header>
         <div class="wrapper">
             <h1 style="margin-top: -45px;"><img src="img/loo.png"></h1>
@@ -40,10 +36,14 @@
     </header>
     <div class="container">
       <div class="info">
+          {% raw %}
         <h1> Sign In | NerdStacks Console</h1>
+          <span style="color:red">{{errorMessage}}
+          </span>
+          {% endraw %}
       </div>
     </div>
-    <div class="form" data-ng-controller="LoginController">
+    <div class="form">
       <form class="login-form">
         <input type="text" ng-model="loginCredentials.email" placeholder="email"/>
         <input type="password" ng-model="loginCredentials.password" placeholder="password"/>

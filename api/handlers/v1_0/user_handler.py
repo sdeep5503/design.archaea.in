@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint, request
 from api.services.user_service import UserService
 from api.common_helper.http_response import HttpResponse
@@ -22,6 +23,8 @@ def create_user():
             company = request.json['company']
         except Exception:
             return HttpResponse.bad_request('One or parameters are missing')
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            return HttpResponse.bad_request('Please enter a valid email')
         user_by_email = UserService.get_user_by_email(email=email)
         if len(user_by_email) > 0:
             return HttpResponse.bad_request('An user account with this email already exists')

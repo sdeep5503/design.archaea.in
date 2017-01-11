@@ -1,20 +1,21 @@
 /**
  *  Login Controller to have all the login logic
  */
-angular.module('nerdstacks', ['nerdstacks.services'])
+angular.module('nerdstacks', ['nerdstacks.services', 'ngCookies'])
 
- .controller('LoginController', ['$scope', 'Authenticate', function ($scope, Authenticate) {
+ .controller('LoginController', ['$scope', '$cookies', 'Authenticate', function ($scope, $cookies, Authenticate) {
 
     $scope.loginCredentials = {};
+    $scope.errorMessage = '';
 
     $scope.signIn = function () {
         Authenticate.login({
             'email': $scope.loginCredentials.email,
             'password': $scope.loginCredentials.password
         }, function (response) {
-            console.log(JSON.stringify(response));
+            $cookies['ns_claims'] = response.claims_token;
         }, function (error) {
-            console.log(JSON.stringify(error));
+            $scope.errorMessage = error.data.message;
         });
     }
 
