@@ -3,7 +3,7 @@
  */
 angular.module('nerdstacks', ['nerdstacks.services', 'ngCookies'])
 
- .controller('LoginController', ['$scope', '$cookies', 'Authenticate', function ($scope, $cookies, Authenticate) {
+ .controller('LoginController', ['$scope', '$cookieStore', 'Authenticate', function ($scope, $cookieStore, Authenticate) {
 
     $scope.loginCredentials = {};
     $scope.errorMessage = '';
@@ -14,7 +14,7 @@ angular.module('nerdstacks', ['nerdstacks.services', 'ngCookies'])
             'email': $scope.loginCredentials.email,
             'password': $scope.loginCredentials.password
         }, function (response) {
-            $cookies['ns_claims'] = response.claims_token;
+            $cookieStore.put('ns_claims', response.claims_token);
         }, function (error) {
             $scope.errorMessage = error.data.message;
         });

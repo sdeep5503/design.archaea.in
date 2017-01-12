@@ -3,6 +3,7 @@ from functools import wraps
 from token_service import TokenService
 from api.services.user_service import UserService
 from api.common_helper.common_constants import ApiRequestConstants
+from api.common_helper.http_response import HttpResponse
 
 
 class JWTAuthService:
@@ -14,8 +15,10 @@ class JWTAuthService:
     def jwt_validation(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            current_user = JWTAuthService.validate_jwt_token_and_get_user(request.headers
-                .get(ApiRequestConstants.X_ARCHAEA_AUTHORIZATION))
+            token = request.headers.get(ApiRequestConstants.X_ARCHAEA_AUTHORIZATION)
+            current_user = JWTAuthService.validate_jwt_token_and_get_user(token)
+            if len(current_user) == 0:
+                return HttpResponse.unauthorized('User not found')
             kwargs['current_user'] = current_user[0]
             return f(*args, **kwargs)
 

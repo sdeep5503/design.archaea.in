@@ -13,9 +13,9 @@ function MasterCtrl($scope, $cookieStore, $window, Whoami) {
     $scope.user = {};
 
     Whoami.get(function(response) {
-        console.log(JSON.stringify(response));
+        $scope.user = response;
     }, function(error) {
-        console.log(JSON.stringify(error));
+        console.log(error.data.message);
     });
 
     $scope.getWidth = function() { return window.innerWidth; };

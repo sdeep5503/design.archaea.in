@@ -1,13 +1,13 @@
 /**
  * Common Nerdstacks Services
  */
-angular.module('nerdstacks.services', ['ngResource'])
+angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
 
-    .service('defaultRequestHeaders', function() {
+    .service('defaultRequestHeaders', function($cookieStore) {
         return {
             'Content-Type': 'application/json',
             'X-Request-Id': 'edjoijnpoi',
-            'X-Motohub-Authorization': 'bjihubik'
+            'X-NS-Authorization': $cookieStore.get('ns_claims')
         }
     })
 
