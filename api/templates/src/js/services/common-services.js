@@ -19,7 +19,8 @@ angular.module('nerdstacks.services', ['ngResource'])
         var o = {
             version: 'v1_0',
             accounts: base + '/accounts/:account_guid',
-            authenticate: base + '/authenticate'
+            authenticate: base + '/authenticate',
+            whoami: base + '/whoami'
         };
 
         return angular.extend(o, {
@@ -30,5 +31,11 @@ angular.module('nerdstacks.services', ['ngResource'])
     .factory('Authenticate', function ($location, $resource, api, defaultRequestHeaders) {
         return $resource(api.authenticate, {version: api.version}, {
             login: {method: 'POST', headers: defaultRequestHeaders}
+        });
+    })
+
+    .factory('Whoami', function ($resource, api, defaultRequestHeaders) {
+        return $resource(api.whoami, {version: api.version}, {
+            get: {method: 'GET', headers: defaultRequestHeaders}
         });
     })

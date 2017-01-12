@@ -4,8 +4,9 @@ from api.services.user_service import UserService
 from api.common_helper.http_response import HttpResponse
 from api.services.jwt_auth_service import JWTAuthService
 from api.services.account_service import AccountsService
-from api.common_helper.common_constants import ApiVersions, AccountPermissions
 from api.common_helper.common_validations import RequestValidator
+from api.common_helper.transformers import Transformer
+from api.common_helper.common_constants import ApiVersions, AccountPermissions
 
 user_handler = Blueprint(__name__, __name__)
 
@@ -35,6 +36,17 @@ def create_user():
             last_name=last_name,
             company=company)
         return HttpResponse.accepted('User created and added to niche account successfully')
+    except Exception as e:
+        return HttpResponse.internal_server_error(e.message)
+
+
+@user_handler.route(ApiVersions.API_VERSION_V1 + '/whoami', methods=['GET'])
+@RequestValidator.validate_request_header
+@JWTAuthService.jwt_validation
+def get_whoami(**kwargs):
+    try:
+        current_user = kwargs['current_user']
+        return HttpResponse.success(Transformer.user_to_json(user=current_user))
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)
 

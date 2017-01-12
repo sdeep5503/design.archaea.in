@@ -2,14 +2,21 @@
  * Master Controller
  */
 angular.module('nerdstacks')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', 'Whoami', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, $window) {
+function MasterCtrl($scope, $cookieStore, $window, Whoami) {
     /**
      * Sidebar Toggle & Cookie Control
      *
      */
     var mobileView = 992;
+    $scope.user = {};
+
+    Whoami.get(function(response) {
+        console.log(JSON.stringify(response));
+    }, function(error) {
+        console.log(JSON.stringify(error));
+    });
 
     $scope.getWidth = function() { return window.innerWidth; };
 

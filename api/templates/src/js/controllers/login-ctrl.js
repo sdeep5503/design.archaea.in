@@ -9,6 +9,7 @@ angular.module('nerdstacks', ['nerdstacks.services', 'ngCookies'])
     $scope.errorMessage = '';
 
     $scope.signIn = function () {
+
         Authenticate.login({
             'email': $scope.loginCredentials.email,
             'password': $scope.loginCredentials.password
@@ -17,6 +18,7 @@ angular.module('nerdstacks', ['nerdstacks.services', 'ngCookies'])
         }, function (error) {
             $scope.errorMessage = error.data.message;
         });
-    }
+
+    };
 
  }]);
