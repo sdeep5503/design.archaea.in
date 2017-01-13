@@ -2,19 +2,30 @@
  * Master Controller
  */
 angular.module('nerdstacks')
-    .controller('MasterCtrl', ['$scope', '$cookieStore', '$window', 'Whoami', MasterCtrl]);
+    .controller('MasterCtrl', ['$scope', '$rootScope', '$cookieStore', '$window', 'Whoami', 'Accounts', MasterCtrl]);
 
-function MasterCtrl($scope, $cookieStore, $window, Whoami) {
+function MasterCtrl($scope, $rootScope, $cookieStore, $window, Whoami, Accounts) {
     /**
      * Sidebar Toggle & Cookie Control
      *
      */
     var mobileView = 992;
     $scope.user = {};
+    $scope.accounts = [];
+    $scope.currentAccount = {};
+    $rootScope.current = {};
 
     Whoami.get(function(response) {
         $scope.user = response;
     }, function(error) {
+        console.log(error.data.message);
+    });
+
+    Accounts.get(function(response) {
+        $scope.accounts = response;
+        $rootScope.current.account = $scope.accounts[0];
+        $scope.currentAccount = $scope.accounts[0];
+    }, function() {
         console.log(error.data.message);
     });
 

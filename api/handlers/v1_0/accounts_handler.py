@@ -87,7 +87,7 @@ def get_accounts_by_guid(account_guid, **kwargs):
             return HttpResponse.accepted('All accounts should be returned [unimplemented]')
         else:
             accounts = AccountsService.get_account_by_guid(account_guid=account_guid)
-            if not len(accounts) or len(accounts) == 0:
+            if accounts is None:
                 return HttpResponse.bad_request('The account doesn\'t exist')
             return HttpResponse.success(Transformer.account_to_json(accounts[0]))
     except Exception as e:

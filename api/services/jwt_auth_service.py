@@ -16,6 +16,8 @@ class JWTAuthService:
         @wraps(f)
         def decorated(*args, **kwargs):
             token = request.headers.get(ApiRequestConstants.X_ARCHAEA_AUTHORIZATION)
+            if token is None:
+                return HttpResponse.forbidden('Token validation failure')
             current_user = JWTAuthService.validate_jwt_token_and_get_user(token)
             if len(current_user) == 0:
                 return HttpResponse.unauthorized('User not found')

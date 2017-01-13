@@ -18,17 +18,19 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
         }
         var o = {
             version: 'v1_0',
-            accounts: base + '/accounts/:account_guid',
             authenticate: base + '/authenticate',
-            whoami: base + '/whoami'
+            whoami: base + '/whoami',
+            accounts: base + '/accounts',
+            account: base + '/accounts/:account_guid'
         };
 
         return angular.extend(o, {
-            account_users: o.accounts + '/users/:user_guid'
+            nerds: o.account + '/nerds',
+            applications: o.account + '/nerds/:nerd_guid/applications'
         });
     })
 
-    .factory('Authenticate', function ($location, $resource, api, defaultRequestHeaders) {
+    .factory('Authenticate', function ($resource, api, defaultRequestHeaders) {
         return $resource(api.authenticate, {version: api.version}, {
             login: {method: 'POST', headers: defaultRequestHeaders}
         });
@@ -38,4 +40,22 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
         return $resource(api.whoami, {version: api.version}, {
             get: {method: 'GET', headers: defaultRequestHeaders}
         });
+    })
+
+    .factory('Accounts', function ($resource, api, defaultRequestHeaders) {
+        return $resource(api.accounts, {version: api.version}, {
+            get: {method: 'GET', headers: defaultRequestHeaders, isArray: true}
+        });
+    })
+
+    .factory('Nerds', function($resource, api, defaultRequestHeaders) {
+        return $resource(api.nerds, {version: api.version}, {
+            get: {method: 'GET', headers: defaultRequestHeaders, isArray:true}
+        })
+    })
+
+    .factory('Applications', function($resource, api, defaultRequestHeaders) {
+        return $resource(api.applications, {version: api.version}, {
+            get: {method: 'GET', headers: defaultRequestHeaders, isArray:true}
+        })
     })
