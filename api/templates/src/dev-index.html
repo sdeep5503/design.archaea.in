@@ -8,6 +8,7 @@
   <script type="text/javascript" src="dist/js/vendors.min.js"></script>
   <script type="text/javascript" src="js/module.js"></script>
   <script type="text/javascript" src="js/routes.js"></script>
+  <script type="text/javascript" src="js/services/common-services.js"></script>
   <script type="text/javascript" src="js/controllers/alerts-ctrl.js"></script>
   <script type="text/javascript" src="js/controllers/master-ctrl.js"></script>
   <script type="text/javascript" src="js/controllers/manage-nerds-ctrl.js"></script>
@@ -40,10 +41,10 @@
           <a href="#/nerds" ng-click="changePageInfoHeader('nerds')">Nerds<span class="menu-icon fa fa-table"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#/users" ng-click="changePageInfoHeader('users')">Nerds<span class="menu-icon fa fa-users"></span></a>
+          <a href="#/users" ng-click="changePageInfoHeader('users')">Users<span class="menu-icon fa fa-users"></span></a>
         </li>
         <li class="sidebar-list">
-          <a href="#/documentations" ng-click="changePageInfoHeader('documentations')">Nerds<span class="menu-icon fa fa-users"></span></a>
+          <a href="#/documentations" ng-click="changePageInfoHeader('documentations')">Docs<span class="menu-icon fa fa-users"></span></a>
         </li>
       </ul>
       <div class="sidebar-footer">
@@ -71,29 +72,19 @@
             <div class="user pull-right">
               <div class="item dropdown" style="width:150px;">
                 <div href="#" class="dropdown-toggle meta">
-                   <div class="meta" style="margin:2px">
-                     Vishnu Satis
+                   <div class="meta" style="margin:2px" ng-cloak="">
+                     [[user.first_name + " " + user.last_name]]
                      <i class="fa fa-caret-down small" style="padding:2px;font-size: 0.8em"></i>
                     </div>
                 </div>
                 <ul class="dropdown-menu dropdown-menu-right">
                   <li class="dropdown-header">
-                    Joe Bloggs
+                    [[user.first_name + " " + user.last_name]]
                   </li>
                   <li class="divider"></li>
                   <li class="link">
                     <a href="#">
                       Profile
-                    </a>
-                  </li>
-                  <li class="link">
-                    <a href="#">
-                      Menu Item
-                    </a>
-                  </li>
-                  <li class="link">
-                    <a href="#">
-                      Menu Item
                     </a>
                   </li>
                   <li class="divider"></li>
@@ -108,7 +99,7 @@
                 <div href="#" class="dropdown-toggle meta">
                    <div class="meta">
                       <i class="fa fa-cloud" aria-hidden="true" style="padding:2px;"></i>
-                     MBaaS Team
+                     [[currentAccount.account_name]]
                      <i class="fa fa-caret-down small" style="padding:2px;font-size: 0.8em"></i>
                     </div>
                 </div>
@@ -126,7 +117,7 @@
             <div page-header>
           </div>
         </div>
-        <section data-ui-view>bjb</section>
+        <section data-ui-view></section>
       </div>
     </div>
   </div>

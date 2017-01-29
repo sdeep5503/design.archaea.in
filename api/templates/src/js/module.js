@@ -1,4 +1,4 @@
-angular.module('nerdstacks', ['ui.bootstrap', 'ui.router', 'ngCookies'], function($interpolateProvider) {
+angular.module('nerdstacks', ['ui.bootstrap', 'ui.router', 'ngCookies','nerdstacks.services'], function($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 });

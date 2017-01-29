@@ -39,7 +39,7 @@ class ApiRequestConstants:
     # Request Keys
     CONTENT_TYPE = 'Content-Type'
     X_REQUEST_ID = 'X-Request-Id'
-    X_ARCHAEA_AUTHORIZATION = 'X-Archaea-Authorization'
+    X_ARCHAEA_AUTHORIZATION = 'X-NS-Authorization'
 
 
 class NerdUrlPaths:

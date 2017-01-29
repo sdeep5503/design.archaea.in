@@ -39,6 +39,17 @@ class Transformer:
         }
 
     @staticmethod
+    def user_to_json(user=None):
+        return {
+            'user_id': user.user_id,
+            'user_guid': user.user_guid,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'is_system': user.is_system
+        }
+
+    @staticmethod
     def account_list_to_json_array(accounts=None):
         account_list = []
         for account in accounts:

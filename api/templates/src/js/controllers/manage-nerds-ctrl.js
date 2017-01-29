@@ -2,9 +2,17 @@
  * Master Controller
  */
 angular.module('nerdstacks')
-    .controller('ManageNerdsCtrl', ['$scope', '$window', '$rootScope', ManageNerdsCtrl]);
+    .controller('ManageNerdsCtrl', ['$scope', '$window', '$rootScope', 'Nerds', ManageNerdsCtrl]);
 
-function ManageNerdsCtrl($scope, $window, $rootScope) {
+function ManageNerdsCtrl($scope, $window, $rootScope, Nerds) {
+
+    Nerds.get({
+        'account_guid': $rootScope.current.account.account_guid
+    }, function (response) {
+        $rootScope.current.nerd = response[0];
+    }, function (error) {
+
+    });
 
     $scope.navigateToAppManagement = function(nerdGuid)
     {
