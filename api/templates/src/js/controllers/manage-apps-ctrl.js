@@ -6,9 +6,12 @@ angular.module('nerdstacks')
 
 function ManageAppsCtrl($scope, $window, $rootScope, Applications) {
 
+    var currentUrlPath = $window.location.href;
+    var nerdGuid = currentUrlPath.split('/')[currentUrlPath.split('/').length - 2];
+
     Applications.get({
         'account_guid': $rootScope.current.account.account_guid,
-        'nerd_guid': ''
+        'nerd_guid': $rootScope.currentNerd
     }, function (response) {
 
     }, function (error) {
@@ -18,6 +21,10 @@ function ManageAppsCtrl($scope, $window, $rootScope, Applications) {
     $scope.navigateToAppCreateEditPage = function(applicationGuid)
     {
         $rootScope.currentApplication = applicationGuid;
-        $window.location.href = '#/nerds/' + $rootScope.currentNerd + '/applications/' + applicationGuid;
+        var appGuid = '';
+        if (applicationGuid) {
+            appGuid = '/' + applicationGuid
+        }
+        $window.location.href = '#/nerds/' + $rootScope.currentNerd + '/applications' + appGuid;
     }
 }

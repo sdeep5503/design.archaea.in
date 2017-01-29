@@ -62,9 +62,12 @@ def get_all_applications(account_guid, nerd_guid, **kwargs):
         if len(nerd) == 0:
             return HttpResponse.forbidden('The user has no permission on this nerd')
         nerd_response = ApplicationService.get_application(nerd_url=nerd[0].nerd_url)
+        # TODO time out this request otherwise everything will fail
         return HttpResponse.custom_http_response(loads(nerd_response.text), nerd_response.status_code)
     except Exception as e:
-        return HttpResponse.bad_request(e.message)
+        if e.message.message is not None:
+            return HttpResponse.internal_server_error(e.message.message)
+        return HttpResponse.internal_server_error(e.message)
 
 
 @application_handler.route(
@@ -88,4 +91,6 @@ def get_application(account_guid, nerd_guid, application_guid, **kwargs):
                                                                    application_guid=application_guid)
         return HttpResponse.custom_http_response(loads(nerd_response.text), nerd_response.status_code)
     except Exception as e:
-        return HttpResponse.bad_request(e.message)
+        if e.message.message is not None:
+            return HttpResponse.internal_server_error(e.message.message)
+        return HttpResponse.internal_server_error(e.message)

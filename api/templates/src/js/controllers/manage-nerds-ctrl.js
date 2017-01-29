@@ -6,17 +6,20 @@ angular.module('nerdstacks')
 
 function ManageNerdsCtrl($scope, $window, $rootScope, Nerds) {
 
+    $scope.nerds = [];
+
     Nerds.get({
         'account_guid': $rootScope.current.account.account_guid
     }, function (response) {
-        $rootScope.current.nerd = response[0];
+        $scope.nerds = response;
     }, function (error) {
-
+        console.log(error.data.message)
     });
 
-    $scope.navigateToAppManagement = function(nerdGuid)
+    $scope.navigateToAppManagement = function(nerd)
     {
-        $rootScope.currentNerd = nerdGuid;
-        $window.location.href = '#/nerds/' + nerdGuid + '/applications';
+        $rootScope.currentNerd = nerd.nerd_guid;
+        $rootScope.current.nerd = nerd;
+        $window.location.href = '#/nerds/' + nerd.nerd_guid + '/applications';
     }
 }
