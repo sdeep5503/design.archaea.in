@@ -1,4 +1,5 @@
 {
   "DATABASE_URL": "mysql+pymysql://root:Kony@123@localhost/design",
-  "MOCK_NERD_RESPONSE": false
+  "MOCK_NERD_RESPONSE": false,
+  "EXTERNAL_REQUEST_TIMEOUT": 20
 }

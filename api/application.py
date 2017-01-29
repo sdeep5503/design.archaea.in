@@ -19,4 +19,4 @@ if __name__ == '__main__':
     app.register_blueprint(application_handler)
     app.register_blueprint(assets_controller)
     app.register_blueprint(view_controller)
-    app.run(debug=True, port=9080)
+    app.run(debug=True, port=9081, host="0.0.0.0")

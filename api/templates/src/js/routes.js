@@ -32,5 +32,9 @@ angular.module('nerdstacks').config(['$stateProvider', '$urlRouterProvider',
         .state('edit-applications', {
             url: '/nerds/:nerd_guid/applications/:application_guid',
             templateUrl: 'design-applications.html'
+        })
+        .state('create-applications', {
+            url: '/nerds/:nerd_guid/applications/create',
+            templateUrl: 'design-applications.html'
         });
 }]);
