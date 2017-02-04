@@ -3,6 +3,18 @@
  */
 angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
 
+    .factory('httpInterceptor', function ($window) {
+        return {
+            response: function (response) {
+                if (response.status == 401 || response.status == 403) {
+                    // TODO logout flow
+                    $window.location.href = '/login';
+                }
+                return response;
+            }
+        }
+    })
+
     .service('defaultRequestHeaders', function($cookieStore) {
         return {
             'Content-Type': 'application/json',
@@ -26,7 +38,7 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
 
         return angular.extend(o, {
             nerds: o.account + '/nerds',
-            applications: o.account + '/nerds/:nerd_guid/applications'
+            applications: o.account + '/nerds/:nerd_guid/applications/:application_guid'
         });
     })
 
@@ -56,6 +68,14 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
 
     .factory('Applications', function($resource, api, defaultRequestHeaders) {
         return $resource(api.applications, {version: api.version}, {
-            get: {method: 'GET', headers: defaultRequestHeaders, isArray:true}
+            get: {method: 'GET', headers: defaultRequestHeaders, isArray:true},
+            save: {method: 'POST', headers: defaultRequestHeaders},
+            update: {method: 'PUT', headers: defaultRequestHeaders}
+        })
+    })
+
+    .factory('Applications2', function($resource, api, defaultRequestHeaders) {
+        return $resource(api.applications, {version: api.version}, {
+            get: {method: 'GET', headers: defaultRequestHeaders}
         })
     })

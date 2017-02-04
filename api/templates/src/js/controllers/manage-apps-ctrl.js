@@ -2,20 +2,27 @@
  * Master Controller
  */
 angular.module('nerdstacks')
-    .controller('ManageAppsCtrl', ['$scope', '$window', '$rootScope', 'Applications',  ManageAppsCtrl]);
+    .controller('ManageAppsCtrl', ['$scope', '$window', '$modal', '$rootScope', 'Accounts', 'Applications', 'Applications2',  ManageAppsCtrl]);
 
-function ManageAppsCtrl($scope, $window, $rootScope, Applications) {
+function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applications, Applications2) {
+
+    $scope.applications = [];
+    $scope.apiApp = {};
 
     var currentUrlPath = $window.location.href;
     var nerdGuid = currentUrlPath.split('/')[currentUrlPath.split('/').length - 2];
 
-    Applications.get({
-        'account_guid': $rootScope.current.account.account_guid,
-        'nerd_guid': $rootScope.currentNerd
-    }, function (response) {
+    Accounts.get(function(response) {
+        Applications.get({
+            'account_guid': $rootScope.current.account.account_guid,
+            'nerd_guid': nerdGuid
+        }, function (response) {
+            $scope.applications = response;
+        }, function (error) {
 
-    }, function (error) {
-
+        });
+    }, function() {
+        console.log(error.data.message);
     });
 
     $scope.navigateToAppCreateEditPage = function(applicationGuid)
@@ -25,6 +32,29 @@ function ManageAppsCtrl($scope, $window, $rootScope, Applications) {
         if (applicationGuid) {
             appGuid = '/' + applicationGuid
         }
-        $window.location.href = '#/nerds/' + $rootScope.currentNerd + '/applications' + appGuid;
+        $window.location.href = '#/nerds/' + nerdGuid + '/applications' + appGuid;
+    }
+
+    $scope.open = function (appGuid) {
+
+        Applications2.get({
+            'account_guid': $rootScope.current.account.account_guid,
+            'nerd_guid': nerdGuid,
+            'application_guid': appGuid
+        }, function (response) {
+            $scope.apiApp = response;
+            $modal.open({
+                templateUrl: 'api-list-popup.html',
+                scope: $scope,
+                resolve: {
+                    apiApp: function() {
+                      return $scope.apiApp;
+                    }
+                }
+            });
+        }, function (error) {
+
+        });
+
     }
 }
