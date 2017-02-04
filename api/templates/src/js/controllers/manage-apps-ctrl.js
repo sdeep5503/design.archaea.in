@@ -6,14 +6,16 @@ angular.module('nerdstacks')
 
 function ManageAppsCtrl($scope, $window, $rootScope, Applications) {
 
+    $scope.applications = [];
+
     var currentUrlPath = $window.location.href;
     var nerdGuid = currentUrlPath.split('/')[currentUrlPath.split('/').length - 2];
 
     Applications.get({
         'account_guid': $rootScope.current.account.account_guid,
-        'nerd_guid': $rootScope.currentNerd
+        'nerd_guid': nerdGuid
     }, function (response) {
-
+        $scope.applications = response;
     }, function (error) {
 
     });
@@ -25,6 +27,6 @@ function ManageAppsCtrl($scope, $window, $rootScope, Applications) {
         if (applicationGuid) {
             appGuid = '/' + applicationGuid
         }
-        $window.location.href = '#/nerds/' + $rootScope.currentNerd + '/applications' + appGuid;
+        $window.location.href = '#/nerds/' + nerdGuid + '/applications' + appGuid;
     }
 }
