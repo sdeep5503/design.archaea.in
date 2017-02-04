@@ -3,6 +3,18 @@
  */
 angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
 
+    .factory('httpInterceptor', function ($window) {
+        return {
+            response: function (response) {
+                if (response.status == 401 || response.status == 403) {
+                    // TODO logout flow
+                    $window.location.href = '/login';
+                }
+                return response;
+            }
+        }
+    })
+
     .service('defaultRequestHeaders', function($cookieStore) {
         return {
             'Content-Type': 'application/json',

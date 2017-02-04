@@ -16,7 +16,7 @@ angular.module('nerdstacks')
                 'password': $scope.loginCredentials.password
             }, function (response) {
                 $cookieStore.put('ns_claims', response.claims_token);
-                $window.location.href = "/#/dashboard";
+                $window.location.href = "/#/nerds";
             }, function (error) {
                 $scope.errorMessage = error.data.message;
             });

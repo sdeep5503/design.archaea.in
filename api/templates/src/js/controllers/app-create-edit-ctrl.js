@@ -2,9 +2,9 @@
  * Master Controller
  */
 angular.module('nerdstacks')
-    .controller('AppCreateEditCtrl', ['$scope', '$window', '$rootScope', 'Applications', 'Applications2',  AppCreateEditCtrl]);
+    .controller('AppCreateEditCtrl', ['$scope', '$window', '$rootScope', 'Accounts', 'Applications', 'Applications2',  AppCreateEditCtrl]);
 
-function AppCreateEditCtrl($scope, $window, $rootScope, Applications, Applications2) {
+function AppCreateEditCtrl($scope, $window, $rootScope, Accounts, Applications, Applications2) {
 
     $scope.createMode = true;
     $scope.application = {};
@@ -44,28 +44,33 @@ function AppCreateEditCtrl($scope, $window, $rootScope, Applications, Applicatio
 
     }
 
-    if (appGuid != 'create') {
-       // TODO populate $scope.application
-       $scope.createMode = false;
-       Applications2.get({
-            'account_guid': $rootScope.current.account.account_guid,
-            'nerd_guid': nerd_guid,
-            'application_guid': appGuid
-        }, function (response) {
-            $scope.application.name = response.application_name;
-            $scope.application.algorithm = response.algorithm;
-            $scope.application.app_metadata = JSON.stringify(response.parameters);
-            $scope.application.secret = response.application_secret;
-            $scope.application.key = response.application_key;
-        }, function (error) {
-            $scope.addAlert({
-                type: 'danger',
-                msg: error.data.message
-            });
-        });
-    } else {
 
-    }
+    Accounts.get(function(response) {
+        if (appGuid != 'create') {
+           // TODO populate $scope.application
+           $scope.createMode = false;
+           Applications2.get({
+                'account_guid': $rootScope.current.account.account_guid,
+                'nerd_guid': nerd_guid,
+                'application_guid': appGuid
+            }, function (response) {
+                $scope.application.name = response.application_name;
+                $scope.application.algorithm = response.algorithm;
+                $scope.application.app_metadata = JSON.stringify(response.parameters);
+                $scope.application.secret = response.application_secret;
+                $scope.application.key = response.application_key;
+            }, function (error) {
+                $scope.addAlert({
+                    type: 'danger',
+                    msg: error.data.message
+                });
+            });
+        } else {
+
+        }
+    }, function() {
+        console.log(error.data.message);
+    });
 
     $scope.save = function () {
         $scope.isLoading = true;

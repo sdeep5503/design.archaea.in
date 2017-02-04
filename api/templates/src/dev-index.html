@@ -20,6 +20,7 @@
   <script type="text/javascript" src="js/directives/widget-body.js"></script>
   <script type="text/javascript" src="js/directives/widget-header.js"></script>
 
+
   <script>
         var nerdstacks_base_url = '{{ base_url }}';
   </script>
@@ -36,15 +37,15 @@
           </a>
         </li>
         <li class="sidebar-title"><span>NAVIGATION</span></li>
-        <li class="sidebar-list">
+        <!--li class="sidebar-list">
           <a href="#/dashboard" ng-click="changePageInfoHeader('dashboard')">Dashboard<span class="menu-icon fa fa-tachometer"></span></a>
-        </li>
+        </li-->
         <li class="sidebar-list">
           <a href="#/nerds" ng-click="changePageInfoHeader('nerds')">Nerds<span class="menu-icon fa fa-table"></span></a>
-        </li>
+        <!--/li>
         <li class="sidebar-list">
           <a href="#/users" ng-click="changePageInfoHeader('users')">Users<span class="menu-icon fa fa-users"></span></a>
-        </li>
+        </li-->
         <li class="sidebar-list">
           <a href="#/documentations" ng-click="changePageInfoHeader('documentations')">Docs<span class="menu-icon fa fa-users"></span></a>
         </li>
@@ -91,7 +92,7 @@
                   </li>
                   <li class="divider"></li>
                   <li class="link">
-                    <a href="#">
+                    <a href="#" ng-click="logout()">
                       Logout
                     </a>
                   </li>
@@ -106,13 +107,12 @@
                     </div>
                 </div>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li class="dropdown-header">
-                    Notifications
-                  </li>
-                  <li class="divider"></li>
-                  <li>
-                    <a href="#">Server Down!</a>
-                  </li>
+                  <div ng-repeat="account in accounts">
+                    <li class="dropdown-header">
+                      [[account.account_name]]
+                    </li>
+                    <li class="divider"></li>
+                  </div>
                 </ul>
               </div>
             </div>

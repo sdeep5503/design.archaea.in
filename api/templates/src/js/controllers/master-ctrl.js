@@ -14,6 +14,8 @@ function MasterCtrl($scope, $rootScope, $cookieStore, $window, Whoami, Accounts)
     $scope.accounts = [];
     $scope.currentAccount = {};
     $rootScope.current = {};
+    $scope.currentPageName = 'Nerd Console';
+    $scope.currentPageDescription = 'Manage all your nerd clouds and apps give life to your apps';
 
     Whoami.get(function(response) {
         $scope.user = response;
@@ -69,7 +71,7 @@ function MasterCtrl($scope, $rootScope, $cookieStore, $window, Whoami, Accounts)
 
     $scope.changePageInfoHeader = function (pageName)
     {
-      var url = $window.location.href;
+      /**var url = $window.location.href;
       var urlPath = url.split('/');
       var moduleName = urlPath[urlPath.length - 1]
 
@@ -94,8 +96,13 @@ function MasterCtrl($scope, $rootScope, $cookieStore, $window, Whoami, Accounts)
       }
 
       $scope.currentPageName = headerMap[pageName ? pageName : moduleName];
-      $scope.currentPageDescription = descriptionMap[pageName ? pageName : moduleName];
+      $scope.currentPageDescription = descriptionMap[pageName ? pageName : moduleName];**/
     }
 
-    $scope.changePageInfoHeader();
+    $scope.logout = function () {
+        // TODO clear client side tokens
+        $window.location.href = '/login';
+    }
+
+    //$scope.changePageInfoHeader();
 }

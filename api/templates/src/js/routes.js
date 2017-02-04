@@ -5,14 +5,14 @@ angular.module('nerdstacks').config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
 
     // For unmatched routes
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/nerds');
 
     // Application routes
     $stateProvider
-        .state('dashboard', {
+        /*.state('dashboard', {
             url: '/dashboard',
             templateUrl: 'dashboard.html'
-        })
+        })*/
         .state('nerds', {
             url: '/nerds',
             templateUrl: 'manage-nerds.html'
