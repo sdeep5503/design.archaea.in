@@ -35,6 +35,15 @@ class NerdAdapter(BaseAdapter):
             raise Exception(e.message)
 
     @staticmethod
+    def read_by_account(account_id):
+        try:
+            nerds = db.query(Nerds).filter(Nerds.account_id.like(account_id)).all()
+            return nerds
+        except Exception as e:
+            db.rollback()
+            raise Exception(e.message)
+
+    @staticmethod
     def read_by_user(user_id=None, account_id=None):
         try:
             nerds = db.query(Nerds).filter(Nerds.users.any(user_id=user_id)). \

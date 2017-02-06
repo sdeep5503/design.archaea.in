@@ -33,6 +33,12 @@ class NerdService:
         )
 
     @staticmethod
+    def read_by_account(account=None):
+        return NerdAdapter.read_by_account(
+            account_id=account.account_id
+        )
+
+    @staticmethod
     def get_nerd_guid(account=None, user=None, nerd_guid=None):
         return NerdAdapter.read_nerd_by_user_and_nerd_guid(
             account_id=account.account_id,

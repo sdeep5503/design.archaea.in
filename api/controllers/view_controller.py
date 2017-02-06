@@ -11,6 +11,13 @@ def authenticate():
     return render_template('src/authenticate.html', base_url='127.0.0.1:9081')
 
 
+@view_controller.route('/register', methods=['GET'])
+def registration():
+    if config == "prod":
+        return render_template('dist/authenticate.html', base_url='127.0.0.1:9081')
+    return render_template('src/registration.html', base_url='127.0.0.1:9081')
+
+
 @view_controller.route('/', methods=['GET'])
 def home():
     if config == "prod":

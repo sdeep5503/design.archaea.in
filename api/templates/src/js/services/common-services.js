@@ -3,14 +3,15 @@
  */
 angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
 
-    .factory('httpInterceptor', function ($window) {
+    .factory('httpInterceptor', function ($window, $q) {
         return {
-            response: function (response) {
-                if (response.status == 401 || response.status == 403) {
+            responseError: function(reject) {
+                if (reject.status == 401 || reject.status == 403) {
                     // TODO logout flow
                     $window.location.href = '/login';
+                } else {
+                    return $q.reject(reject);
                 }
-                return response;
             }
         }
     })
@@ -31,6 +32,7 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
         var o = {
             version: 'v1_0',
             authenticate: base + '/authenticate',
+            register_user: base + '/users/register',
             whoami: base + '/whoami',
             accounts: base + '/accounts',
             account: base + '/accounts/:account_guid'
@@ -46,6 +48,12 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
         return $resource(api.authenticate, {version: api.version}, {
             login: {method: 'POST', headers: defaultRequestHeaders}
         });
+    })
+
+    .factory('Registration', function ($resource, api, defaultRequestHeaders) {
+        return $resource(api.register_user, {version: api.version}, {
+            register: {method: 'POST', headers: defaultRequestHeaders}
+        })
     })
 
     .factory('Whoami', function ($resource, api, defaultRequestHeaders) {
