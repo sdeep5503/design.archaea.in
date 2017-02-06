@@ -13,14 +13,13 @@
   <script type="text/javascript" src="dist/js/vendors.min.js"></script>
   <script type="text/javascript" src="js/module.js"></script>
   <script type="text/javascript" src="js/services/common-services.js"></script>
-  <script type="text/javascript" src="js/controllers/login-ctrl.js"></script>
-
+  <script type="text/javascript" src="js/controllers/registration-ctrl.js"></script>
   <script>
         var nerdstacks_base_url = '{{ base_url }}';
   </script>
 
 </head>
-<body ng-controller="LoginController">
+<body ng-controller="RegistrationController">
     <header>
         <div class="wrapper">
             <h1 style="width: 140px;height: auto;margin-top: -40px;">
@@ -37,20 +36,30 @@
         </div>
     </header>
     <div class="container">
-      <div class="info">
+      <div class="info"ng-if="!userRegistrationSuccess">
           {% raw %}
-        <h1> Sign In | NerdStacks Console</h1>
+        <h1> Register on Nerdstacks</h1>
           <span style="color:red">[[errorMessage]]
           </span>
           {% endraw %}
       </div>
     </div>
     <div class="form">
-      <form class="login-form">
-        <input type="text" ng-model="loginCredentials.email" placeholder="email"/>
-        <input type="password" ng-model="loginCredentials.password" placeholder="password"/>
-        <button ng-click="signIn()">Sign In</button>
-        <p class="message">Not registered ? <a href="/register">Create an account</a></p>
+      <form class="login-form" ng-if="!userRegistrationSuccess">
+        <input type="text" ng-model="registrationData.email" placeholder="email"/>
+        <input type="password" ng-model="registrationData.password" placeholder="password"/>
+        <input type="text" ng-model="registrationData.firstName" placeholder="First Name"/>
+        <input type="text" ng-model="registrationData.lastName" placeholder="Last Name"/>
+        <input type="text" ng-model="registrationData.company" placeholder="Company"/>
+        <button ng-click="registerUser()">Sign In</button>
+        <div ng-if="userRegistrationSuccess">
+            <p class="message">Not registered ? <a href="#">Create an account</a></p>
+        </div>
+      </form>
+      <form class="login-form" ng-if="userRegistrationSuccess">
+          <h1> Thank you for signing up with Nerdstacks</h1>
+          <p> Please click on the confirmation link sent to your email to activate your account</p>
+          <button class="btn-success" ng-click="toSignInPage()">Sign In</button>
       </form>
     </div>
     <footer>

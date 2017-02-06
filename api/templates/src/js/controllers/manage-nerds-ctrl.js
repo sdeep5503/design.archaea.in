@@ -19,7 +19,7 @@ function ManageNerdsCtrl($scope, $window, $rootScope, Nerds, Accounts) {
         }, function (error) {
             console.log(error.data.message)
         });
-    }, function() {
+    }, function(error) {
         console.log(error.data.message);
     });
 
