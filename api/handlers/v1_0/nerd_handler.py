@@ -56,8 +56,8 @@ def get_nerds(account_guid, **kwargs):
         if current_user.is_system:
             return HttpResponse.accepted('All accounts should be returned [unimplemented]')
         else:
-            bots = NerdService.read(account=account, user=current_user)
-            return HttpResponse.success(Transformer.nerd_list_to_json_array(bots))
+            nerds = NerdService.read(account=account, user=current_user)
+            return HttpResponse.success(Transformer.nerd_list_to_json_array(nerds))
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)
 
