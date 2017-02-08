@@ -15,12 +15,12 @@ class Nerds(Base):
     __tablename__ = 'nerds'
 
     nerd_id = Column(Integer, primary_key=True)
+    nerd_guid = Column(String(45), unique=True)
     account_id = Column(Integer, ForeignKey('accounts.account_id', ondelete='CASCADE',
                                             onupdate='CASCADE'))
     users = relationship('Users', cascade='all, save-update, delete',
                          secondary=nerd_user_association_table)
-    nerd_guid = Column(String(128), unique=True)
-    nerd_name = Column(String(64), nullable=False)
+    nerd_name = Column(String(255), nullable=False)
     nerd_url = Column(String(255), nullable=False)
     is_deleted = Column(Boolean, nullable=False, default=False)
     is_active = Column(Boolean, nullable=False, default=True)

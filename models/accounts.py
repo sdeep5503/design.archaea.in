@@ -4,7 +4,7 @@ from sqlalchemy.types import Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Boolean
 
-account_user_association_table = Table('accounts_users', Base.metadata,
+account_user_association_table = Table('account_users', Base.metadata,
                                        Column('account_id', Integer,
                                               ForeignKey('accounts.account_id', ondelete='CASCADE',
                                                          onupdate='CASCADE')),
@@ -18,12 +18,12 @@ class Accounts(Base):
     __tablename__ = 'accounts'
 
     account_id = Column(Integer, primary_key=True, nullable=False)
-    account_name = Column(String(50), nullable=False)
-    account_guid = Column(String(120), unique=True, nullable=False)
+    account_guid = Column(String(45), unique=True, nullable=False)
+    account_name = Column(String(255), nullable=False)
     account_type = Column(Enum('common_niche', 'enterprise'), nullable=False)
-    company = Column(String(64), nullable=True)
-    is_active = Column(Boolean, nullable=False)
-    is_deleted = Column(Boolean, nullable=False)
+    company = Column(String(255), nullable=False)
+    is_active = Column(Boolean, nullable=False, default=False)
+    is_deleted = Column(Boolean, nullable=False, default=True)
     nerds = relationship('Nerds', cascade='all, save-update, delete')
     users = relationship('Users', cascade='all, save-update, delete',
                          secondary=account_user_association_table)
