@@ -44,3 +44,12 @@ class UserService:
         return UserAdapter.read({
             'user_guid': user_guid
         })
+
+    @staticmethod
+    def confirm_user(user_guid):
+        UserAdapter.update(query={
+            'user_guid': user_guid
+        }, new_user={
+            'is_active': True
+        })
+

@@ -54,7 +54,7 @@ def get_whoami(**kwargs):
         return HttpResponse.internal_server_error(e.message)
 
 
-@user_handler.route(ApiVersions.API_VERSION_V1 + '<account_guid>/users', methods=['PUT'])
+@user_handler.route(ApiVersions.API_VERSION_V1 + '/<account_guid>/users', methods=['PUT'])
 @RequestValidator.validate_request_header
 @JWTAuthService.jwt_validation
 def add_user_to_account(account_guid, **kwargs):
@@ -83,4 +83,4 @@ def add_user_to_account(account_guid, **kwargs):
             )
             return HttpResponse.accepted('User has been added successfully')
     except Exception as e:
-        HttpResponse.internal_server_error(e.message)
+        return HttpResponse.internal_server_error(e.message)

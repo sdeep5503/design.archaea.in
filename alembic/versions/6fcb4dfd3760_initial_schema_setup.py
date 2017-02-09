@@ -52,7 +52,7 @@ __nerds = """
 
       `nerd_name` VARCHAR(255) NOT NULL ,
 
-      `nerd_url` VARCHAR(255) NOT NULL ,
+      `nerd_url` VARCHAR(2083) NOT NULL ,
 
       `is_active` TINYINT(1) NOT NULL DEFAULT true ,
 

@@ -21,7 +21,7 @@ class Nerds(Base):
     users = relationship('Users', cascade='all, save-update, delete',
                          secondary=nerd_user_association_table)
     nerd_name = Column(String(255), nullable=False)
-    nerd_url = Column(String(255), nullable=False)
+    nerd_url = Column(String(2083), nullable=False)
     is_deleted = Column(Boolean, nullable=False, default=False)
     is_active = Column(Boolean, nullable=False, default=True)
 
