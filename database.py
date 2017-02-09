@@ -19,7 +19,6 @@ def init_db():
 
     :return:
     """
-    import models.dump
     import models.users
     import models.accounts
     import models.nerds
@@ -34,6 +33,3 @@ def destroy_session():
     :return:
     """
     db.remove()
-
-
-init_db()

@@ -6,7 +6,7 @@ from api.services.jwt_auth_service import JWTAuthService
 from api.services.account_service import AccountsService
 from api.common_helper.common_validations import RequestValidator
 from api.common_helper.transformers import Transformer
-from api.common_helper.common_constants import ApiVersions, AccountPermissions
+from api.common_helper.common_constants import ApiVersions, AccountPermissions, AccountTypes
 
 user_handler = Blueprint(__name__, __name__)
 
@@ -29,6 +29,9 @@ def create_user():
         user_by_email = UserService.get_user_by_email(email=email)
         if len(user_by_email) > 0:
             return HttpResponse.bad_request('An user account with this email already exists')
+        niche_account = AccountsService.get_account_by_account_type(account_type=AccountTypes.COMMON_NICHE)
+        if len(niche_account) == 0:
+            return HttpResponse.bad_request('Niche account not found')
         UserService.create_user_and_add_to_niche(
             email=email,
             password=password,
@@ -51,7 +54,7 @@ def get_whoami(**kwargs):
         return HttpResponse.internal_server_error(e.message)
 
 
-@user_handler.route(ApiVersions.API_VERSION_V1 + '<account_guid>/users', methods=['PUT'])
+@user_handler.route(ApiVersions.API_VERSION_V1 + '/<account_guid>/users', methods=['PUT'])
 @RequestValidator.validate_request_header
 @JWTAuthService.jwt_validation
 def add_user_to_account(account_guid, **kwargs):
@@ -80,4 +83,4 @@ def add_user_to_account(account_guid, **kwargs):
             )
             return HttpResponse.accepted('User has been added successfully')
     except Exception as e:
-        HttpResponse.internal_server_error(e.message)
+        return HttpResponse.internal_server_error(e.message)

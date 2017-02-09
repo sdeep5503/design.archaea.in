@@ -1,0 +1,1 @@
+INSERT INTO users (user_guid, email, password, first_name, last_name, company, is_system, is_active, is_deleted, created_at, updated_at) VALUES ('73ca1099-ee29-11e6-9d87-6c4008bb2c08', 'vizsatiz@gmail.com', 'Kony@123', 'Vishnu', 'Satis', 'Archaea', 1, 1, 0, '2017-02-08 18:07:29', '2017-02-08 18:07:29');

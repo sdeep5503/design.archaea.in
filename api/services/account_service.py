@@ -155,3 +155,10 @@ class AccountsService:
         if not account_user or len(account_user) == 0:
             Exception('[Services] user doesn\'t have permission on account')
         return account_user[0].permission
+
+    @staticmethod
+    def get_account_by_account_type(account_type=None):
+        accounts = AccountsAdapter.read(query= {
+          'account_type': account_type
+        })
+        return accounts

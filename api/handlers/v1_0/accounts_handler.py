@@ -33,6 +33,7 @@ def create_account(**kwargs):
         else:
             # TODO creating enterprise account. Do take the credit card details.
             if account_type == AccountTypes.ENTERPRISE:
+                return HttpResponse.bad_request('Enterprise account creation is disabled as part of this release')
                 AccountsService.create_account(current_user,
                                                account_name=account_name,
                                                company=company,
