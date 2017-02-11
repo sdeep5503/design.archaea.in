@@ -6,7 +6,7 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
     .factory('httpInterceptor', function ($window, $q) {
         return {
             responseError: function(reject) {
-                if (reject.status == 401 || reject.status == 403) {
+                if ((reject.status == 401 || reject.status == 403) && reject.data.message != "Incorrect username or password") {
                     // TODO logout flow
                     $window.location.href = '/login';
                 } else {

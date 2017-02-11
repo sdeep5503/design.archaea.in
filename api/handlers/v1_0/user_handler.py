@@ -77,10 +77,12 @@ def add_user_to_account(account_guid, **kwargs):
         if not new_user:
             return HttpResponse.bad_request('This user is unknown to archaea')
         else:
+            """
             AccountsService.add_user_to_account(
                 account_guid=account_guid,
                 user=new_user
             )
+            """
             return HttpResponse.accepted('User has been added successfully')
     except Exception as e:
         return HttpResponse.internal_server_error(e.message)

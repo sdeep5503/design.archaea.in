@@ -26,6 +26,14 @@ class NerdService:
                            user=user)
 
     @staticmethod
+    def give_permission_to_nerds_by_account(user=None, account=None):
+        all_nerds = NerdService.read_by_account(account=account)
+        for nerd in all_nerds:
+            NerdAdapter.add_user(query={
+                'nerd_id': nerd.nerd_id
+            }, user=user)
+
+    @staticmethod
     def read(account=None, user=None):
         return NerdAdapter.read_by_user(
             user_id=user.user_id,
