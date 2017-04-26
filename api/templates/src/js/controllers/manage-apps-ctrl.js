@@ -48,7 +48,10 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
                 scope: $scope,
                 resolve: {
                     apiApp: function() {
-                      return $scope.apiApp;
+                      return $scope.apiApp
+                    },
+                    nerd: function() {
+                       return
                     }
                 }
             });
