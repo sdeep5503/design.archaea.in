@@ -13,19 +13,19 @@
         <div class="col-sm-12">
             <label class="col-sm-12">Application Secret</label>
             <div class="col-sm-12">
-              <input  type="text" class="form-control" disabled="disabled" value="apiApp.application_secret"/>
+              <input  type="text" class="form-control" disabled="disabled" ng-model="apiApp.application_secret"/>
             </div>
          </div>
         <div class="col-sm-12">
             <label class="col-sm-12">Training API</label>
             <div class="col-sm-12">
-              <input  type="text" class="form-control" disabled="disabled" ng-value="apiApp.secret"/>
+              <input  type="text" class="form-control" disabled="disabled" value="[[nerd.nerd_url + '/application/train']]"/>
             </div>
          </div>
         <div class="col-sm-12">
             <label class="col-sm-12">Compute API</label>
             <div class="col-sm-12">
-              <input  type="text" class="form-control" disabled="disabled" ng-model="apiApp.secret"/>
+              <input  type="text" class="form-control" disabled="disabled" value="[[nerd.nerd_url + '/application/compute']]"/>
             </div>
          </div>
     </div>

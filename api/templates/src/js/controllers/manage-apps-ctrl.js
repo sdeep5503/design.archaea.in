@@ -2,9 +2,9 @@
  * Master Controller
  */
 angular.module('nerdstacks')
-    .controller('ManageAppsCtrl', ['$scope', '$window', '$modal', '$rootScope', 'Accounts', 'Applications', 'Applications2',  ManageAppsCtrl]);
+    .controller('ManageAppsCtrl', ['$scope', '$window', '$modal', '$rootScope', 'Accounts', 'Applications', 'Applications2', 'Nerds2',  ManageAppsCtrl]);
 
-function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applications, Applications2) {
+function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applications, Applications2, Nerds2) {
 
     $scope.applications = [];
     $scope.apiApp = {};
@@ -13,6 +13,16 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
     var nerdGuid = currentUrlPath.split('/')[currentUrlPath.split('/').length - 2];
 
     Accounts.get(function(response) {
+
+        Nerds2.get({
+            'account_guid': $rootScope.current.account.account_guid,
+            'nerd_guid': nerdGuid
+        }, function (response) {
+            $scope.nerd = response;
+        }, function (error) {
+            console.log(error.data.message)
+        });
+
         Applications.get({
             'account_guid': $rootScope.current.account.account_guid,
             'nerd_guid': nerdGuid
@@ -21,6 +31,7 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
         }, function (error) {
 
         });
+
     }, function() {
         console.log(error.data.message);
     });
@@ -51,7 +62,7 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
                       return $scope.apiApp
                     },
                     nerd: function() {
-                       return
+                       return $scope.nerd
                     }
                 }
             });
