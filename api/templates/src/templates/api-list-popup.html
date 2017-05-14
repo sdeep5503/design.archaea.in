@@ -2,10 +2,35 @@
     <div class="modal-header">
         <h3 class="modal-title">[[apiApp.application_name]]</h3>
     </div>
+
     <div class="modal-body">
-        [[apiApp]]
+        <div class="col-sm-12">
+            <label class="col-sm-12">Application Key</label>
+            <div class="col-sm-12">
+                <input  type="text" class="form-control" disabled="disabled" ng-model="apiApp.application_key"/>
+            </div>
+         </div>
+        <div class="col-sm-12">
+            <label class="col-sm-12">Application Secret</label>
+            <div class="col-sm-12">
+              <input  type="text" class="form-control" disabled="disabled" ng-model="apiApp.application_secret"/>
+            </div>
+         </div>
+        <div class="col-sm-12">
+            <label class="col-sm-12">Training API</label>
+            <div class="col-sm-12">
+              <input  type="text" class="form-control" disabled="disabled" value="[[nerd.nerd_url + 'api/v1_0/application/train']]"/>
+            </div>
+         </div>
+        <div class="col-sm-12">
+            <label class="col-sm-12">Compute API</label>
+            <div class="col-sm-12">
+              <input  type="text" class="form-control" disabled="disabled" value="[[nerd.nerd_url + 'api/v1_0/application/compute']]"/>
+            </div>
+         </div>
     </div>
-    <div class="modal-footer">
+
+    <div class="modal-footer" style="margin-top: 250px;">
         <button id="close-api-list" class="btn btn-warning" type="button" onclick="(function(){location.reload();})() ">Close</button>
     </div>
 </div>

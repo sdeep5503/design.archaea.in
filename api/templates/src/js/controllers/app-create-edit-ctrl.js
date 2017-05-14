@@ -9,7 +9,8 @@ function AppCreateEditCtrl($scope, $window, $rootScope, Accounts, Applications, 
     $scope.createMode = true;
     $scope.application = {};
     $scope.isLoading = false;
-    $scope.algorithms = ['linear_regression', 'logistic_regression'];
+    $scope.algorithms = ['linear_regression', 'logistic_regression',
+    'ridge_regression', 'neural_network', 'conv_neural_nets'];
 
     var currentUrlPath = $window.location.href;
     var appGuid = currentUrlPath.split('/')[currentUrlPath.split('/').length - 1];
@@ -28,11 +29,94 @@ function AppCreateEditCtrl($scope, $window, $rootScope, Accounts, Applications, 
     var getMetadataForAlgorithm = function (algorithm) {
 
         var metadataMapper = {
+
             'linear_regression': {
                 'fit_intercept': true,
                 'normalize': false,
                 'copy_X': true,
                 'n_jobs': 1
+            },
+
+            'logistic_regression': {
+                'penalty': "l2",
+                'dual': false,
+                'tol': 1e-4,
+                'C': 1.0,
+                'fit_intercept': true,
+                'intercept_scaling': 1,
+                'class_weight': null,
+                'random_state': null,
+                'solver': 'liblinear',
+                'max_iter': 100,
+                'multi_class': "ovr",
+                'verbose': 0,
+                'warm_start': false,
+                'n_jobs': 1
+            },
+
+            'ridge_regression': {
+                'alpha': 0.0001,
+                'fit_intercept': true,
+                'normalize': false,
+                'copy_X': true,
+                'max_iter': 5
+            },
+
+            'neural_network': {
+                'dimension': [128, 64, 10]
+            },
+
+            'conv_neural_netsØ': {
+                'layers': [{
+                    'layer_name': 'input',
+                    'layer_type': 'InputLayer',
+                    'shape': [null, 1, 28, 28]
+                }, {
+                    'layer_name': 'conv2d1',
+                    'layer_type': 'Conv2DLayer',
+                    'num_filters': 32,
+                    'filter_size': [5, 5],
+                    'layer_nonlinearity': 'rectify',
+                    'conv_window': 'glorotuniform'
+                }, {
+                    'layer_name': 'maxpool1',
+                    'layer_type': 'MaxPool2DLayer',
+                    'pool_size': [2, 2]
+                }, {
+                    'layer_name': 'conv2d2',
+                    'layer_type': 'Conv2DLayer',
+                    'num_filters': 32,
+                    'filter_size': [5, 5],
+                    'layer_nonlinearity': 'rectify',
+                    'conv_window': null
+                }, {
+                    'layer_name': 'maxpool2',
+                    'layer_type': 'MaxPool2DLayer',
+                    'pool_size': [2, 2]
+                }, {
+                    'layer_name': 'dropout1',
+                    'layer_type': 'DropoutLayer',
+                    'dropout_pivot': 0.5
+                }, {
+                    'layer_name': 'dense',
+                    'layer_type': 'DenseLayer',
+                    'num_units': 256,
+                    'layer_nonlinearity': 'rectify'
+                }, {
+                    'layer_name': 'dropout2',
+                    'layer_type': 'DropoutLayer',
+                    'dropout_pivot': 0.5
+                }, {
+                    'layer_name': 'output',
+                    'layer_type': 'DenseLayer',
+                    'num_units': 10,
+                    'layer_nonlinearity': 'softmax'
+                }],
+                'update': 'nesterov_momentum',
+                'update_learning_rate': 0.01,
+                'update_momentum': 0.9,
+                'max_epochs': 1,
+                'verbose': 1
             }
         }
 

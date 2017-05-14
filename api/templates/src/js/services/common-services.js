@@ -39,7 +39,7 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
         };
 
         return angular.extend(o, {
-            nerds: o.account + '/nerds',
+            nerds: o.account + '/nerds/:nerd_guid',
             applications: o.account + '/nerds/:nerd_guid/applications/:application_guid'
         });
     })
@@ -71,6 +71,12 @@ angular.module('nerdstacks.services', ['ngResource', 'ngCookies'])
     .factory('Nerds', function($resource, api, defaultRequestHeaders) {
         return $resource(api.nerds, {version: api.version}, {
             get: {method: 'GET', headers: defaultRequestHeaders, isArray:true}
+        })
+    })
+
+    .factory('Nerds2', function($resource, api, defaultRequestHeaders) {
+        return $resource(api.nerds, {version: api.version}, {
+            get: {method: 'GET', headers: defaultRequestHeaders}
         })
     })
 
