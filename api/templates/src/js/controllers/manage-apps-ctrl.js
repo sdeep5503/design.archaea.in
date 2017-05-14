@@ -2,7 +2,8 @@
  * Master Controller
  */
 angular.module('nerdstacks')
-    .controller('ManageAppsCtrl', ['$scope', '$window', '$modal', '$rootScope', 'Accounts', 'Applications', 'Applications2', 'Nerds2',  ManageAppsCtrl]);
+    .controller('ManageAppsCtrl', ['$scope', '$window', '$modal', '$rootScope', 'Accounts', 'Applications', 'Applications2', 'Nerds2',  ManageAppsCtrl])
+    .controller('ApiPopUpCtrl', ['$scope', '$modal', '$rootScope', '$modalInstance'], ApiPopUpCtrl);
 
 function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applications, Applications2, Nerds2) {
 
@@ -41,7 +42,7 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
         if (applicationGuid) {
             appGuid = '/' + applicationGuid
         }
-        $window.location.href = '#/nerds/' + $rootScope.current.nerd.nerd_guid + '/applications' + appGuid;
+        $window.location.href = '#/nerds/' + nerdGuid + '/applications' + appGuid;
     }
 
     $scope.open = function (appGuid) {
@@ -51,22 +52,26 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
             'nerd_guid': nerdGuid,
             'application_guid': appGuid
         }, function (response) {
-            $scope.apiApp = response;
+            $rootScope.current.apiApp = response;
             $modal.open({
                 templateUrl: 'api-list-popup.html',
                 scope: $scope,
-                resolve: {
-                    apiApp: function() {
-                      return $scope.apiApp
-                    },
-                    nerd: function() {
-                       return $scope.nerd
-                    }
-                }
+                controller: ApiPopUpCtrl
             });
         }, function (error) {
 
         });
 
     }
+}
+
+function ApiPopUpCtrl($scope, $modal, $rootScope, $modalInstance) {
+
+    $scope.apiApp = $rootScope.current.apiApp;
+    $scope.nerd = $rootScope.current.nerd;
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
 }
