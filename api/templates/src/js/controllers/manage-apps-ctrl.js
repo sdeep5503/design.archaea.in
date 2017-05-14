@@ -12,28 +12,26 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
     var currentUrlPath = $window.location.href;
     var nerdGuid = currentUrlPath.split('/')[currentUrlPath.split('/').length - 2];
 
-    Accounts.get(function(response) {
+    if ($rootScope.current.nerd) {
+        nerdGuid = $rootScope.current.nerd.nerd_guid;
+    }
 
-        Nerds2.get({
-            'account_guid': $rootScope.current.account.account_guid,
-            'nerd_guid': nerdGuid
-        }, function (response) {
-            $scope.nerd = response;
-        }, function (error) {
-            console.log(error.data.message)
-        });
+    Nerds2.get({
+        'account_guid': $rootScope.current.account.account_guid,
+        'nerd_guid': nerdGuid
+    }, function (response) {
+        $scope.nerd = response;
+    }, function (error) {
+        console.log(error.data.message)
+    });
 
-        Applications.get({
-            'account_guid': $rootScope.current.account.account_guid,
-            'nerd_guid': nerdGuid
-        }, function (response) {
-            $scope.applications = response;
-        }, function (error) {
+    Applications.get({
+        'account_guid': $rootScope.current.account.account_guid,
+        'nerd_guid': nerdGuid
+    }, function (response) {
+        $scope.applications = response;
+    }, function (error) {
 
-        });
-
-    }, function() {
-        console.log(error.data.message);
     });
 
     $scope.navigateToAppCreateEditPage = function(applicationGuid)
@@ -43,7 +41,7 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
         if (applicationGuid) {
             appGuid = '/' + applicationGuid
         }
-        $window.location.href = '#/nerds/' + nerdGuid + '/applications' + appGuid;
+        $window.location.href = '#/nerds/' + $rootScope.current.nerd.nerd_guid + '/applications' + appGuid;
     }
 
     $scope.open = function (appGuid) {
