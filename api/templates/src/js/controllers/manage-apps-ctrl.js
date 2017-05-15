@@ -17,14 +17,15 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
         nerdGuid = $rootScope.current.nerd.nerd_guid;
     }
 
-    Nerds2.get({
-        'account_guid': $rootScope.current.account.account_guid,
-        'nerd_guid': nerdGuid
-    }, function (response) {
-        $scope.nerd = response;
-    }, function (error) {
-        console.log(error.data.message)
-    });
+    $scope.alerts = [];
+
+    $scope.addAlert = function(alert) {
+        $scope.alerts.push(alert);
+    };
+
+    $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+    };
 
     Applications.get({
         'account_guid': $rootScope.current.account.account_guid,
@@ -32,7 +33,11 @@ function ManageAppsCtrl($scope, $window, $modal, $rootScope, Accounts, Applicati
     }, function (response) {
         $scope.applications = response;
     }, function (error) {
-
+        console.log('We are unable to get the applications from this nerd. Please check whether the nerd is up and running.');
+        $scope.addAlert({
+            msg: 'We are unable to get the applications from this nerd. Please check whether the nerd is up and running.',
+            type: 'danger'
+        });
     });
 
     $scope.navigateToAppCreateEditPage = function(applicationGuid)
