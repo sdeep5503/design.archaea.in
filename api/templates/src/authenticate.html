@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/auth-style.css">
 
   <script type="text/javascript" src="dist/js/vendors.min.js"></script>
-  <script type="text/javascript" src="js/module.js"></script>
+  <script type="text/javascript" src="js/auth-module.js"></script>
   <script type="text/javascript" src="js/services/common-services.js"></script>
   <script type="text/javascript" src="js/controllers/login-ctrl.js"></script>
 
@@ -23,7 +23,7 @@
 <body ng-controller="LoginController">
     <header>
         <div class="wrapper">
-            <h1 style="width: 140px;height: auto;margin-top: -40px;">
+            <h1 style="margin-top: -45px;">
                 <img src="img/loo.png">
             </h1>
             <nav>
@@ -53,22 +53,24 @@
         <p class="message">Not registered ? <a href="/register">Create an account</a></p>
       </form>
     </div>
-    <footer>
+     <footer>
         <div class="wrapper">
-            <ul>
-                <li><h5>Company</h5></li>
-            </ul>
-            <ul>
-                <li><h5>About Us</h5></li>
-            </ul>
-            <ul>
-                <li><h5>Our Team</h5></li>
-            </ul>
-            <ul>
-                <li><h5>Career</h5></li>
-            </ul>
+            <div id="footer-links">
+                <ul>
+                    <li><h5>Company</h5></li>
+                </ul>
+                <ul>
+                    <li><h5>About Us</h5></li>
+                </ul>
+                <ul>
+                    <li><h5>Our Team</h5></li>
+                </ul>
+                <ul>
+                    <li><h5>Career</h5></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
         </div>
-        <div class="clear"></div>
     </footer>
 </body>
 </html>

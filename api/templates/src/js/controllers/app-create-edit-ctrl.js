@@ -183,6 +183,12 @@ function AppCreateEditCtrl($scope, $window, $rootScope, Accounts, Applications, 
             });
         } else {
             // TODO validate input and update the app
+            console.log('Update of applications is currently not implemented');
+            $scope.addAlert({
+                msg: 'Update of applications is currently not implemented. Please contact the administrator to know more.',
+                type: 'danger'
+            });
+            $scope.isLoading = false;
         }
     }
 
@@ -190,5 +196,9 @@ function AppCreateEditCtrl($scope, $window, $rootScope, Accounts, Applications, 
         var selectedAlgorithm = $scope.algorithms[$('#algorithm_selector')[0].value];
         $scope.application.app_metadata = JSON.stringify(getMetadataForAlgorithm(selectedAlgorithm));
     });
+
+    $scope.back =  function () {
+        $window.location.href = '#/nerds/' + nerd_guid + '/applications';
+    }
 
 }
